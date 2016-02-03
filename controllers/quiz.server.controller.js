@@ -2,8 +2,8 @@ var Quiz = require('../models/quiz.server.model.js');
 
 exports.create = function(req, res) {
     var entry = new Quiz ({
-        name: req.body.qName,
-        description: req.body.qDescription,
+        qName: req.body.qName,
+        qDescription: req.body.qDescription,
         qNumber: req.body.qNumber,
         shuffleQuestion: req.body.shuffleQuestion,
         shuffleAnswers: req.body.shuffleAnswers,
@@ -18,5 +18,5 @@ exports.create = function(req, res) {
 };
 
 exports.getNode = function(req,res) {
-    res.render('newnode', {title: "Quiz - New node"});
+    res.render('newquiz', {title: "Quiz - New node"});
 }
