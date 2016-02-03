@@ -1,4 +1,4 @@
-var Quiz = require('../models/qius.server.model.js');
+var Quiz = require('../models/quiz.server.model.js');
 
 exports.create = function(req, res) {
     var entry = new Quiz ({
