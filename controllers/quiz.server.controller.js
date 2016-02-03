@@ -16,7 +16,6 @@ exports.create = function(req, res) {
     //redirect to homepage
     res.redirect(301, '/');
 };
-
 exports.getNode = function(req,res) {
     res.render('newquiz', {title: "Quiz - New node"});
 }

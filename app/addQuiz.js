@@ -16,21 +16,21 @@ MongoClient.connect("mongodb://user:user@ds041924.mongolab.com:41924/testbase", 
     var collection = db.collection('Quizez');
 
  //Create some users
-    var quiz = {name: 'Quiz1',
-                topic: 'Topic1',
-                views: 0,
-                questions: 5,
-                Status: 'Public',
-                type: 'Quiz',
-                topic: 'Topic1',
-                owner: 'Username',
+    var quiz = {name: 'Quiz2', topic: 'Topic1',
+                views: 0, questions: 5,
+                Status: 'Public', type: 'Quiz',
+                topic: 'Topic1', owner: 'Username',
                 source: 'User',
                 questions: [
-    {question:'1Question Text goes here',answer1:'answer1',answer2:'answer2',answer3:'answer4',rightAnswer:'answer1'},
-    {question:'2Question Text goes here',answer1:'answer1',answer2:'answer2',answer3:'answer4',rightAnswer:'answer1'},
-    {question:'3Question Text goes here',answer1:'answer1',answer2:'answer2',answer3:'answer4',rightAnswer:'answer1'}
+    {question:'1Question Text goes here',answer1:'answer1',
+    answer2:'answer2',answer3:'answer4',rightAnswer:'answer1'},
+    {question:'2Question Text goes here',answer1:'answer1',
+    answer2:'answer2',answer3:'answer4',rightAnswer:'answer1'},
+    {question:'3Question Text goes here',answer1:'answer1',
+    answer2:'answer2',answer3:'answer4',rightAnswer:'answer1'},
+    {question:'4Question Text goes here',answer1:'answer1',
+    answer2:'answer2',answer3:'answer4',rightAnswer:'answer1'}
                             ]};
-
 
    // Insert some users
     collection.insert(quiz, function (err, result) {

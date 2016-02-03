@@ -13,7 +13,7 @@ MongoClient.connect("mongodb://user:user@ds041924.mongolab.com:41924/testbase", 
         // Get the documents collection
     var collection = db.collection('Quizez');
 
-var cursor = collection.find({name: 'Quiz1'});
+var cursor = collection.find({topic: 'Topic1'});
     //Limit to max 10 records
     cursor.limit(10);
 
@@ -28,12 +28,10 @@ var cursor = collection.find({name: 'Quiz1'});
           if(doc === null){
               return;
           };
-        console.log('Fetched:', doc.name);
+        console.log('Fetched:', doc);
         
       }
     });
-
   }
 });
-
 };

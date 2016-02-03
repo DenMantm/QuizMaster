@@ -10,7 +10,17 @@
  * @author Deniss Strods, x14100398
  *
  */ 
+var standardCtrl = require("./controllers/quiz.server.controller.js");
 module.exports = function(app, passport) {
+			//ROUTES FOR QUIZ GET, POST
+			
+	app.get('/newquiz',isLoggedIn, function(req, res) {
+	return standardCtrl.getNode(req,res);
+});
+
+app.post('/newquiz',isLoggedIn, function(req, res) {
+	return standardCtrl.create(req,res);
+});
 
 	// =====================================
 	// HOME PAGE (with login links) ========
@@ -47,7 +57,6 @@ module.exports = function(app, passport) {
 		failureRedirect : '/login', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
-
 	// =====================================
 	// SIGNUP ==============================
 	// =====================================

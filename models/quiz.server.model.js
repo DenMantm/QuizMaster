@@ -13,7 +13,6 @@ var subAnswers = {
     answer: String,
     correct: Boolean
 };
-
 //define main document schema
 var quizSchema = new Schema({
     qName: String,   

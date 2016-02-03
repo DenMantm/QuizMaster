@@ -18,7 +18,6 @@ var port     = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
-var standardCtrl = require("./controllers/quiz.server.controller.js");
 
 var configDB = require('./config/database.js');
 
@@ -46,14 +45,6 @@ app.configure(function() {
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
-
-app.get('/newquiz', function(req, res) {
-	return standardCtrl.getNode(req,res);
-});
-
-app.post('/newquiz', function(req, res) {
-	return standardCtrl.create(req,res);
-});
 
 
 //running app on start
