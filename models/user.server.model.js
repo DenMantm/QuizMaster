@@ -8,24 +8,12 @@ var userSchema = mongoose.Schema({
     local            : {
         email        : String,
         password     : String,
-    },
-    facebook         : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
-    },
-    twitter          : {
-        id           : String,
-        token        : String,
-        displayName  : String,
-        username     : String
-    },
-    google           : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
+        name:       {firstName:{type:String, default:'Your name'},
+        surname:    {type:String, default:'Your surname'}},
+        pictureUrl: {type:String, default:'/pics/defaultpic.jpg'},
+        username: String,
+        age:{type:Number, default:99},
+        myQuizzes: [{quizID: String}]
     }
 });
 // methods ======================

@@ -1,19 +1,20 @@
 var Quiz = require('../models/quiz.server.model.js');
 
-exports.create = function(req, res) {
+//getting info from body object, which is subbmitted by POST methodfrom front end
+exports.create = function(body) {
+     console.log(body.qName);
     var entry = new Quiz ({
-        qName: req.body.qName,
-        qDescription: req.body.qDescription,
-        qNumber: req.body.qNumber,
-        shuffleQuestion: req.body.shuffleQuestion,
-        shuffleAnswers: req.body.shuffleAnswers,
-        design: req.body.design,
-        questions: req.body.questions
+        qName: body.qName,
+        qDescription: body.qDescription,
+        qNumber: body.qNumber,
+        shuffleQuestion: body.shuffleQuestion,
+        shuffleAnswers: body.shuffleAnswers,
+        design: body.design,
+        viewCount: body.viewCount,
+        questions: body.questions
     });
-    
     entry.save();
     //redirect to homepage
-    res.redirect(301, '/');
 };
 exports.getNode = function(req,res) {
     res.render('newquiz', {title: "Quiz - New node"});

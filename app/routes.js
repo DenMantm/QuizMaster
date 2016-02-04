@@ -12,16 +12,23 @@
  */ 
 var standardCtrl = require("../controllers/quiz.server.controller.js");
 module.exports = function(app, passport) {
-			//ROUTES FOR QUIZ GET, POST
+	
+		// ==================================
+		// == ROUTES FOR QUIZ GET, POST =====
+		// ==================================
 			
-	app.get('/newquiz', function(req, res) {
-	return standardCtrl.getNode(req,res);
-});
-
-app.post('/newquiz', function(req, res) {
-	return standardCtrl.create(req,res);
-});
-
+		app.get('/newquiz', function(req, res) {
+			
+		
+		return standardCtrl.getNode(req,res);
+		
+		
+		});
+		//body with data is passed to standardCtrl
+		app.post('/newquiz', function(req, res) {
+			  standardCtrl.create(req.body);  //saving object to database
+			  res.redirect(301, '/'); //redirecting to homepage
+		});
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
@@ -30,7 +37,6 @@ app.post('/newquiz', function(req, res) {
 			user : req.user // get the user out of session and pass to template
 		});
 	});
-
 	//app.get('/', function(req, res) {
 
 	//	res.render('index.ejs'); // load the index.ejs file
@@ -44,7 +50,6 @@ app.post('/newquiz', function(req, res) {
 		// render the page and pass in any flash data if it exists
 		res.render('login.ejs', { message: req.flash('loginMessage') });
 	});
-
 		app.get('/index', isLoggedIn, function(req, res) {
 		// render the page and pass in any flash data if it exists
 		res.render('index.ejs');

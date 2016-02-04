@@ -21,16 +21,19 @@ var quizSchema = new Schema({
     shuffleQuestion: Boolean,
     shuffleAnswers: Boolean,
     design: String,
+    createdOn: {type: Date, default: Date.now},
+    viewCount: Number,
     questions: [subQuestions]
 });
 
-var userSchema = new Schema({
-    name: {firstName: String, surname: String},
-    pictureUrl: String,
-    username: String,
-    age: Number,
-    myQuizzes: [{quizID: String}]
-});
+//Added all this to user schema
+//var userSchema = new Schema({
+//    name: {firstName: String, surname: String},
+//    pictureUrl: String,
+//    username: String,
+//    age: Number,
+//    myQuizzes: [{quizID: String}]
+//});
 
 //exports the model making it available in other files
 module.exports = mongoose.model('Quiz', quizSchema);

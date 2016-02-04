@@ -49,7 +49,7 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 //running app on start
 //require('./app/addQuiz.js')('a');
-require('./app/findQuiz.js')();
+//require('./app/findQuiz.js')();
 
 
 
