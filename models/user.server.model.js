@@ -11,8 +11,9 @@ var userSchema = mongoose.Schema({
         name:       {firstName:{type:String, default:'Your name'},
         surname:    {type:String, default:'Your surname'}},
         pictureUrl: {type:String, default:'/pics/defaultpic.jpg'},
-        username: String,
+        username: String, //as default populated wit e-mail in passport.js when new user is created
         age:{type:Number, default:99},
+        createdOn: {type: Date, default: Date.now},
         myQuizzes: [{quizID: String}]
     }
 });

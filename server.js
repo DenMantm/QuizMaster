@@ -46,12 +46,9 @@ app.configure(function() {
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-
 //running app on start
 //require('./app/addQuiz.js')('a');
 //require('./app/findQuiz.js')();
-
-
 
 // launch ======================================================================
 app.listen(port);
