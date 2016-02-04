@@ -29,6 +29,14 @@ module.exports = function(app, passport) {
 			  standardCtrl.create(req.body);  //saving object to database
 			  res.redirect(301, '/'); //redirecting to homepage
 		});
+		
+		
+		
+		//testPage
+		app.get('/x', function(req, res) {
+		 res.render('new_index.ejs');
+		});
+
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
