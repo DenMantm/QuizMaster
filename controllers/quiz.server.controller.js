@@ -12,7 +12,6 @@ exports.create = function(req, res) {
     });
     
     entry.save();
-    
     //redirect to homepage
     res.redirect(301, '/');
 };
