@@ -32,6 +32,9 @@ app.configure(function() {
 	app.use(express.logger('dev')); // log every request to the console
 	app.use(express.cookieParser()); // read cookies (needed for auth)
 	app.use(express.bodyParser()); // get information from html forms
+	
+	 //HANDLING STATIC CONTENT
+    app.use('/', express.static(__dirname + '/public'));
 
 	app.set('view engine', 'ejs'); // set up ejs for templating
 
