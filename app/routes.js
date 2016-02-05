@@ -10,7 +10,10 @@
  * @author Deniss Strods, x14100398
  *
  */ 
+ //controller for quizes
 var standardCtrl = require("../controllers/quiz.server.controller.js");
+//controler for users
+var UserCtrl = require("../controllers/user.server.controller.js");
 module.exports = function(app, passport) {
 	
 		// ==================================
@@ -31,10 +34,15 @@ module.exports = function(app, passport) {
 		});
 		
 		
+		//POST method for user update
+		app.post('/updateUser',isLoggedIn, function(req, res) {
 		
-		//testPage
-		app.get('/x', function(req, res) {
-		 res.render('new_index.ejs');
+    		UserCtrl.updateUser(req, res);  //saving object to database
+		});
+		
+		//Getting user info 
+		app.get('/updateUser',isLoggedIn, function(req, res) {
+		res.render('profile.ejs',{user : req.user, date:Date.now()});
 		});
 
 	// =====================================
@@ -45,10 +53,6 @@ module.exports = function(app, passport) {
 			user : req.user // get the user out of session and pass to template
 		});
 	});
-	//app.get('/', function(req, res) {
-
-	//	res.render('index.ejs'); // load the index.ejs file
-	//});
 
 	// =====================================
 	// LOGIN ===============================
@@ -115,3 +119,4 @@ function isLoggedIn(req, res, next) {
 	// if they aren't redirect them to the home page
 	res.redirect('/login');
 }
+
