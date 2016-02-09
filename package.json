@@ -3,6 +3,7 @@
   "main": "server.js",
   "dependencies": {
     "bcrypt-nodejs": "latest",
+    "bootstrap-switch": "^3.3.2",
     "connect-flash": "~0.1.1",
     "ejs": "~0.8.5",
     "express": "^3.4.8",

@@ -35,6 +35,7 @@ app.configure(function() {
 	
 	 //HANDLING STATIC CONTENT
     app.use('/', express.static(__dirname + '/public'));
+    app.use('/scripts', express.static(__dirname + '/node_modules/'));
 
 	app.set('view engine', 'ejs'); // set up ejs for templating
 

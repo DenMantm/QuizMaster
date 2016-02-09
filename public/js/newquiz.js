@@ -14,6 +14,30 @@
     $("#back").click(function(){
         back();
     });
+    $('[name="cb_qNumber"]').on('switchChange.bootstrapSwitch', function(event, state) {    
+      if(state) {
+          $("#qNumber_field").hide();
+          $("#qNumber").val('all');
+          $("#shuffleQuestion").val(true);
+      } else {
+          $("#qNumber_field").show();
+          $("#qNumber").val('');
+      }
+    });
+    $('[name="cb_shuffleAnswers"]').on('switchChange.bootstrapSwitch', function(event, state) {    
+      if(state) {
+          $("#shuffleAnswers").val(true);
+      } else {
+          $("#shuffleAnswers").val(false);
+      }
+    });
+    $('[name="cb_shuffleQuestion"]').on('switchChange.bootstrapSwitch', function(event, state) {    
+      if(state) {
+          $("#shuffleQuestion").val(true);
+      } else {
+          $("#shuffleQuestion").val(false);
+      }
+    });
   });
   
   function next(){
@@ -22,8 +46,14 @@
   }
   
   function back(){
-      step--;
-      refresh();
+      if ($("#qNumber").val() === 'all' && step===5) {
+        step--;
+        step--;
+        refresh();
+      } else {
+        step--;
+        refresh();
+      }
   }
   
   function refresh() {
@@ -52,6 +82,7 @@
             $("#step2").hide();
             $("#step3").show();
             $("#step4").hide();
+            $("#step5").hide();
             refreshBar();
             break;
         case 4:
@@ -60,7 +91,10 @@
                 step--;
                 refreshBar();
                 break;
-            } else {
+            } else if ($("#qNumber").val() === 'all') {
+                next();
+                break;
+            } else { 
             $("#step3").hide();
             $("#step4").show();
             $("#step5").hide();
@@ -68,6 +102,7 @@
             break;
             }
         case 5:
+            $("#step3").hide();
             $("#step4").hide();
             $("#step5").show();
             $("#step6").hide();

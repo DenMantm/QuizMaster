@@ -18,7 +18,7 @@ var subAnswers = {
 var quizSchema = new Schema({
     qName: String,   
     qDescription: String,
-    qNumber: Number,
+    qNumber: String,
     shuffleQuestion: Boolean,
     shuffleAnswers: Boolean,
     design: String,

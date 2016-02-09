@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
 		//body with data is passed to standardCtrl
 		app.post('/newquiz', function(req, res) {
 			  standardCtrl.create(req.body);  //saving object to database
-			  res.redirect(301, '/'); //redirecting to homepage
+			  res.redirect(301, '/index'); //redirecting to homepage
 		});
 		
 		
