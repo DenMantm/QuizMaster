@@ -1,4 +1,5 @@
   var step = 1;
+
   
   $(document).ready(function() {
     $("#step2").hide();
