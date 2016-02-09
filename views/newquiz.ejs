@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
+<!--  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" data-semver="3.3.5" data-require="bootstrap@*" />-->
+<!--  <link href="style.css" rel="stylesheet" />-->
+<!--  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>-->
+<!--  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>-->
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<!--  <script src="js/functions.js"></script>-->
+<!--  <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>-->
+<!--  <script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>-->
+<!--  <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />-->
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
+<!--  <link rel="stylesheet" href="/bower_components/Morphext/dist/morphext.css">-->
+<!--  <link rel="stylesheet" href="/bower_components/animate.css/animate.css">-->
+<!--  <script src="/bower_components/Morphext/dist/morphext.min.js"></script>-->
+<!--</head>-->
+
+<head>
+    <% include ./partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include ./partials/header %>
+    </header>
+
+    <main>
+        <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<div class="progress">
+				<div class="progress-bar progress-success">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<form role="form" action="newquiz" method="post">
+				<div class="form-group" id="step1">
+					<label for="qName">
+						Step 1: Quiz name
+					</label>
+					<input class="form-control" id="qName" name="qName"/>
+				</div>
+				
+				<div class="form-group" id="step2">
+					<label for="qDescription">
+						Step 2: Quiz description
+					</label>
+					<textarea class="form-control" rows="3" id="qDescription" name="qDescription"></textarea>
+				</div>
+				
+				<div class="form-group" id="step3">
+					<label for="qNumber">
+						Step 3: Number of questions
+						Type a number of questions which will be presented to the user.
+					</label>
+						<div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="">
+                            Display all available questions
+                          </label>
+                          <input class="form-control" id="qNumber" name="qNumber" type="number"/>
+                        </div>
+				</div>
+				
+			    <div class="form-group" id="step4">
+					<label for="shuffleQuestion">
+						Step 4: Tick the box if you would like to display a questions in random order. 
+						Please bear in mind that for the quizzes with not all questions being displayed this option is not available and your questions will appear in random order.
+					</label>
+					<div class="cb_shuffleQuestion">
+                      <label>
+                        <input type="checkbox" value="true" id="shuffleQuestion" name="shuffleQuestion">
+                        Display questions in random order
+                      </label>
+                    </div>
+				</div>
+    		    <div class="form-group" id="step5">
+    			    <label for="shuffleAnswers">
+    					Step 5: Tick the box if you would like to display an answers in the random order. 
+    					Please bear in mind that if you select this option you should avoid answers like "all above" or "none of the above".
+    				</label>
+    				<div class="cb_shuffleAnswers">
+                        <label>
+                        <input type="checkbox" value="false" id="shuffleAnswers" name="shuffleAnswers">
+                        Display answers in random order
+                         </label>
+                    </div>
+    			</div>
+                <div class="form-group" id="step6">
+    			    <label for="design">
+    					Step 6: Pick which design you would like to use for your quiz.
+    				</label>
+        			<div class="dropdown">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="design" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" name="design">
+                        Dropdown
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="design" name="design">
+                        <li><a href="#">Simple</a></li>
+                        <li><a href="#">Pink style</a></li>
+                      </ul>
+                    </div>
+    			</div>    			
+
+								
+			
+				<button type="submit" class="btn btn-default">
+					Submit
+				</button>
+			</form>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+</div>
+    </main>
+
+    <footer>
+        <% include ./partials/footer %>
+    </footer>
+    
+</body>
+</html>

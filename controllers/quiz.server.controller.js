@@ -11,7 +11,8 @@ exports.create = function(body) {
         shuffleAnswers: body.shuffleAnswers,
         design: body.design,
         viewCount: body.viewCount,
-        questions: body.questions
+        questions: body.questions,
+        owner: body.owner
     });
     entry.save();
     //redirect to homepage
