@@ -39,6 +39,5 @@ exports.updateUser = function(req,res){
     
     res.redirect(301, '/updateUser'); //redirecting to homepage
 });
-
-
 };
+

@@ -23,13 +23,18 @@ module.exports = function(app, passport) {
 		app.get('/newquiz', function(req, res) {
 			
 		
-		return standardCtrl.getNode(req,res);
+	//	return standardCtrl.getNode(req,res);
+
+	//	return standardCtrl.getNode(req,res);
+	res.render('newquiz.ejs',{user : req.user});
+		
 
 		});
 		//body with data is passed to standardCtrl
 		app.post('/newquiz', function(req, res) {
 			  standardCtrl.create(req.body);  //saving object to database
 			  res.redirect(301, '/index'); //redirecting to homepage
+			  
 		});
 		
 		
