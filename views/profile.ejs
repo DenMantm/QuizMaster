@@ -7,9 +7,12 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 <!doctype html>
 <html>
 <head>
-<% include ./partials/head %>
+<% include ./index_partials/head %>
 </head>
 <body>
+        <div class="container">
+<% include ./index_partials/navbar %>
+</div>
     <script>
     $(document).ready(function() {
     var panels = $('.user-infos');
@@ -174,10 +177,9 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                       <tr>
                         <td>Created:</td>
                         <td><%=user.local.createdOn%></td>
+                        
                       </tr>
-                     
                     </tbody>
-                    
                   </table>
                 </div>
               </div>

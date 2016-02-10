@@ -11,7 +11,9 @@
  *
  */ 
  //controller for quizes
- var user;
+ var user,
+	 condition = false; //this value is set accordingly if you are logged in or not
+	 
 var standardCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
@@ -22,8 +24,7 @@ module.exports = function(app, passport) {
 		// ==================================
 			
 		app.get('/newquiz', function(req, res) {
-			
-		
+
 	//	return standardCtrl.getNode(req,res);
 
 	//	return standardCtrl.getNode(req,res);
@@ -36,24 +37,14 @@ module.exports = function(app, passport) {
 			  res.redirect(301, '/index'); //redirecting to homepage
 			  
 		});
-		
-		
 				app.get('/x', function(req, res) {
-				user = UserCtrl.getUser(req.user);
-				console.log(user);
-				
-				
+				res.render('new_index.ejs');
 		});
 		
 		//POST method for user update
 		app.post('/updateUser',isLoggedIn, function(req, res) {
-    	//querying current user
-    	
-    		UserCtrl.updateUser(req,res, req.user);
-   
-    	
+    		UserCtrl.updateUser(req,res, req.user);//querying current user
 		});
-		
 		//Getting user info 
 		app.get('/updateUser',isLoggedIn, function(req, res) {
 		res.render('profile.ejs',{user : req.user, date:Date.now()});
@@ -64,7 +55,7 @@ module.exports = function(app, passport) {
 	// =====================================
 		app.get('/', isLoggedIn, function(req, res) {
 			
-		res.render('login.ejs', {
+		res.render('index.ejs', {
 			user : req.user // get the user out of session and pass to template
 		});
 	});
@@ -125,13 +116,15 @@ module.exports = function(app, passport) {
 		res.redirect('/');
 	});
 };
-
 // route middleware to make sure
 function isLoggedIn(req, res, next) {
 	// if user is authenticated in the session, carry on
-	if (req.isAuthenticated())
-		return next();
+	if (req.isAuthenticated()){
+		condition = true;
+		return next();}
+	
 	// if they aren't redirect them to the home page
+	condition = false;
 	res.redirect('/login');
 }
 

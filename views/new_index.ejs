@@ -1,26 +1,22 @@
-<!-- views/pages/index.ejs -->
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <% include ./partials/head %>
-</head>
-<body class="container">
+  <head>
+<% include ./index_partials/head %>
+  </head>
+  <body>
+    <div class="container">
+<% include ./index_partials/navbar %>
 
-    <header>
-        <% include ./partials/header %>
-    </header>
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>Navbar example</h1>
+        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
+        </p>
+      </div>
 
-    <main>
-        <div class="jumbotron">
-            <h1>This is great</h1>
-            <p>Welcome to templating using EJS</p>
-        </div>
-    </main>
-
-    <footer>
-        <% include ./partials/footer %>
-    </footer>
-    
-</body>
+    </div> <!-- /container -->
+  </body>
 </html>
