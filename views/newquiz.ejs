@@ -39,7 +39,7 @@
                             <label for="qName">
                                 Step 1: Choose your quiz name
                             </label>
-                            <input class="form-control" id="qName" name="qName" />
+                            <input class="form-control" id="qName" name="qName" placeholder="Quiz name"/>
                         </div>
 
                         <!-- STEP2 QUIZ DESCRIPTION -->
@@ -103,10 +103,21 @@
                             <label for="design">
                                 Step 6: Pick which design you would like to use for your quiz.
                             </label>
-                            <div class="dropdown">
-                                <input type="radio" name="design" value="default"> Default<br>
-                                <input type="radio" name="design" value="black"> Black<br>
-                                <input type="radio" name="design" value="pink"> Pink 
+                            <div class="picklist">
+                                <table>
+                                    <tr>
+                                        <td class="cratio"><input id="Default" type="radio" name="design" value="default"></td>
+                                        <td><label for="Default">Default (placeholder for Default design picture)</label></td>
+                                    <tr>
+                                        <td class="cratio"><input id="Black" type="radio" name="design" value="Black"></td>
+                                        <td><label for="Black">Black (placeholder for Black design picture)</label></td>
+                                    </tr>
+                                     <tr>
+                                        <td class="cratio"><input id="Pink" type="radio" name="design" value="Pink"></td>
+                                        <td><label for="Pink">Pink (placeholder for Pink design picture)</label></td>
+                                    </tr>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                         
