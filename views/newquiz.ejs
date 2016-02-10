@@ -40,13 +40,16 @@
                                 Step 1: Choose your quiz name
                             </label>
                             <input class="form-control" id="qName" name="qName" placeholder="Quiz name"/>
+                            <button type="button" class="btn btn-danger" id="check">CHECK</button>
                         </div>
 
                         <!-- STEP2 QUIZ DESCRIPTION -->
-
+                        
                         <div class="form-group" id="step2">
                             <label for="qDescription">
                                 Step 2: Please provide a short description of your quizz (optional)
+                                <%= user.local.email%>
+                        <%= message.text%>
                             </label>
                             <textarea class="form-control" rows="3" id="qDescription" name="qDescription"></textarea>
                         </div>
@@ -93,6 +96,7 @@
                                     <input type="checkbox" value="false" id="cb_shuffleAnswers" name="cb_shuffleAnswers"> Display answers in random order
                                     <input class="form-control" id="shuffleAnswers" name="shuffleAnswers" type="hidden"/>
                                     <input class="form-control" id="owner" name="owner" type="hidden" value=<%= user.local.email%>/>
+
                                 
                                 </label>
                             </div>

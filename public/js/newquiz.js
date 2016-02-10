@@ -1,4 +1,4 @@
-  var step = 1;
+  var step = 1
 
   
   $(document).ready(function() {
@@ -19,6 +19,10 @@
     //back button
     $("#back").click(function(){
         back();
+    });
+    $("#check").click(function(){
+        var name =  $("#qName").val;
+        checkName(name);
     });
     //switch button for displaying all qiestions or not
     $('[name="cb_qNumber"]').on('switchChange.bootstrapSwitch', function(event, state) {    
@@ -90,6 +94,9 @@
             break;
         //step two checks if the user have provided a quiz name in the previous step if not it will change the classes of step1 and not progress any fuerther
         case 2:
+            var test = $("#qName").val();
+            checkName(test);
+            console.log('<%= user.local.email%>');
             if ($("#qName").val() === '') {
                 $("#step1").addClass("has-error bg-danger");
                 step--;
@@ -156,8 +163,13 @@
   }
   
   //check database if the quiz with such a name already exsist
-  function checkName() {
-   
+  function checkName(name) {
+    $.ajax({
+      type: "POST",
+      url: "/checkqName",
+      data: {qName: name},
+      cache: false
+    });
   }
   
   //maintain the barr progress base on step counter
