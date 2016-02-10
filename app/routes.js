@@ -9,18 +9,23 @@
  * @reference https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
  * @author Deniss Strods, x14100398
  *
- */
-//controller for quizes
+
+ */ 
+ //controller for quizes
+ var user,
+	 condition = false; //this value is set accordingly if you are logged in or not
+	 
+
 var standardCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
 module.exports = function(app, passport) {
 
-	// ==================================
-	// == ROUTES FOR QUIZ GET, POST =====
-	// ==================================
-
-	app.get('/newquiz', function(req, res) {
+		// ==================================
+		// == ROUTES FOR QUIZ GET, POST =====
+		// ==================================
+			
+		app.get('/newquiz', function(req, res) {
 
 		res.render('newquiz.ejs', {
 			user: req.user,
@@ -28,40 +33,35 @@ module.exports = function(app, passport) {
 		});
 
 	});
-	
-	app.post('/checkqName', function(req, res) {
-		console.log('Doing /chekname');
-		return standardCtrl.checkqName(req,res);
-	  });
-	
-	//body with data is passed to standardCtrl
-	app.post('/newquiz', function(req, res) {
-		standardCtrl.create(req.body); //saving object to database
-		res.redirect(301, '/index'); //redirecting to homepage
+		//body with data is passed to standardCtrl
+		app.post('/newquiz', function(req, res) {
+			  standardCtrl.create(req.body);  //saving object to database
+			  res.redirect(301, '/index'); //redirecting to homepage
+			  
+		});
+				app.get('/x', function(req, res) {
+				res.render('new_index.ejs');
+		});
+		
+		//POST method for user update
+		app.post('/updateUser',isLoggedIn, function(req, res) {
+    		UserCtrl.updateUser(req,res, req.user);//querying current user
+		});
+		//Getting user info 
+		app.get('/updateUser',isLoggedIn, function(req, res) {
+		res.render('profile.ejs',{user : req.user, date:Date.now()});
 
-	});
-
-
-	//POST method for user update
-	app.post('/updateUser', isLoggedIn, function(req, res) {
-
-		UserCtrl.updateUser(req, res); //saving object to database
-	});
-
-	//Getting user info 
-	app.get('/updateUser', isLoggedIn, function(req, res) {
-		res.render('profile.ejs', {
-			user: req.user,
-			date: Date.now()
 		});
 	});
 
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
-	app.get('/', isLoggedIn, function(req, res) {
-		res.render('login.ejs', {
-			user: req.user // get the user out of session and pass to template
+
+		app.get('/', isLoggedIn, function(req, res) {
+			
+		res.render('index.ejs', {
+			user : req.user // get the user out of session and pass to template
 		});
 	});
 
@@ -125,12 +125,49 @@ module.exports = function(app, passport) {
 		res.redirect('/');
 	});
 };
-
 // route middleware to make sure
 function isLoggedIn(req, res, next) {
 	// if user is authenticated in the session, carry on
-	if (req.isAuthenticated())
-		return next();
+	if (req.isAuthenticated()){
+		condition = true;
+		return next();}
+	
 	// if they aren't redirect them to the home page
+	condition = false;
 	res.redirect('/login');
 }
+<<<<<<< HEAD
+=======
+
+//Asynchrosity generation function REF: 
+//http://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
+
+var when = function() {
+  var args = arguments;  // the functions to execute first
+  return {
+    then: function(done) {
+      var counter = 0;
+      for(var i = 0; i < args.length; i++) {
+        // call each function with a function to call on done
+        args[i](function() {
+          counter++;
+          if(counter === args.length) {  // all functions have notified they're done
+            done();
+          }
+        });
+      }
+    }
+  };
+};
+  //  	when(
+  //function(done) {
+		// user = UserCtrl.getUser(req.user,done);
+		// console.log('1 running');
+  //	}
+		// ).then(function() {
+		// 	console.log('3 running');
+    		
+  //  		UserCtrl.updateUser(req,res,user);
+    	
+		// });
+>>>>>>> 8a807d8584ecd86036af32c7b6b7b6d016fedfe2
