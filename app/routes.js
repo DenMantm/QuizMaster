@@ -24,8 +24,7 @@ module.exports = function(app, passport) {
 			
 		
 		return standardCtrl.getNode(req,res);
-		
-		
+
 		});
 		//body with data is passed to standardCtrl
 		app.post('/newquiz', function(req, res) {
@@ -37,7 +36,10 @@ module.exports = function(app, passport) {
 		//POST method for user update
 		app.post('/updateUser',isLoggedIn, function(req, res) {
 		
-    		UserCtrl.updateUser(req, res);  //saving object to database
+    
+    		
+
+    		
 		});
 		
 		//Getting user info 
@@ -49,6 +51,7 @@ module.exports = function(app, passport) {
 	// HOME PAGE (with login links) ========
 	// =====================================
 		app.get('/', isLoggedIn, function(req, res) {
+			
 		res.render('login.ejs', {
 			user : req.user // get the user out of session and pass to template
 		});

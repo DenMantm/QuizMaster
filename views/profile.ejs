@@ -24,7 +24,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 
         //current button
         var currentButton = $(this);
-        idFor.slideToggle(400, function() {
+        idFor.slideToggle(400, function(){
             //Completed slidetoggle
             if(idFor.is(':visible'))
             {
@@ -160,7 +160,8 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                       <tr>
                         <td>Email</td>
                         <td><span class='fields'><a href=<%='mailto:'+user.local.email%>><%=user.local.email%></a></span>
-                        <input name='email' value=<%= user.local.email%> type="email" class="form-control editProfileField"  placeholder="e-mail"></td>
+                        <input name='email' value=<%= user.local.email%> type="email" class="form-control editProfileField"  placeholder="e-mail">
+                        </td>
                       </tr>
                       <td>NickName:</td>
                         <td><span class='fields'><%=user.local.username%></span>
