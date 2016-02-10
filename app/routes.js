@@ -11,6 +11,7 @@
  *
  */ 
  //controller for quizes
+ var user;
 var standardCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
@@ -28,7 +29,6 @@ module.exports = function(app, passport) {
 	//	return standardCtrl.getNode(req,res);
 	res.render('newquiz.ejs',{user : req.user});
 		
-
 		});
 		//body with data is passed to standardCtrl
 		app.post('/newquiz', function(req, res) {
@@ -38,13 +38,20 @@ module.exports = function(app, passport) {
 		});
 		
 		
+				app.get('/x', function(req, res) {
+				user = UserCtrl.getUser(req.user);
+				console.log(user);
+				
+				
+		});
+		
 		//POST method for user update
 		app.post('/updateUser',isLoggedIn, function(req, res) {
-		
-    
-    		
-
-    		
+    	//querying current user
+    	
+    		UserCtrl.updateUser(req,res, req.user);
+   
+    	
 		});
 		
 		//Getting user info 
@@ -128,3 +135,34 @@ function isLoggedIn(req, res, next) {
 	res.redirect('/login');
 }
 
+//Asynchrosity generation function REF: 
+//http://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
+
+var when = function() {
+  var args = arguments;  // the functions to execute first
+  return {
+    then: function(done) {
+      var counter = 0;
+      for(var i = 0; i < args.length; i++) {
+        // call each function with a function to call on done
+        args[i](function() {
+          counter++;
+          if(counter === args.length) {  // all functions have notified they're done
+            done();
+          }
+        });
+      }
+    }
+  };
+};
+  //  	when(
+  //function(done) {
+		// user = UserCtrl.getUser(req.user,done);
+		// console.log('1 running');
+  //	}
+		// ).then(function() {
+		// 	console.log('3 running');
+    		
+  //  		UserCtrl.updateUser(req,res,user);
+    	
+		// });
