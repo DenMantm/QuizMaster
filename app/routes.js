@@ -61,19 +61,15 @@ module.exports = function(app, passport) {
     // Get the temporary location of the file
     var tmp_path    = req.files.image.path,
     	target_path = './upload/userPics/' + req.user.local.email;
-    // Set where the file should actually exists - in this case it is in the "images" directory.
     // Move the file from the temporary location to the intended location
     fs.rename(tmp_path, target_path, function(err) {
-        if (err)
-            throw err;
+        if (err) throw err;
         // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files.
         fs.unlink(tmp_path, function() {
-            if (err)
-                throw err;
-            //
+            if (err) throw err;
         });
     });
-	
+	//update profile image link in database
     var update = {'local.pictureUrl':"./upload/userPics/"+req.user.local.email};
     UserCtrl.updateOneElement(req.user,update);
     
@@ -81,7 +77,7 @@ module.exports = function(app, passport) {
 		});
 		
 		//Uploading file REF:http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
-		//###############################################################################################                   
+		//###############################################################################################               
 		//############## THIS FUNCTION RETURNS PROFILE IMAGE IN BINARY FORMAT TO FRONT END ##############
 		//###############################################################################################
 		
@@ -113,13 +109,21 @@ module.exports = function(app, passport) {
 			bcrypt.compare(plainPassFromUser, hashFromDB, function(err, matches) {
   			if (err)
     			console.log('Error while checking password');
-  			else if (matches)
+  			else if (matches){
     			console.log('The password matches!');
-  			else
+    			UserCtrl.removeElement(req.user);
+    			req.logout();
+    			res.render('./profile/profileDeleted');
+    			
+  			}
+    			
+  			else{
     			console.log('The password does NOT match!');
+    			res.render('./profile/profileNotDeleted');
+  			}
 			});
 			
-	       res.redirect(301, '/updateUser'); //redirecting
+	      
 			  
 		 });
 		
