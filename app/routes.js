@@ -51,6 +51,7 @@ module.exports = function(app, passport) {
 		});
 		
 		//Uploading file REF:
+		//UPLOADING IMAGE FROM THE USER
 		//http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
 		app.post('/upload', function(req, res) {
     // Get the temporary location of the file
@@ -74,20 +75,23 @@ module.exports = function(app, passport) {
     UserCtrl.updateOneElement(req.user,update);
     
     res.redirect(301, '/updateUser'); //redirecting to homepage
-});
-
+		});
+		
+	//THIS FUNCTION RETURNS PROFILE IMAGE IN BINARY FORMAT TO FRONT END
 	app.get('/getProgilePic', function(req, res) {
 			console.log(req.user.local.pictureUrl);
-				fs.readFile(req.user.local.pictureUrl, "binary", function(error, file) {
-    if(error) {
-        res.writeHead(500, {"Content-Type": "text/plain"});
-        res.write(error + "\n");
-        res.end();
-    }
-    else {
-        res.writeHead(200, {"Content-Type": "image/png"});
-        res.write(file, "binary");
-    }
+		
+		fs.readFile(req.user.local.pictureUrl, "binary", function(error, file) {
+		    if(error) {
+		        res.writeHead(500, {"Content-Type": "text/plain"});
+		        res.write(error + "\n");
+		        res.end();
+		    }
+		    else {
+		        res.writeHead(200, {"Content-Type": "image/png"});
+		        res.write(file, "binary");
+		        res.end();
+		    }
 });
 			
 			
