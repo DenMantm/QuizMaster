@@ -32,4 +32,13 @@ exports.updateUser = function(req,res,user){
     res.redirect(301, '/updateUser'); //redirecting to homepage
 });
 };
+exports.updateOneElement = function(user,update){
+    
+    var email = user.local.email;
+    var condition = {'local.email':email};
 
+User.update(condition,update,
+function(err, numberAffected,rawResponse){if(err)console.log('error while updating picture url')});
+
+    
+};

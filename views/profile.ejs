@@ -53,7 +53,6 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 
     });
      $('#enableCancel').click(function() {
-        
         $('.fields').toggle();  
         $('#enableEdit').toggle();
         $('.editProfileField').toggle();
@@ -62,6 +61,13 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 
     });
     
+         $('#enableSavePicture').click(function() {
+             
+             
+        $('#saveImageModal').modal();
+        
+        
+    });
     
 });
     </script>
@@ -136,7 +142,46 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src=<%= user.local.pictureUrl%> class="img-circle img-responsive"> </div>
+                  <!--<%= user.local.pictureUrl%> -->
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src= '/getProgilePic'class="img-circle img-responsive">  
+                </br>
+                 <input id='enableSavePicture' value='Change' data-original-title="Change Picture" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning"></input>
+                
+ 
+                <div id='saveImageModal' class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Change Profile Picture</h4>
+      </div>
+      <div class="modal-body">
+        
+        <p>File Upload</p>
+        <!--<form action='/upload' target="/upload" method="post">-->
+        <!--<input type="file" name="uploading_file"/>-->
+        <!--</br>-->
+        <!--<input value='Save' data-original-title="Change Picture" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning"></input>-->
+
+        <!--</form>-->
+        
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          Select an image to upload:
+          <input type="file" name="image"> 
+            <input type="submit" value="UploadImage">
+            </form>
+        
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+                
+                </div>
                 
                 <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
                   <dl>

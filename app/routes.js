@@ -12,7 +12,9 @@
  */ 
  //controller for quizes
  var user,
-	 condition = false; //this value is set accordingly if you are logged in or not
+	 condition = false, //this value is set accordingly if you are logged in or not
+	 fs 	   = require('fs');
+	 
 	 
 var standardCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
@@ -47,6 +49,52 @@ module.exports = function(app, passport) {
 		app.get('/updateUser',isLoggedIn, function(req, res) {
 		res.render('profile.ejs',{user : req.user, date:Date.now()});
 		});
+		
+		//Uploading file REF:
+		//http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
+		app.post('/upload', function(req, res) {
+    // Get the temporary location of the file
+    var tmp_path    = req.files.image.path,
+    	target_path = './upload/userPics/' + req.user.local.email;
+    // Set where the file should actually exists - in this case it is in the "images" directory.
+    // Move the file from the temporary location to the intended location
+    fs.rename(tmp_path, target_path, function(err) {
+        if (err)
+            throw err;
+        // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files.
+        fs.unlink(tmp_path, function() {
+            if (err)
+                throw err;
+            //
+        });
+    });
+    
+    var update = {'local.pictureUrl':"./upload/userPics/"+req.user.local.email};
+    
+    UserCtrl.updateOneElement(req.user,update);
+    
+    res.redirect(301, '/updateUser'); //redirecting to homepage
+});
+
+	app.get('/getProgilePic', function(req, res) {
+			console.log(req.user.local.pictureUrl);
+				fs.readFile(req.user.local.pictureUrl, "binary", function(error, file) {
+    if(error) {
+        res.writeHead(500, {"Content-Type": "text/plain"});
+        res.write(error + "\n");
+        res.end();
+    }
+    else {
+        res.writeHead(200, {"Content-Type": "image/png"});
+        res.write(file, "binary");
+    }
+});
+			
+			
+		});
+		
+	//Reading user image::
+
 
 	// =====================================
 	// HOME PAGE (with login links) ========
