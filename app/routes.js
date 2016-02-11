@@ -13,7 +13,8 @@
  //controller for quizes
  var user,
 	 condition = false, //this value is set accordingly if you are logged in or not
-	 fs 	   = require('fs');
+	 fs 	   = require('fs'),
+	 bcrypt    = require('bcrypt-nodejs');
 	 
 	 
 var standardCtrl = require("../controllers/quiz.server.controller.js");
@@ -41,6 +42,7 @@ module.exports = function(app, passport) {
 				res.render('new_index.ejs');
 		});
 		
+		
 		//POST method for user update
 		app.post('/updateUser',isLoggedIn, function(req, res) {
     		UserCtrl.updateUser(req,res, req.user);//querying current user
@@ -50,9 +52,11 @@ module.exports = function(app, passport) {
 		res.render('profile.ejs',{user : req.user, date:Date.now()});
 		});
 		
-		//Uploading file REF:
-		//UPLOADING IMAGE FROM THE USER
-		//http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
+		//Uploading file REF:http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
+		//###############################################################################################                   
+		//#################################	UPLOADING IMAGE FROM THE USER ###############################
+		//###############################################################################################
+		
 		app.post('/upload', function(req, res) {
     // Get the temporary location of the file
     var tmp_path    = req.files.image.path,
@@ -69,15 +73,18 @@ module.exports = function(app, passport) {
             //
         });
     });
-    
+	
     var update = {'local.pictureUrl':"./upload/userPics/"+req.user.local.email};
-    
     UserCtrl.updateOneElement(req.user,update);
     
     res.redirect(301, '/updateUser'); //redirecting to homepage
 		});
 		
-	//THIS FUNCTION RETURNS PROFILE IMAGE IN BINARY FORMAT TO FRONT END
+		//Uploading file REF:http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
+		//###############################################################################################                   
+		//############## THIS FUNCTION RETURNS PROFILE IMAGE IN BINARY FORMAT TO FRONT END ##############
+		//###############################################################################################
+		
 	app.get('/getProgilePic', function(req, res) {
 			console.log(req.user.local.pictureUrl);
 		
@@ -93,13 +100,30 @@ module.exports = function(app, passport) {
 		        res.end();
 		    }
 });
-			
-			
 		});
+		//REF: http://stackoverflow.com/questions/24583608/nodejs-in-bcrypt-it-returns-false-at-compare-password-hash
+		//###############################################################################################                   
+		//#################################	DELETING USER FROM DATABASE #################################
+		//###############################################################################################
+		app.post('/deleteUser', function(req, res) {
+
+ 			var hashFromDB = req.user.local.password;
+			var plainPassFromUser = req.body.password;
+
+			bcrypt.compare(plainPassFromUser, hashFromDB, function(err, matches) {
+  			if (err)
+    			console.log('Error while checking password');
+  			else if (matches)
+    			console.log('The password matches!');
+  			else
+    			console.log('The password does NOT match!');
+			});
+			
+	       res.redirect(301, '/updateUser'); //redirecting
+			  
+		 });
 		
-	//Reading user image::
-
-
+		
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
