@@ -8,12 +8,14 @@ var userSchema = mongoose.Schema({
     local            : {
         email        : String,
         password     : String,
-        name:       {firstName:{type:String, default:'Your name'},
-        surname:    {type:String, default:'Your surname'}},
-        pictureUrl: {type:String, default:'http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png'},
+        name:       {firstName:{type:String, default:'John'},
+        surname:    {type:String, default:'Doe'}},
+        pictureUrl: {type:String, default:'./upload/userPics/default.jpg'},
         username: String, //as default populated wit e-mail in passport.js when new user is created
         age:{type:Number, default:99},
         createdOn: {type: Date, default: Date.now},
+        key:String,
+        validEmail: {type:Boolean, default:false},
         myQuizzes: [{quizID: String}]
     }
 });

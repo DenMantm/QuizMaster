@@ -106,9 +106,11 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                       </tr>
                       <tr>
                         <td>Email</td>
-                        <td><span><a href=<%='mailto:'+user.local.email%>><%=user.local.email%></a></span>
-                        
-                        </td>
+                        <td><span><a href=<%='mailto:'+user.local.email%>><%=user.local.email%></a></span></td>
+                      </tr>
+                      <tr>
+                        <td>Verified:</td>
+                        <td><span><%=user.local.validEmail%></a></span></td>
                       </tr>
                       <td>NickName:</td>
                         <td><span class='fields'><%=user.local.username%></span>

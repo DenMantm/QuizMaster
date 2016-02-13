@@ -45,5 +45,4 @@ exports.removeElement = function(user){
     var email = user.local.email;
     User.find({'local.email':email}).remove().exec();
     console.log('removed: '+ email);
-    
 };

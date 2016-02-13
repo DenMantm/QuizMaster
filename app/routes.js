@@ -15,8 +15,6 @@
 	 condition = false, //this value is set accordingly if you are logged in or not
 	 fs 	   = require('fs'),
 	 bcrypt    = require('bcrypt-nodejs');
-	 
-	 
 var standardCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
@@ -39,7 +37,7 @@ module.exports = function(app, passport) {
 			  
 		});
 				app.get('/x', function(req, res) {
-				res.render('new_index.ejs');
+				res.render('login_new.ejs');
 		});
 		
 		
@@ -126,7 +124,27 @@ module.exports = function(app, passport) {
 	      
 			  
 		 });
-		
+		 
+		 
+		 
+		//###############################################################################################
+		//#################################Verifying user e-mail by link#################################
+		//###############################################################################################
+		app.get('/verifyEmail/:key', function(req, res) {
+				
+				if(req.params.key == req.user.local.key){
+					
+						//update profile image link in database
+    					var update = {'local.validEmail':true};
+    					UserCtrl.updateOneElement(req.user,update);
+
+					res.send('Your e-mail is now verified');
+				}
+				else{
+						res.send('This is invalid key: '+req.params.key);
+				}
+
+  		});
 		
 	// =====================================
 	// HOME PAGE (with login links) ========
