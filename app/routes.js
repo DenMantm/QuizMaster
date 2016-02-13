@@ -124,9 +124,6 @@ module.exports = function(app, passport) {
 	      
 			  
 		 });
-		 
-		 
-		 
 		//###############################################################################################
 		//#################################Verifying user e-mail by link#################################
 		//###############################################################################################
@@ -144,8 +141,7 @@ module.exports = function(app, passport) {
 						res.send('This is invalid key: '+req.params.key);
 				}
 
-  		});
-		
+  		}); 
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
@@ -227,23 +223,23 @@ function isLoggedIn(req, res, next) {
 //Asynchrosity generation function REF: 
 //http://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
 
-var when = function() {
-  var args = arguments;  // the functions to execute first
-  return {
-    then: function(done) {
-      var counter = 0;
-      for(var i = 0; i < args.length; i++) {
-        // call each function with a function to call on done
-        args[i](function() {
-          counter++;
-          if(counter === args.length) {  // all functions have notified they're done
-            done();
-          }
-        });
-      }
-    }
-  };
-};
+// var when = function() {
+//   var args = arguments;  // the functions to execute first
+//   return {
+//     then: function(done) {
+//       var counter = 0;
+//       for(var i = 0; i < args.length; i++) {
+//         // call each function with a function to call on done
+//         args[i](function() {
+//           counter++;
+//           if(counter === args.length) {  // all functions have notified they're done
+//             done();
+//           }
+//         });
+//       }
+//     }
+//   };
+// };
   //  	when(
   //function(done) {
 		// user = UserCtrl.getUser(req.user,done);
