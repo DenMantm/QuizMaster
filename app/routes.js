@@ -41,17 +41,24 @@ module.exports = function(app, passport) {
 	app.post('/newquiz', function(req, res) {
 		console.log('getting newquiz');
 		quizCtrl.create(req.body); //saving object to database
-		res.redirect(301, '/index'); //redirecting to homepage
-
+		res.redirect(301, '/showquiz'); //redirecting to homepage
+});
 	// ==================================
 	// ========== SHOW QUIZ =============
 	// ==================================
 	
-});
+
 	
 	app.get('/showquiz', function(req, res) {
 		console.log('getting showquiz');
 		return quizCtrl.list(req, res);
+	});
+	
+	app.post('/removeqz', function(req, res) {
+		quizCtrl.removeq(req);
+		console.log('redirecting') ;
+		res.redirect(301, '../index'); //redirecting to homepage
+		console.log('redirected') ;
 	});
 
 	// ==================================
@@ -62,6 +69,7 @@ module.exports = function(app, passport) {
 	app.get('/x', function(req, res) {
 		res.render('login_new.ejs');
 	});
+
 
 
 	//POST method for user update

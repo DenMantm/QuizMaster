@@ -47,6 +47,14 @@ exports.list = function(req,res) {
     var query = Quiz.find();
     query.sort({ owner: 'desc' })
     .exec(function(err, results){
-        res.render('showlist.ejs', {list:results});
+        res.render('showlist.ejs', {list:results, user:req.user});
+    });
+};
+
+exports.removeq  = function(req,res) {
+    var condition = {_id: req.query.id};
+    console.log(req.query.id);
+    Quiz.remove(condition, function(err) {
+        
     });
 };

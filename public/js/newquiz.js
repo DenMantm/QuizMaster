@@ -158,7 +158,6 @@
             refreshBar();
             break;
         default:
-        alert("fdsfsdgf");
       }
   }
   

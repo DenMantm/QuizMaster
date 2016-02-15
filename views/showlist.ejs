@@ -2,22 +2,36 @@
 
 <head>
     <% include ./partials/head %>
-        <script src="../js/newquiz.js"></script>
+        <script src="../js/showlist.js"></script>
         <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
         <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
 </head>
 
 <body class="container">
 
+
     <header>
         <% include ./index_partials/navbar %>
     </header>
 
     <main>
+             <input type="checkbox" value="false" id="cb_displayMine" name="cb_displayMine"> Display only mine quizzes
     <% for(var i=0; i<list.length; i++) {%>
-    <div class="container-fluid">
-    	<div class="row">
+
+    <div class="container-fluid" id="<%= list[i]._id %>">
+        <% if (user.local.username === list[i].owner) { %>
+    	<div class="row mine">
+    	    <% } else { %>
+    	   <div class="row notMine">
+    	    <% } %>
     		<div class="col-md-2">
+    		    <% if (user.local.username === list[i].owner) { %>
+    
+    	<a class="btn icon-btn btn-warning" id="btn_remove" method="post">
+<span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
+Remove7
+</a>
+    	    <% } %>
     		</div>
     		<div class="col-md-8">
     			<h2>
