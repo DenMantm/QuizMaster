@@ -42,3 +42,11 @@ exports.checkqName = function(req,res) {
         res.render('newquiz.ejs' , {message: message, user: req.user});
     });
 };
+
+exports.list = function(req,res) {
+    var query = Quiz.find();
+    query.sort({ owner: 'desc' })
+    .exec(function(err, results){
+        res.render('showlist.ejs', {list:results});
+    });
+};

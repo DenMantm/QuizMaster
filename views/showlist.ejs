@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<head>
+    <% include ./partials/head %>
+        <script src="../js/newquiz.js"></script>
+        <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
+        <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+</head>
+
+<body class="container">
+
+    <header>
+        <% include ./index_partials/navbar %>
+    </header>
+
+    <main>
+    <% for(var i=0; i<list.length; i++) {%>
+    <div class="container-fluid">
+    	<div class="row">
+    		<div class="col-md-2">
+    		</div>
+    		<div class="col-md-8">
+    			<h2>
+    				<%= list[i].qName %>
+    			</h2>
+    			<p>
+    				<%= list[i].qDescription %>
+    			</p>
+    			<p>
+    				<a class="btn" href="/quiz?id=<%= list[i]._id %>">View details »</a>
+    			</p>
+    		</div>
+    		<div class="col-md-2">
+    		</div>
+    	</div>
+    </div>
+<% } %>
+    </main>
+
+    <footer>
+        <% include ./partials/footer %>
+    </footer>
+    <script>
+        $(function(argument) {
+            $('[type="checkbox"]').bootstrapSwitch();
+        })
+    </script>
+</body>
+
+</html>
