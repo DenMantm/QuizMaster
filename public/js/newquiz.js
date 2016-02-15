@@ -95,8 +95,8 @@
         //step two checks if the user have provided a quiz name in the previous step if not it will change the classes of step1 and not progress any fuerther
         case 2:
             var test = $("#qName").val();
-            checkName(test);
-            console.log('<%= user.local.email%>');
+            //checkName(test);
+           // console.log('<%= user.local.email%>');
             if ($("#qName").val() === '') {
                 $("#step1").addClass("has-error bg-danger");
                 step--;
