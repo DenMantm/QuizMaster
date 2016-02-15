@@ -33,3 +33,16 @@ exports.updateUser = function(req,res,user){
 });
 };
 
+//UPDATES ALL ELEMENTS OF USER WHICH ARE SENT AS UPDATE
+exports.updateOneElement = function(user,update){
+    var email = user.local.email;
+    var condition = {'local.email':email};
+User.update(condition,update,
+function(err, numberAffected,rawResponse){if(err)console.log('error while updating picture url')});
+};
+//removing user from database
+exports.removeElement = function(user){
+    var email = user.local.email;
+    User.find({'local.email':email}).remove().exec();
+    console.log('removed: '+ email);
+};

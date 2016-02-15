@@ -60,14 +60,31 @@ module.exports = function(passport) {
             if (user) {
                 return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
             } else {
+                console.log(req.body.username);
+                        User.findOne({ 'local.username' :  req.body.username }, function(err, user) {
+            // if there are any errors, return the error
+            if (err)
+                return done(err);
+
+            // check to see if theres already a user with that email
+            if (user) {
+                return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+            
+            } else {
 
 				// if there is no user with that email
                 // create the user
+                
+                //Sending Verification e-mail to the user
+                console.log(email);
+                var emaiLink = require('../app/emailLink.js');
+               var key = emaiLink.verifyEmail(req, email);
+                    console.log(key);
                 var newUser            = new User();
-
                 // set the user's local credentials
                 newUser.local.email    = email;
-                newUser.local.username    = email;
+                newUser.local.username    = req.body.username;
+                newUser.local.key = key;
                 newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
 
 				// save the user
@@ -76,6 +93,9 @@ module.exports = function(passport) {
                         throw err;
                     return done(null, newUser);
                 });
+                     }
+
+                 });
             }
 
         });

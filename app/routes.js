@@ -12,8 +12,9 @@
  */ 
  //controller for quizes
  var user,
-	 condition = false; //this value is set accordingly if you are logged in or not
-	 
+	 condition = false, //this value is set accordingly if you are logged in or not
+	 fs 	   = require('fs'),
+	 bcrypt    = require('bcrypt-nodejs');
 var standardCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
@@ -36,8 +37,9 @@ module.exports = function(app, passport) {
 			  
 		});
 				app.get('/x', function(req, res) {
-				res.render('new_index.ejs');
+				res.render('login_new.ejs');
 		});
+		
 		
 		//POST method for user update
 		app.post('/updateUser',isLoggedIn, function(req, res) {
@@ -47,7 +49,99 @@ module.exports = function(app, passport) {
 		app.get('/updateUser',isLoggedIn, function(req, res) {
 		res.render('profile.ejs',{user : req.user, date:Date.now()});
 		});
+		
+		//Uploading file REF:http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
+		//###############################################################################################                   
+		//#################################	UPLOADING IMAGE FROM THE USER ###############################
+		//###############################################################################################
+		
+		app.post('/upload', function(req, res) {
+    // Get the temporary location of the file
+    var tmp_path    = req.files.image.path,
+    	target_path = './upload/userPics/' + req.user.local.email;
+    // Move the file from the temporary location to the intended location
+    fs.rename(tmp_path, target_path, function(err) {
+        if (err) throw err;
+        // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files.
+        fs.unlink(tmp_path, function() {
+            if (err) throw err;
+        });
+    });
+	//update profile image link in database
+    var update = {'local.pictureUrl':"./upload/userPics/"+req.user.local.email};
+    UserCtrl.updateOneElement(req.user,update);
+    
+    res.redirect(301, '/updateUser'); //redirecting to homepage
+		});
+		
+		//Uploading file REF:http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
+		//###############################################################################################               
+		//############## THIS FUNCTION RETURNS PROFILE IMAGE IN BINARY FORMAT TO FRONT END ##############
+		//###############################################################################################
+		
+	app.get('/getProgilePic', function(req, res) {
+			console.log(req.user.local.pictureUrl);
+		
+		fs.readFile(req.user.local.pictureUrl, "binary", function(error, file) {
+		    if(error) {
+		        res.writeHead(500, {"Content-Type": "text/plain"});
+		        res.write(error + "\n");
+		        res.end();
+		    }
+		    else {
+		        res.writeHead(200, {"Content-Type": "image/png"});
+		        res.write(file, "binary");
+		        res.end();
+		    }
+});
+		});
+		//REF: http://stackoverflow.com/questions/24583608/nodejs-in-bcrypt-it-returns-false-at-compare-password-hash
+		//###############################################################################################                   
+		//#################################	DELETING USER FROM DATABASE #################################
+		//###############################################################################################
+		app.post('/deleteUser', function(req, res) {
 
+ 			var hashFromDB = req.user.local.password;
+			var plainPassFromUser = req.body.password;
+
+			bcrypt.compare(plainPassFromUser, hashFromDB, function(err, matches) {
+  			if (err)
+    			console.log('Error while checking password');
+  			else if (matches){
+    			console.log('The password matches!');
+    			UserCtrl.removeElement(req.user);
+    			req.logout();
+    			res.render('./profile/profileDeleted');
+    			
+  			}
+    			
+  			else{
+    			console.log('The password does NOT match!');
+    			res.render('./profile/profileNotDeleted');
+  			}
+			});
+			
+	      
+			  
+		 });
+		//###############################################################################################
+		//#################################Verifying user e-mail by link#################################
+		//###############################################################################################
+		app.get('/verifyEmail/:key', function(req, res) {
+				
+				if(req.params.key == req.user.local.key){
+					
+						//update profile image link in database
+    					var update = {'local.validEmail':true};
+    					UserCtrl.updateOneElement(req.user,update);
+
+					res.send('Your e-mail is now verified');
+				}
+				else{
+						res.send('This is invalid key: '+req.params.key);
+				}
+
+  		}); 
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
@@ -129,23 +223,23 @@ function isLoggedIn(req, res, next) {
 //Asynchrosity generation function REF: 
 //http://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
 
-var when = function() {
-  var args = arguments;  // the functions to execute first
-  return {
-    then: function(done) {
-      var counter = 0;
-      for(var i = 0; i < args.length; i++) {
-        // call each function with a function to call on done
-        args[i](function() {
-          counter++;
-          if(counter === args.length) {  // all functions have notified they're done
-            done();
-          }
-        });
-      }
-    }
-  };
-};
+// var when = function() {
+//   var args = arguments;  // the functions to execute first
+//   return {
+//     then: function(done) {
+//       var counter = 0;
+//       for(var i = 0; i < args.length; i++) {
+//         // call each function with a function to call on done
+//         args[i](function() {
+//           counter++;
+//           if(counter === args.length) {  // all functions have notified they're done
+//             done();
+//           }
+//         });
+//       }
+//     }
+//   };
+// };
   //  	when(
   //function(done) {
 		// user = UserCtrl.getUser(req.user,done);

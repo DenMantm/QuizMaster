@@ -13,112 +13,8 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
         <div class="container">
 <% include ./index_partials/navbar %>
 </div>
-    <script>
-    $(document).ready(function() {
-    var panels = $('.user-infos');
-    var panelsButton = $('.dropdown-user');
-    panels.hide();
-
-    //Click dropdown
-    panelsButton.click(function() {
-        //get data-for attribute
-        var dataFor = $(this).attr('data-for');
-        var idFor = $(dataFor);
-
-        //current button
-        var currentButton = $(this);
-        idFor.slideToggle(400, function(){
-            //Completed slidetoggle
-            if(idFor.is(':visible'))
-            {
-                currentButton.html('<i class="glyphicon glyphicon-chevron-up text-muted"></i>');
-            }
-            else
-            {
-                currentButton.html('<i class="glyphicon glyphicon-chevron-down text-muted"></i>');
-            }
-        })
-    });
 
 
-    $('[data-toggle="tooltip"]').tooltip();
-
-    $('#enableEdit').click(function() {
-        
-        $('.fields').toggle();  
-        $('#enableEdit').toggle();
-        $('.editProfileField').toggle();
-        $('#enableSave').toggle();
-        $('#enableCancel').toggle();
-
-    });
-     $('#enableCancel').click(function() {
-        
-        $('.fields').toggle();  
-        $('#enableEdit').toggle();
-        $('.editProfileField').toggle();
-        $('#enableSave').toggle();
-        $('#enableCancel').toggle();
-
-    });
-    
-    
-});
-    </script>
-    
-    <style>
-    
-    .user-row {
-    margin-bottom: 14px;
-}
-
-.user-row:last-child {
-    margin-bottom: 0;
-}
-
-.dropdown-user {
-    margin: 13px 0;
-    padding: 5px;
-    height: 100%;
-}
-
-.dropdown-user:hover {
-    cursor: pointer;
-}
-
-.table-user-information > tbody > tr {
-    border-top: 1px solid rgb(221, 221, 221);
-}
-
-.table-user-information > tbody > tr:first-child {
-    border-top: 0;
-}
-
-
-.table-user-information > tbody > tr > td {
-    border-top: 0;
-}
-.toppad
-{margin-top:20px;
-}
-
-    
-    
-    
-    .editProfileField{
-                    height: 20px;
-                    width:60%;
-                    padding: 0px 0px;
-                    display:none;
-                    margin-left:1px;
-                    }
-    .fix{width:40%;margin-right:5px;}
-    #enableSave, #enableCancel{display:none;}
-
-    
-    
-    </style>
-    <h1>Profile Page</h1>
 <div class="container">
       <div class="row">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
@@ -136,20 +32,67 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src=<%= user.local.pictureUrl%> class="img-circle img-responsive"> </div>
+                  <!--<%= user.local.pictureUrl%> -->
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src= '/getProgilePic'class="img-circle img-responsive">  
+                </br>
+                 <input id='enableSavePicture' value='Change' data-original-title="Change Picture" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning"></input>
                 
-                <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
-                  <dl>
-                    <dt>DEPARTMENT:</dt>
-                    <dd>Administrator</dd>
-                    <dt>HIRE DATE</dt>
-                    <dd>11/12/2013</dd>
-                    <dt>DATE OF BIRTH</dt>
-                       <dd>11/12/2013</dd>
-                    <dt>GENDER</dt>
-                    <dd>Male</dd>
-                  </dl>
-                </div>-->
+ 
+<div id='saveImageModal' class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Change Profile Picture</h4>
+      </div>
+      <div class="modal-body">
+        
+        <p>File Upload</p>
+        
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          Select an image to upload:
+          <input class="btn btn-sm btn-warning" type="file" name="image"> 
+             </br>
+            <input class="btn btn-sm btn-warning" type="submit" value="UploadImage">
+            </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+        <!--~~~~~~~~~~~~~~~~~~~MODAL DOR USER DELETION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<div id='deleteUserModal' class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete User Profile</h4>
+      </div>
+      <div class="modal-body">
+         <form action="/deleteUser" method="post">
+             <h4>Are you sure you want to delete your user profile?</h4>
+            <input name='password' type="password" class="form-control"  placeholder="Your Password">
+            </br>
+            <input type="submit" id='deleteUser' value='Delete' data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"></input>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+                
+                </div>
+                
                 <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information">
                 <form action="/updateUser" method="post">
@@ -159,12 +102,15 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         <td><span class='fields'><%= user.local.name.firstName+' '+user.local.name.surname%></span>
                         <input name='name' value=<%= user.local.name.firstName%> type="text" class="form-control editProfileField fix"  placeholder="name">
                         <input name='surname' value=<%= user.local.name.surname%> type="text" class="form-control editProfileField fix"  placeholder="surname"></td>
+                      
                       </tr>
                       <tr>
                         <td>Email</td>
-                        <td><span><a href=<%='mailto:'+user.local.email%>><%=user.local.email%></a></span>
-                        
-                        </td>
+                        <td><span><a href=<%='mailto:'+user.local.email%>><%=user.local.email%></a></span></td>
+                      </tr>
+                      <tr>
+                        <td>Verified:</td>
+                        <td><span><%=user.local.validEmail%></a></span></td>
                       </tr>
                       <td>NickName:</td>
                         <td><span class='fields'><%=user.local.username%></span>
@@ -177,7 +123,6 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                       <tr>
                         <td>Created:</td>
                         <td><%=user.local.createdOn%></td>
-                        
                       </tr>
                     </tbody>
                   </table>
@@ -185,7 +130,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
               </div>
             </div>
                  <div class="panel-footer">
-                        <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a id='enableDeleteUser' data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
                         <span class="pull-right">
                             <a id='enableEdit' data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
                             <input id='enableSave' value='Save' data-original-title="Save details" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning"></input>

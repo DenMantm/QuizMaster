@@ -6,6 +6,7 @@
     "bootstrap-switch": "^3.3.2",
     "connect-flash": "~0.1.1",
     "ejs": "~0.8.5",
+    "emailjs": "^1.0.2",
     "express": "^3.4.8",
     "install": "^0.4.1",
     "mongodb": "^2.1.4",
