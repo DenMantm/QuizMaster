@@ -34,12 +34,13 @@ exports.checkqName = function(req,res) {
         console.log(results[0]);
         var message;
         if(results.length != 0) {
-            message = {text: "Quizz with such a name already exsists"}
+            message = {text: "Quizz with such a name already exsists"};
         } else {
-            message = {text: "OK"}
+            message = {text: "OK"};
         }
         console.log(message);
         res.render('newquiz.ejs' , {message: message, user: req.user});
+        console.log("Error: " + err);
     });
 };
 
@@ -48,6 +49,7 @@ exports.list = function(req,res) {
     query.sort({ owner: 'desc' })
     .exec(function(err, results){
         res.render('showlist.ejs', {list:results, user:req.user});
+        console.log("Error: " + err);
     });
 };
 
@@ -55,6 +57,35 @@ exports.removeq  = function(req,res) {
     var condition = {_id: req.query.id};
     console.log(req.query.id);
     Quiz.remove(condition, function(err) {
-        
+        console.log("Error: " + err);
     });
+};
+
+exports.editqz = function(req,res) {
+    var id = req.query.id;
+    var query = Quiz.findOne();
+    query.sort({ owner: 'desc' }).where({_id: id})
+    .exec(function(err,results){
+        res.render('edit_qz_settings.ejs', {settings: results});
+        console.log("Error: " + err);
+    });
+};
+
+exports.updateqz = function(body) {
+    var condition = { _id: body._id };
+    var update = {
+        qName: body.qName,
+        qDescription: body.qDescription,
+        qNumber: body.qNumber,
+        shuffleQuestion: body.shuffleQuestion,
+        shuffleAnswers: body.shuffleAnswers,
+        design: body.design
+    };
+    console.log(update);
+    Quiz.update(condition, update, function(err, numberAffected, rawResponce) {
+        console.log("Error: " + err);
+        console.log("numberAffected: " + numberAffected);
+        console.log("rawResponce: " + rawResponce);
+    });
+    //redirect to homepage
 };

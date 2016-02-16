@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<head>
+    <% include ./partials/head %>
+        <script src="../js/editqz.js"></script>
+        <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
+        <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+</head>
+
+<body class="container">
+
+    <header>
+        <% include ./index_partials/navbar %>
+    </header>
+
+    <main>
+        <div class="container-fluid">
+            <form role="form" action="updateqz" method="post">
+            <div class="row" id="Name">
+                <div class="col-md-2">
+                    <label for="qName">Name:</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group" id="step1">
+                        <input class="form-control" id="qName" name="qName" value="<%= settings.qName%>">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+            
+            <div class="row" id="Description">
+                <div class="col-md-2">
+                    <label for="qDescription">Description:</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" id="qDescription" name="qDescription" ><%= settings.qDescription%></textarea></textarea>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+            
+            <div class="row" id="qNum_cb">
+                <div class="col-md-2">
+                    <label for="qNumber">Display all questions</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <% if (settings.qNumber==='all') { %>
+                            <input type="checkbox" value="true" name="cb_qNumber" checked>
+                        <% } else { %>
+                            <input type="checkbox" value="true" name="cb_qNumber">
+                        <% } %>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>            
+            
+            <div class="row" id="qNum">
+                <div class="col-md-2">
+                    <label for="qNumber">Number of questions:</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                            <input class="form-control" id="qNumber" name="qNumber" value="<%= settings.qNumber%>">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>  
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="shuffleQuestion">Display questions in random order:</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <% if (settings.shuffleQuestion) { %>
+                            <input type="checkbox" value="true" name="cb_shuffleQuestion" id="cb_shuffleQuestion" checked>
+                        <% } else { %>
+                            <input type="checkbox" value="true" name="cb_shuffleQuestion" id="cb_shuffleQuestion">
+                        <% } %>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>   
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="shuffleAnswers">Display answers in random order:</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <% if (settings.shuffleAnswers) { %>
+                            <input type="checkbox" value="false" id="cb_shuffleAnswers" name="cb_shuffleAnswers" checked>
+                            <input class="form-control" id="shuffleAnswers" name="shuffleAnswers" type="hidden" value="true"/>
+                        <% } else { %>
+                            <input type="checkbox" value="false" id="cb_shuffleAnswers" name="cb_shuffleAnswers">
+                            <input class="form-control" id="shuffleAnswers" name="shuffleAnswers" type="hidden" value="false"/>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>   
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="shuffleAnswers">Design:</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <% if (settings.design === "default") { %>
+                        <table>
+                            <tr>
+                                <td class="cratio"><input id="Default" type="radio" name="design" value="default" checked></td>
+                                <td><label for="Default">Default (placeholder for Default design picture)</label></td>
+                            <tr>
+                                <td class="cratio"><input id="Black" type="radio" name="design" value="Black"></td>
+                                <td><label for="Black">Black (placeholder for Black design picture)</label></td>
+                            </tr>
+                             <tr>
+                                <td class="cratio"><input id="Pink" type="radio" name="design" value="Pink"></td>
+                                <td><label for="Pink">Pink (placeholder for Pink design picture)</label></td>
+                            </tr>
+                            </tr>
+                        </table>
+                        <% } else if (settings.design === "Black") { %>
+                        <table>
+                            <tr>
+                                <td class="cratio"><input id="Default" type="radio" name="design" value="default"></td>
+                                <td><label for="Default">Default (placeholder for Default design picture)</label></td>
+                            <tr>
+                                <td class="cratio"><input id="Black" type="radio" name="design" value="Black" checked></td>
+                                <td><label for="Black">Black (placeholder for Black design picture)</label></td>
+                            </tr>
+                             <tr>
+                                <td class="cratio"><input id="Pink" type="radio" name="design" value="Pink"></td>
+                                <td><label for="Pink">Pink (placeholder for Pink design picture)</label></td>
+                            </tr>
+                            </tr>
+                        </table>
+                        <% } else { %>
+                        <table>
+                            <tr>
+                                <td class="cratio"><input id="Default" type="radio" name="design" value="default"></td>
+                                <td><label for="Default">Default (placeholder for Default design picture)</label></td>
+                            <tr>
+                                <td class="cratio"><input id="Black" type="radio" name="design" value="Black"></td>
+                                <td><label for="Black">Black (placeholder for Black design picture)</label></td>
+                            </tr>
+                             <tr>
+                                <td class="cratio"><input id="Pink" type="radio" name="design" value="Pink" checked></td>
+                                <td><label for="Pink">Pink (placeholder for Pink design picture)</label></td>
+                            </tr>
+                            </tr>
+                        </table>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>  
+            <input class="form-control" id="_id" name="_id" type="hidden" value="<%= settings._id %>"/> 
+            <button type="submit" class="btn btn-success" id="submit">Save changes</button>
+            <button class="btn btn-danger" id="cancel">Cancel</button>
+            </form>
+        </div>
+
+
+                 
+
+
+
+    </main>
+
+    <footer>
+        <% include ./partials/footer %>
+    </footer>
+    <script>
+        $(function(argument) {
+            $('[type="checkbox"]').bootstrapSwitch();
+        })
+    </script>
+</body>
+
+</html>

@@ -20,4 +20,14 @@ $(document).ready(function() {
             location.href = "/showquiz";
         });
     });
+    $("#btn_edit").click(function() {
+        var id = "/editqz?id=" +
+            $(this)
+            .parent()
+            .parent()
+            .parent()
+            .attr("id");
+            location.href = id;
+    
+    });
 });
