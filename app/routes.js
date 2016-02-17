@@ -29,7 +29,6 @@ module.exports = function(app, passport) {
 	// ==================================		
 
 	app.get('/newquiz', function(req, res) {
-		console.log('getting newquiz');
 		res.render('newquiz.ejs', {
 			user: req.user,
 			message: {
@@ -39,10 +38,14 @@ module.exports = function(app, passport) {
 	});
 	//body with data is passed to standardCtrl
 	app.post('/newquiz', function(req, res) {
-		console.log('getting newquiz');
 		quizCtrl.create(req.body); //saving object to database
 		res.redirect(301, '/showquiz'); //redirecting to homepage
 });
+
+	app.post('/updateqz' , function(req, res) {
+		quizCtrl.updateqz(req.body);
+		res.redirect(301, '/showquiz');
+	});
 	// ==================================
 	// ========== SHOW QUIZ =============
 	// ==================================
@@ -60,6 +63,10 @@ module.exports = function(app, passport) {
 		res.redirect(301, '../index'); //redirecting to homepage
 		console.log('redirected') ;
 	});
+	
+	app.get('/editqz', function(req, res){
+		return quizCtrl.editqz(req, res);
+	})
 
 	// ==================================
 	// ========= UPDATE USER ============
