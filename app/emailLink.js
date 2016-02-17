@@ -3,7 +3,6 @@ var email   = require("emailjs");
 
 //REF: https://github.com/eleith/emailjs
 exports.verifyEmail = function(req,userEmail){
-   
     //generating simple verification link and saving it to database
     //REF: http://stackoverflow.com/questions/5398737/how-can-i-make-a-simple-wep-key-generator-in-javascript
    function generateHexString(length) {

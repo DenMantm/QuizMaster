@@ -2,6 +2,7 @@
 var User = require('../models/user.server.model.js');
 var emaiLink = require('../app/emailLink.js');
 
+
 //getting info from body object, which is subbmitted by POST methodfrom front end
 
 //get user document from database
@@ -22,15 +23,16 @@ exports.getPostNewPassword = function(req,res){
         console.log('RUNNING_post_key');
         if(doc ===null){
             res.send('No such user');
-            
         }
         else{
             if(doc.local.key===req.body.key){
-                console.log('done with changing password');
-                res.render('login.ejs',{message:'Password succesfully changed'});
                 
+                //res.render('login.ejs',{message:'Password succesfully changed'});
+                
+                //creating separate module for changing password, here passing new password to the module
+                
+                require('../app/changePassword.js')(req.body.password,doc);
             }
-            
             else{
                 res.send('invalid key');
             }
@@ -120,6 +122,7 @@ exports.updateUser = function(req,res,user){
 //UPDATES ALL ELEMENTS OF USER WHICH ARE SENT AS UPDATE
 exports.updateOneElement = function(user,update){
     var email = user.local.email;
+    console.log('Updating:: '+email);
     var condition = {'local.email':email};
 User.update(condition,update,
 function(err, numberAffected,rawResponse){if(err)console.log('error while updating picture url')});

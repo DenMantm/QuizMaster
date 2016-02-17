@@ -202,22 +202,13 @@ module.exports = function(app, passport) {
 		res.render('./profile/retrievePassword.ejs',{message:''});
 	});
 	
-	//HANDLING LINK RECIEVED BY E_MAIL
-		app.get('/recoverPassword/:key/:keys', function(req, res) {
-			
-			//res.send('first: '+req.params.key+' second: '+req.params.keys)
-			
-			//check if we got valid key and e-mail:::
-			UserCtrl.getVerifyKey(req,res);
-			
-			
-		//res.render('./profile/newPassword.ejs',{message:''});
+	//HANDLING LINK RECIEVED BY E_MAIL key = email from the form, keys = hex generated key which is attached to user profile
+	app.get('/recoverPassword/:key/:keys', function(req, res) {
+		UserCtrl.getVerifyKey(req,res);
 	});
-			app.post('/recoverPassword', function(req, res) {
-			UserCtrl.getPostNewPassword(req,res);
+	app.post('/recoverPassword', function(req, res) {
+		UserCtrl.getPostNewPassword(req,res);
 		});
-	
-	
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
@@ -302,23 +293,23 @@ function isLoggedIn(req, res, next) {
 //Asynchrosity generation function REF: 
 //http://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
 
-var when = function() {
-  var args = arguments;  // the functions to execute first
-  return {
-    then: function(done) {
-      var counter = 0;
-      for(var i = 0; i < args.length; i++) {
-        // call each function with a function to call on done
-        args[i](function() {
-          counter++;
-          if(counter === args.length) {  // all functions have notified they're done
-            done();
-          }
-        });
-      }
-    }
-  };
-};
+// var when = function() {
+//   var args = arguments;  // the functions to execute first
+//   return {
+//     then: function(done) {
+//       var counter = 0;
+//       for(var i = 0; i < args.length; i++) {
+//         // call each function with a function to call on done
+//         args[i](function() {
+//           counter++;
+//           if(counter === args.length) {  // all functions have notified they're done
+//             done();
+//           }
+//         });
+//       }
+//     }
+//   };
+// };
 //  	when(
 // function(done) {
 	
