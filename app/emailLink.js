@@ -1,3 +1,5 @@
+var email   = require("emailjs");
+
 
 //REF: https://github.com/eleith/emailjs
 exports.verifyEmail = function(req,userEmail){
@@ -17,7 +19,6 @@ exports.verifyEmail = function(req,userEmail){
 var link = "http://"+req.get('host')+"/verifyEmail/"+key;
 
     //e-mailing part
-var email   = require("emailjs");
 var server  = email.server.connect({
    user:    "quizmastermail@gmail.com", 
    password:"quizmaster123", 
@@ -49,4 +50,41 @@ var message = {
     });
     return key;
 };
-//Password recovery to be placed here::
+
+
+//Universal e-mail sender::
+//We are passing message object which 
+exports.sendEmail = function(message){
+
+    //e-mailing part
+
+var server  = email.server.connect({
+   user:    "quizmastermail@gmail.com", 
+   password:"quizmaster123", 
+   host:    "smtp.gmail.com", 
+   ssl:     true
+});
+// send the message and get a callback with an error or details of the message that was sent
+// var message = {
+//   text:    "Verification link",
+//   from:    "QuizMaster <username@your-email.com>",
+//   to:      'denmantm@inbox.lv',
+//   cc:      "",
+//   subject: "Quizmaster Verification e-mail",
+//   attachment: 
+//   [
+//       {data:"<html> <h3>This is your verification link:</h3></hr></br>Press Here</a></html>", alternative:true}
+//       //{path:"path/to/file.zip", type:"application/zip", name:"renamed.zip"}
+//   ]
+// };
+    //message.to = 'User<'+reciever+'>';
+    //console.log(message.to);
+    server.send(message, function(err, message) {
+        if(err)
+        console.log(err);
+        
+        else 
+        console.log('email sent');
+    });
+};
+

@@ -89,7 +89,7 @@ module.exports = function(app, passport) {
 	//#################################	UPLOADING IMAGE FROM THE USER ###############################
 	//###############################################################################################
 
-	app.post('/upload', function(req, res) {
+	app.post('/upload', isLoggedIn, function(req, res) {
 		// Get the temporary location of the file
 		var tmp_path = req.files.image.path,
 			target_path = './upload/userPics/' + req.user.local.email;
@@ -115,7 +115,7 @@ module.exports = function(app, passport) {
 	//############## THIS FUNCTION RETURNS PROFILE IMAGE IN BINARY FORMAT TO FRONT END ##############
 	//###############################################################################################
 
-	app.get('/getProgilePic', function(req, res) {
+	app.get('/getProgilePic',isLoggedIn, function(req, res) {
 		console.log(req.user.local.pictureUrl);
 
 		fs.readFile(req.user.local.pictureUrl, "binary", function(error, file) {
@@ -139,7 +139,7 @@ module.exports = function(app, passport) {
 	//###############################################################################################                   
 	//#################################	DELETING USER FROM DATABASE #################################
 	//###############################################################################################
-	app.post('/deleteUser', function(req, res) {
+	app.post('/deleteUser',isLoggedIn, function(req, res) {
 
 		var hashFromDB = req.user.local.password;
 		var plainPassFromUser = req.body.password;
@@ -167,7 +167,7 @@ module.exports = function(app, passport) {
 	//###############################################################################################
 	//#################################Verifying user e-mail by link#################################
 	//###############################################################################################
-	app.get('/verifyEmail/:key', function(req, res) {
+	app.get('/verifyEmail/:key', isLoggedIn, function(req, res) {
 
 		if (req.params.key == req.user.local.key) {
 
@@ -184,11 +184,37 @@ module.exports = function(app, passport) {
 		}
 
 	});
+	
+	//###############################################################################################             
+	//#################################	Retrieving password for user ################################
+	//###############################################################################################
+	app.post('/retrievePassword', function(req, res) {
+         UserCtrl.getPasswordUser(req,res);
+	});
+	app.get('/retrievePassword', function(req, res) {
+		res.render('./profile/retrievePassword.ejs',{message:''});
+	});
+	
+	//HANDLING LINK RECIEVED BY E_MAIL
+		app.get('/recoverPassword/:key/:keys', function(req, res) {
+			
+			//res.send('first: '+req.params.key+' second: '+req.params.keys)
+			
+			//check if we got valid key and e-mail:::
+			UserCtrl.getVerifyKey(req,res);
+			
+			
+		//res.render('./profile/newPassword.ejs',{message:''});
+	});
+			app.post('/recoverPassword', function(req, res) {
+			UserCtrl.getPostNewPassword(req,res);
+		});
+	
+	
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
 	app.get('/', isLoggedIn, function(req, res) {
-
 		res.render('index.ejs', {
 			user: req.user // get the user out of session and pass to template
 		});
@@ -233,7 +259,6 @@ module.exports = function(app, passport) {
 		failureRedirect: '/signup', // redirect back to the signup page if there is an error
 		failureFlash: true // allow flash messages
 	}));
-
 	// =====================================
 	// PROFILE SECTION =========================
 	// =====================================
@@ -270,31 +295,37 @@ function isLoggedIn(req, res, next) {
 //Asynchrosity generation function REF: 
 //http://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
 
-// var when = function() {
-//   var args = arguments;  // the functions to execute first
-//   return {
-//     then: function(done) {
-//       var counter = 0;
-//       for(var i = 0; i < args.length; i++) {
-//         // call each function with a function to call on done
-//         args[i](function() {
-//           counter++;
-//           if(counter === args.length) {  // all functions have notified they're done
-//             done();
-//           }
-//         });
-//       }
-//     }
-//   };
-// };
+var when = function() {
+  var args = arguments;  // the functions to execute first
+  return {
+    then: function(done) {
+      var counter = 0;
+      for(var i = 0; i < args.length; i++) {
+        // call each function with a function to call on done
+        args[i](function() {
+          counter++;
+          if(counter === args.length) {  // all functions have notified they're done
+            done();
+          }
+        });
+      }
+    }
+  };
+};
 //  	when(
-//function(done) {
+// function(done) {
+	
+	
 // user = UserCtrl.getUser(req.user,done);
 // console.log('1 running');
-//	}
-// ).then(function() {
-// 	console.log('3 running');
 
-//  		UserCtrl.updateUser(req,res,user);
+
+	
+// }
+// ).then(function() {
+	
+	
+// 	console.log('2 running');
+
 
 // });
