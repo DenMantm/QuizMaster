@@ -99,7 +99,7 @@ module.exports = function(app, passport) {
 	//#################################	UPLOADING IMAGE FROM THE USER ###############################
 	//###############################################################################################
 
-	app.post('/upload', function(req, res) {
+	app.post('/upload', isLoggedIn, function(req, res) {
 		// Get the temporary location of the file
 		var tmp_path = req.files.image.path,
 			target_path = './upload/userPics/' + req.user.local.email;
@@ -125,7 +125,7 @@ module.exports = function(app, passport) {
 	//############## THIS FUNCTION RETURNS PROFILE IMAGE IN BINARY FORMAT TO FRONT END ##############
 	//###############################################################################################
 
-	app.get('/getProgilePic', function(req, res) {
+	app.get('/getProgilePic',isLoggedIn, function(req, res) {
 		console.log(req.user.local.pictureUrl);
 
 		fs.readFile(req.user.local.pictureUrl, "binary", function(error, file) {
@@ -149,7 +149,7 @@ module.exports = function(app, passport) {
 	//###############################################################################################                   
 	//#################################	DELETING USER FROM DATABASE #################################
 	//###############################################################################################
-	app.post('/deleteUser', function(req, res) {
+	app.post('/deleteUser',isLoggedIn, function(req, res) {
 
 		var hashFromDB = req.user.local.password;
 		var plainPassFromUser = req.body.password;
@@ -177,7 +177,7 @@ module.exports = function(app, passport) {
 	//###############################################################################################
 	//#################################Verifying user e-mail by link#################################
 	//###############################################################################################
-	app.get('/verifyEmail/:key', function(req, res) {
+	app.get('/verifyEmail/:key', isLoggedIn, function(req, res) {
 
 		if (req.params.key == req.user.local.key) {
 
@@ -194,16 +194,34 @@ module.exports = function(app, passport) {
 		}
 
 	});
+	
+	//###############################################################################################             
+	//#################################	Retrieving password for user ################################
+	//###############################################################################################
+	app.post('/retrievePassword', function(req, res) {
+         UserCtrl.getPasswordUser(req,res);
+	});
+	app.get('/retrievePassword', function(req, res) {
+		res.render('./profile/retrievePassword.ejs',{message:''});
+	});
+	
+	//HANDLING LINK RECIEVED BY E_MAIL key = email from the form, keys = hex generated key which is attached to user profile
+	
+	app.get('/recoverPassword/:key/:keys', function(req, res) {
+		UserCtrl.getVerifyKey(req,res);
+	});
+	
+	app.post('/recoverPassword', function(req, res) {
+		UserCtrl.getPostNewPassword(req,res);
+		});
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
 	app.get('/', isLoggedIn, function(req, res) {
-
 		res.render('index.ejs', {
 			user: req.user // get the user out of session and pass to template
 		});
 	});
-
 	// =====================================
 	// LOGIN ===============================
 	// =====================================
@@ -243,7 +261,6 @@ module.exports = function(app, passport) {
 		failureRedirect: '/signup', // redirect back to the signup page if there is an error
 		failureFlash: true // allow flash messages
 	}));
-
 	// =====================================
 	// PROFILE SECTION =========================
 	// =====================================
@@ -298,13 +315,19 @@ function isLoggedIn(req, res, next) {
 //   };
 // };
 //  	when(
-//function(done) {
+// function(done) {
+	
+	
 // user = UserCtrl.getUser(req.user,done);
 // console.log('1 running');
-//	}
-// ).then(function() {
-// 	console.log('3 running');
 
-//  		UserCtrl.updateUser(req,res,user);
+
+	
+// }
+// ).then(function() {
+	
+	
+// 	console.log('2 running');
+
 
 // });

@@ -78,6 +78,7 @@ module.exports = function(passport) {
                 //Sending Verification e-mail to the user
                 console.log(email);
                 var emaiLink = require('../app/emailLink.js');
+                
                var key = emaiLink.verifyEmail(req, email);
                     console.log(key);
                 var newUser            = new User();
