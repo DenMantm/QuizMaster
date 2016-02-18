@@ -203,9 +203,11 @@ module.exports = function(app, passport) {
 	});
 	
 	//HANDLING LINK RECIEVED BY E_MAIL key = email from the form, keys = hex generated key which is attached to user profile
+	
 	app.get('/recoverPassword/:key/:keys', function(req, res) {
 		UserCtrl.getVerifyKey(req,res);
 	});
+	
 	app.post('/recoverPassword', function(req, res) {
 		UserCtrl.getPostNewPassword(req,res);
 		});
@@ -217,7 +219,6 @@ module.exports = function(app, passport) {
 			user: req.user // get the user out of session and pass to template
 		});
 	});
-
 	// =====================================
 	// LOGIN ===============================
 	// =====================================

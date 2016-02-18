@@ -17,18 +17,73 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 
 <div class="container">
       <div class="row">
-      <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
-           <A href="edit.html" >Edit Profile</A>
+        
+        <div class='col-md-2'>
+             <style>
+      
+      #sidebar {
+    background-color: #191919;
+    padding: 10px;
+}
 
-       <br>
-<p class=" text-info"> <%=new Date().toJSON().slice(0,10) +" "+ new Date().toJSON().slice(11,16)%> </p>
-      </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-   
-   
+#sidebar a:hover, a:focus {
+    color: #FFF;
+    text-decoration: none;
+}
+
+#sidebar.nav > li > a,
+#sidebar.nav > li > a:link {
+    background-color: #191919;
+    color: #FFF;
+}
+
+#sidebar.nav > li > a:hover,
+#sidebar.nav > li > a:focus {
+    background-color: #373737;
+}
+
+#sidebar.nav-pills > li.active > a,
+#sidebar.nav-pills > li.active > a:hover,
+#sidebar.nav-pills > li.active > a:focus {
+    color: #FFF;
+    background-color: #C72A25;
+}
+    </style>
+    
+    <ul id="sidebar" class="nav nav-pills nav-stacked" >
+      <li class="active">
+        <a href="#">
+          <span class="glyphicon glyphicon-off"></span>
+  Overview</a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="glyphicon glyphicon-user"></span>
+  Edit Profile</a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="glyphicon glyphicon-lock"></span>
+  Access / Password</a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="glyphicon glyphicon-list"></span>
+  Quizes</a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="glyphicon glyphicon-signal"></span>
+  Statistics</a>
+      </li>
+    </ul>
+          </div>
+        <div class="col-md-7" >
+
           <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title"><%= user.local.email %></h3>
+              <p class=" text-info"> <%=new Date().toJSON().slice(0,10) +" "+ new Date().toJSON().slice(11,16)%> </p>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -139,7 +194,19 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                     </div>
             </form>
           </div>
+          
+           <!----- finishing md5 here-->
+           
         </div>
+       
+        
+         <div class='col-md-3'>
+           
+           <img alt="User Pic" src= '/img/profile_fun_face.jpg'class="img-responsive">  
+           
+            </div>
+        
+        
       </div>
     </div>
 </body>

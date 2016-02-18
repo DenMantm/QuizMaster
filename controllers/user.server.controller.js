@@ -27,11 +27,13 @@ exports.getPostNewPassword = function(req,res){
         else{
             if(doc.local.key===req.body.key){
                 
-                //res.render('login.ejs',{message:'Password succesfully changed'});
+                
                 
                 //creating separate module for changing password, here passing new password to the module
                 
                 require('../app/changePassword.js')(req.body.password,doc);
+                
+                res.render('login.ejs',{message:'Password succesfully changed'});
             }
             else{
                 res.send('invalid key');
