@@ -15,7 +15,7 @@
 
     <main>
         <div class="container-fluid">
-            <form role="form" action="updateqz" method="post">
+            <form role="form" action="updateqz" method="post" id="update_form">
             <div class="row" id="Name">
                 <div class="col-md-2">
                     <label for="qName">Name:</label>
@@ -78,11 +78,15 @@
                 </div>
                 <div class="col-md-8">
                     <div class="form-group">
+                        <% if (settings.qNumber !=='all') { %>
+                            <input type="checkbox" value="true" name="cb_shuffleQuestion" id="cb_shuffleQuestion" disabled="true" checked>
+                        <% } else { %>
                         <% if (settings.shuffleQuestion) { %>
                             <input type="checkbox" value="true" name="cb_shuffleQuestion" id="cb_shuffleQuestion" checked>
                         <% } else { %>
                             <input type="checkbox" value="true" name="cb_shuffleQuestion" id="cb_shuffleQuestion">
-                        <% } %>
+                        <% }}%>
+
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -102,6 +106,7 @@
                             <input type="checkbox" value="false" id="cb_shuffleAnswers" name="cb_shuffleAnswers">
                             <input class="form-control" id="shuffleAnswers" name="shuffleAnswers" type="hidden" value="false"/>
                         <% } %>
+                        
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -166,16 +171,10 @@
                 </div>
             </div>  
             <input class="form-control" id="_id" name="_id" type="hidden" value="<%= settings._id %>"/> 
-            <button type="submit" class="btn btn-success" id="submit">Save changes</button>
-            <button class="btn btn-danger" id="cancel">Cancel</button>
             </form>
+            <button class="btn btn-success" id="submit_btn">Save changes</button>
+            <button class="btn btn-danger" id="cancel">Cancel</button>
         </div>
-
-
-                 
-
-
-
     </main>
 
     <footer>

@@ -31,8 +31,10 @@ exports.checkqName = function(req,res) {
         query.where({ qName: search});
     }
     query.exec(function(err, results) {
-        console.log(results[0]);
         var message;
+        if (err) {
+            console.log("Error: " + err);
+        } else {
         if(results.length != 0) {
             message = {text: "Quizz with such a name already exsists"};
         } else {
@@ -40,7 +42,7 @@ exports.checkqName = function(req,res) {
         }
         console.log(message);
         res.render('newquiz.ejs' , {message: message, user: req.user});
-        console.log("Error: " + err);
+        }
     });
 };
 
@@ -48,7 +50,12 @@ exports.list = function(req,res) {
     var query = Quiz.find();
     query.sort({ owner: 'desc' })
     .exec(function(err, results){
-        res.render('showlist.ejs', {list:results, user:req.user});
+        if (!req.user) {
+            var user = {local: {username:"empty", email:"empty"}}
+             res.render('showlist.ejs', {list:results, user:user});
+        } else {
+            res.render('showlist.ejs', {list:results, user:req.user});
+        }
         console.log("Error: " + err);
     });
 };

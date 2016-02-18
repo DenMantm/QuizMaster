@@ -6,6 +6,37 @@
          $("#qNum").show();
      }
      
+         
+$('#submit_btn').click(function(){
+  var name = $("#qName").val();
+  var desc = $("#qDescription").val();
+  var qnum = $("#qNumber").val();
+  var pattern = /^(0|([1-9]\d*))$/;
+  
+  if (name === '') {
+    $("#Name").addClass("has-error bg-danger");
+  } else {
+    $("#Name").removeClass("has-error bg-danger");
+  }
+  
+  
+  if (desc === '') {
+    $("#Description").addClass("has-error bg-danger");
+  } else {
+    $("#Description").removeClass("has-error bg-danger");
+  }
+  
+  if (qnum === '' || !(pattern.test(qnum))) {
+    $("#qNum").addClass("has-error bg-danger");
+  } else {
+    $("#qNum").removeClass("has-error bg-danger");
+  }
+  var pattern = /^(0([1-9]\d*))$/;
+  if (name !== '' && desc !== '' && (qnum === 'all' || pattern.test(qnum))) {
+  $("#update_form").submit();
+  } 
+
+});
      
      
     $('[name="cb_qNumber"]').on('switchChange.bootstrapSwitch', function(event, state) {    

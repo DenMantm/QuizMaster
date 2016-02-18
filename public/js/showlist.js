@@ -10,7 +10,9 @@ $(document).ready(function() {
         }
     });
     $("#btn_remove").click(function() {
-        var id = "/removeqz?id=" +
+        if (confirm("Are you sure?"))
+{
+    var id = "/removeqz?id=" +
             $(this)
             .parent()
             .parent()
@@ -19,6 +21,8 @@ $(document).ready(function() {
         $.post(id, function() {
             location.href = "/showquiz";
         });
+}
+        
     });
     $("#btn_edit").click(function() {
         var id = "/editqz?id=" +

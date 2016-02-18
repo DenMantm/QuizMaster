@@ -18,6 +18,7 @@ var user,
 var quizCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
+
 module.exports = function(app, passport) {
 
 	// ==================================
@@ -28,7 +29,9 @@ module.exports = function(app, passport) {
 	// ========== NEW QUIZ ==============
 	// ==================================		
 
-	app.get('/newquiz', function(req, res) {
+
+	
+	app.get('/newquiz', isLoggedIn, function(req, res) {
 		res.render('newquiz.ejs', {
 			user: req.user,
 			message: {
@@ -36,8 +39,8 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
-	//body with data is passed to standardCtrl
-	app.post('/newquiz', function(req, res) {
+
+	app.post('/newquiz', isLoggedIn, function(req, res) {
 		quizCtrl.create(req.body); //saving object to database
 		res.redirect(301, '/showquiz'); //redirecting to homepage
 });
@@ -66,7 +69,7 @@ module.exports = function(app, passport) {
 	
 	app.get('/editqz', function(req, res){
 		return quizCtrl.editqz(req, res);
-	})
+	});
 
 	// ==================================
 	// ========= UPDATE USER ============

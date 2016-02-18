@@ -11,6 +11,19 @@
     $("#submit").hide();
     $("#back").hide();
     
+    
+    //preventing enter button fron sending form which caused form being submited before being fully compleeted
+    $('#newquiz').on('keyup keypress', function(e) {
+  var keyCode = e.keyCode || e.which;
+  if (keyCode === 13) { 
+    e.preventDefault();
+    return false;
+  }
+});
+
+
+
+    
     //activate action listeners for buttons
     //next button
     $("#next").click(function(){
