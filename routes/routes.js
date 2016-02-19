@@ -41,7 +41,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.post('/newquiz', isLoggedIn, function(req, res) {
-		quizCtrl.create(req.body); //saving object to database
+		quizCtrl.create(req); //saving object to database
 		res.redirect(301, '/showquiz'); //redirecting to homepage
 });
 

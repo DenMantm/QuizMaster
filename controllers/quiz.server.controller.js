@@ -2,18 +2,18 @@ var Quiz = require('../models/quiz.server.model.js');
 
 
 //getting info from body object, which is subbmitted by POST methodfrom front end
-exports.create = function(body) {
-     console.log(body.qName);
+exports.create = function(req) {
+    console.log(req)
     var entry = new Quiz ({
-        qName: body.qName,
-        qDescription: body.qDescription,
-        qNumber: body.qNumber,
-        shuffleQuestion: body.shuffleQuestion,
-        shuffleAnswers: body.shuffleAnswers,
-        design: body.design,
-        viewCount: body.viewCount,
-        questions: body.questions,
-        owner: body.owner
+        qName: req.body.qName,
+        qDescription: req.body.qDescription,
+        qNumber: req.body.qNumber,
+        shuffleQuestion: req.body.shuffleQuestion,
+        shuffleAnswers: req.body.shuffleAnswers,
+        design: req.body.design,
+        viewCount: req.body.viewCount,
+        questions: req.body.questions,
+        owner: req.user.local.email
     });
     entry.save();
     //redirect to homepage

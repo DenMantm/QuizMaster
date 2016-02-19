@@ -70,7 +70,7 @@ var quizRouter = require('./routes/quizRoutes')(Quiz);
 app.use('/api/quiz', quizRouter);
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./routes/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 //running app on start
 //require('./app/addQuiz.js')('a');
