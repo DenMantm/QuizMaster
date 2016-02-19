@@ -198,9 +198,10 @@ module.exports = function(app, passport) {
 	//###############################################################################################             
 	//#################################	Retrieving password for user ################################
 	//###############################################################################################
-	app.post('/retrievePassword', function(req, res) {
+	app.post('/retrievePassword/ajax', function(req, res) {
          UserCtrl.getPasswordUser(req,res);
 	});
+	
 	app.get('/retrievePassword', function(req, res) {
 		res.render('./profile/retrievePassword.ejs',{message:''});
 	});
@@ -217,8 +218,8 @@ module.exports = function(app, passport) {
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
-	app.get('/', isLoggedIn, function(req, res) {
-		res.render('index.ejs', {
+	app.get('/', function(req, res) {
+		res.render('login_new.ejs', {
 			user: req.user // get the user out of session and pass to template
 		});
 	});
@@ -228,7 +229,7 @@ module.exports = function(app, passport) {
 	// show the login form
 	app.get('/login', function(req, res) {
 		// render the page and pass in any flash data if it exists
-		res.render('login.ejs', {
+		res.render('login_new.ejs', {
 			message: req.flash('loginMessage')
 		});
 	});
@@ -243,6 +244,18 @@ module.exports = function(app, passport) {
 		failureRedirect: '/login', // redirect back to the signup page if there is an error
 		failureFlash: true // allow flash messages
 	}));
+	//login trough ajax call
+			app.post('/login/ajax', function(req, res, next) {
+	 passport.authenticate('local-login', function(err, user, info) {
+        if (err)  { return next(err); }
+        if (!user) { return res.send({"status": 'noUser'}); }
+        req.logIn(user, function(err) {
+          if (err) { return res.send({"status": 'noUser'});}
+          return res.send({"status": 'done'});
+        });
+		 })(req, res, next);    
+			});
+	
 	// =====================================
 	// SIGNUP ==============================
 	// =====================================
@@ -291,7 +304,7 @@ function isLoggedIn(req, res, next) {
 
 	// if they aren't redirect them to the home page
 	condition = false;
-	res.redirect('/login');
+	res.redirect('/');
 }
 
 //Asynchrosity generation function REF: 
