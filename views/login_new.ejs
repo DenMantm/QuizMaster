@@ -47,7 +47,7 @@
    $(document).ready(function() {
 
     //just login button:::::
-    $('#Login').click(function() {
+    $('#Login_index').click(function() {
 	 $.ajax({
             type: "POST",
             dataType: 'json',
@@ -64,12 +64,48 @@
             }
         });
     });//finishing login button
-    $('#singup').click(function(){
+    $('#signup_index').click(function(){
+        if($('#password_signup').val()!=$('#password_confirm_signup').val()){
+            $('#message_signup').show();
+            document.getElementById("message_signup").innerHTML = "Passwords doesnt match, please check fields";
+            return;
+        }
+        if($('#password_signup').val().length<6){
+            $('#message_signup').show();
+            document.getElementById("message_signup").innerHTML = "Password is to short";
+            return;
+        }
+        
+                	 $.ajax({
+            type: "POST",
+            dataType: 'json',
+            data: { "email": $('#email_signup').val(),
+                "password": $('#password_signup').val(),
+                "username": $('#username_signup').val()
+                
+            },
+            url: "/signup/ajax",
+            success: function (data) {
+                alert(data.status);
+            	if(data.status === 'emailExists'){
+            		$('#message_signup').show();
+            		document.getElementById("message_signup").innerHTML = "E-mail is already taken";
+            	}
+            	            	if(data.status === 'userExists'){
+            		$('#message_signup').show();
+            		document.getElementById("message_signup").innerHTML = "Username is already taken";
+            	}
+            	if(data.status==='done'){
+            	    //document.getElementById("message_signup").innerHTML = "E-mail with password recovery link was sent";
+            	    window.location.href = '/index';
+            	}
+            }
+        });
+        
         
     });
     
-    $('#retrieve').click(function(){
-        
+    $('#retrieve_index').click(function(){
         	 $.ajax({
             type: "POST",
             dataType: 'json',
@@ -139,7 +175,7 @@
 			</form>
 <div style='display:none;' id='message' class="alert alert-danger"></div>
                 
-    <button id='Login' type="submit" class="btn btn-success">Login</button>
+    <button id='Login_index' type="submit" class="btn btn-success">Login</button>
 	<hr>
 	<p>Forgot password? <a href="#recover_modal" data-dismiss="modal"  data-toggle="modal">Recovere password</a></p>
 	<p>Need an account? <a href="#signup_modal" data-dismiss="modal"  data-toggle="modal">Signup</a></p>
@@ -169,6 +205,57 @@
                     <h2 style='float:left;'><i class="glyphicon glyphicon-plus"></i>Signup</h2>
                 </div>
                 <div class="modal-body">
+                    
+                    	<!-- LOGIN FORM -->
+	          <form class="form-horizontal" action="/signup" method="POST">
+          <fieldset>
+            <div id="legend">
+              <legend class="">Registration details:</legend>
+            </div>
+            
+            <div class="control-group">
+              <label class="control-label" for="username">Username</label>
+              <div class="controls">
+                <input type="text" id="username_signup" name="username" placeholder="" class="form-control input-lg">
+                <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+              </div>
+            </div>
+         
+            <div class="control-group">
+              <label class="control-label" for="email">E-mail</label>
+              <div class="controls">
+                <input type="email" id="email_signup" name="email" placeholder="" class="form-control input-lg">
+                <p class="help-block">Please provide your E-mail</p>
+              </div>
+            </div>
+         
+            <div class="control-group">
+              <label class="control-label" for="password">Password</label>
+              <div class="controls">
+                <input type="password" id="password_signup" name="password" placeholder="" class="form-control input-lg">
+                <p class="help-block">Password should be at least 6 characters</p>
+              </div>
+            </div>
+         
+            <div class="control-group">
+              <label class="control-label" for="password_confirm_signup">Password (Confirm)</label>
+              <div class="controls">
+                <input type="password" id="password_confirm_signup" name="password_confirm" placeholder="" class="form-control input-lg">
+                <p class="help-block">Please confirm password</p>
+              </div>
+            </div>
+         
+            <div class="control-group">
+              <!-- Button -->
+              <div class="controls">
+                
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <div style='display:none;' id='message_signup' class="alert alert-danger"></div>
+        <button id='signup_index' type="submit" class="btn btn-success">Register</button>
+	<hr>
     
     <p>Need to login? <a href="#login_modal" data-dismiss="modal"  data-toggle="modal">Login</a></p>                
 	<p>Forgot password? <a href="#recover_modal" data-dismiss="modal"  data-toggle="modal">Recovere password</a></p>
@@ -199,7 +286,7 @@
 		</div>
 	</form>
 	<div style='display:none;' id='message_retrieve' class="alert alert-danger"></div>
-	<button id='retrieve' type="submit" class="btn btn-success">Send renewal link</button>
+	<button id='retrieve_index' type="submit" class="btn btn-success">Send renewal link</button>
 	<hr>
                     
 	<p>Need to login? <a href="#login_modal" data-dismiss="modal"  data-toggle="modal">Login</a></p>

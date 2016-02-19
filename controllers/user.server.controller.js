@@ -79,9 +79,7 @@ exports.getPasswordUser = function(req,res){
         res.send({status:'noUser'});
     }
     else{
-        
         console.log('User found');
-        
 //assembling link here for user password recovery::
 var link = "http://"+req.get('host')+"/recoverPassword/"+doc.local.email+'/'+doc.local.key;
         var message = {
