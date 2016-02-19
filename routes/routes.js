@@ -18,6 +18,10 @@ var user,
 var quizCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
+// load up the user model
+var User       		= require('../models/user.server.model');
+// load all the things we need
+var LocalStrategy   = require('passport-local').Strategy;
 
 module.exports = function(app, passport) {
 
@@ -198,9 +202,10 @@ module.exports = function(app, passport) {
 	//###############################################################################################             
 	//#################################	Retrieving password for user ################################
 	//###############################################################################################
-	app.post('/retrievePassword', function(req, res) {
+	app.post('/retrievePassword/ajax', function(req, res) {
          UserCtrl.getPasswordUser(req,res);
 	});
+	
 	app.get('/retrievePassword', function(req, res) {
 		res.render('./profile/retrievePassword.ejs',{message:''});
 	});
@@ -217,8 +222,8 @@ module.exports = function(app, passport) {
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
-	app.get('/', isLoggedIn, function(req, res) {
-		res.render('index.ejs', {
+	app.get('/', function(req, res) {
+		res.render('login_new.ejs', {
 			user: req.user // get the user out of session and pass to template
 		});
 	});
@@ -228,7 +233,7 @@ module.exports = function(app, passport) {
 	// show the login form
 	app.get('/login', function(req, res) {
 		// render the page and pass in any flash data if it exists
-		res.render('login.ejs', {
+		res.render('login_new.ejs', {
 			message: req.flash('loginMessage')
 		});
 	});
@@ -243,12 +248,23 @@ module.exports = function(app, passport) {
 		failureRedirect: '/login', // redirect back to the signup page if there is an error
 		failureFlash: true // allow flash messages
 	}));
+	//login trough ajax call
+			app.post('/login/ajax', function(req, res, next) {
+	 passport.authenticate('local-login', function(err, user, info) {
+        if (err)  { return next(err); }
+        if (!user) { return res.send({"status": 'noUser'}); }
+        req.logIn(user, function(err) {
+          if (err) { return res.send({"status": 'noUser'});}
+          return res.send({"status": 'done'});
+        });
+		 })(req, res, next);    
+			});
+	
 	// =====================================
 	// SIGNUP ==============================
 	// =====================================
 	// show the signup form
 	app.get('/signup', function(req, res) {
-
 		// render the page and pass in any flash data if it exists
 		res.render('signup.ejs', {
 			message: req.flash('signupMessage')
@@ -256,11 +272,36 @@ module.exports = function(app, passport) {
 	});
 
 	// process the signup form
+	
+	
+	
 	app.post('/signup', passport.authenticate('local-signup', {
 		successRedirect: '/index', // redirect to the secure profile section
 		failureRedirect: '/signup', // redirect back to the signup page if there is an error
 		failureFlash: true // allow flash messages
 	}));
+	
+	
+	
+		//signup trough ajax call
+			app.post('/signup/ajax',checkSignup, function(req, res, next) {
+				
+	 passport.authenticate('local-signup', function(err, user, info) {
+	 	
+        if (err)  { return next(err); }
+        
+        // if (user) { return res.send({"status": 'emailExists'});}
+        
+        req.logIn(user, function(err) {
+        	
+          if (err) { return res.send({"status": 'error'});}
+          
+          return res.send({"status": 'done'});
+        });
+		 })(req, res, next);    
+	
+			});
+			
 	// =====================================
 	// PROFILE SECTION =========================
 	// =====================================
@@ -291,7 +332,40 @@ function isLoggedIn(req, res, next) {
 
 	// if they aren't redirect them to the home page
 	condition = false;
-	res.redirect('/login');
+	res.redirect('/');
+}
+
+//creating minleware to check ir that kind e-mail or nickname is already takem
+function checkSignup(req, res, next) {
+console.log('USER: '+ req.body.email);
+        User.findOne({ 'local.email' :  req.body.email }, function(err, user) {
+            // if there are any errors, return the error
+            if (err){
+            console.log(err);
+              return  res.send({"status": err});
+}
+            // check to see if theres already a user with that email
+            if (user) {
+                return res.send({"status": 'emailExists'});
+            }  else {
+            	        User.findOne({ 'local.email' :  req.body.username }, function(err, user) {
+            // if there are any errors, return the error
+            if (err){
+            console.log(err);
+              return  res.send({"status": err});
+}
+            // check to see if theres already a user with that email
+            if (user) {
+                return res.send({"status": 'userExists'});
+            }  else {
+			return	next();
+                     }
+        });
+                     }
+        });
+
+
+
 }
 
 //Asynchrosity generation function REF: 

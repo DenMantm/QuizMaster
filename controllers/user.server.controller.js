@@ -76,12 +76,10 @@ exports.getPasswordUser = function(req,res){
     
     if(doc ===null){
         console.log('cant find user');
-        res.render('./profile/retrievePassword.ejs',{message:'User with such e-mail does not exist'});
+        res.send({status:'noUser'});
     }
     else{
-        
         console.log('User found');
-        
 //assembling link here for user password recovery::
 var link = "http://"+req.get('host')+"/recoverPassword/"+doc.local.email+'/'+doc.local.key;
         var message = {
@@ -97,7 +95,7 @@ var link = "http://"+req.get('host')+"/recoverPassword/"+doc.local.email+'/'+doc
   ]
 };
         emaiLink.sendEmail(message);
-        res.render('./profile/retrievePassword.ejs',{message:'E-mail with password recovery was sent'});
+        res.send({status:'done'});
     }
 });
 };

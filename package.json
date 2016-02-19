@@ -2,18 +2,24 @@
   "name": "node-authentication",
   "main": "server.js",
   "dependencies": {
+    "array-flatten": "^2.0.0",
     "bcrypt-nodejs": "latest",
     "body-parser": "^1.15.0",
     "bootstrap-switch": "^3.3.2",
     "connect-flash": "~0.1.1",
     "cookie-parser": "^1.4.1",
+    "debug": "^2.2.0",
     "ejs": "~0.8.5",
     "emailjs": "^1.0.2",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+<<<<<<< HEAD
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
     "gulp-nodemon": "^2.0.6",
+=======
+    "finalhandler": "^0.4.1",
+>>>>>>> 292b564924ea5e1246d3875f1e54f48c8b403c95
     "install": "^0.4.1",
     "mongodb": "^2.1.4",
     "mongoose": "^3.8.39",
