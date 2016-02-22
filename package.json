@@ -13,7 +13,13 @@
     "emailjs": "^1.0.2",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+<<<<<<< HEAD
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.0.6",
+=======
     "finalhandler": "^0.4.1",
+>>>>>>> 292b564924ea5e1246d3875f1e54f48c8b403c95
     "install": "^0.4.1",
     "mongodb": "^2.1.4",
     "mongoose": "^3.8.39",
@@ -24,6 +30,12 @@
     "passport-facebook": "~1.0.2",
     "passport-google-oauth": "~0.1.5",
     "passport-local": "~0.1.6",
-    "passport-twitter": "~1.0.2"
+    "passport-twitter": "~1.0.2",
+    "should": "^8.2.2",
+    "sinon": "^1.17.3"
+  },
+  "devDependencies": {
+    "gulp-env": "^0.4.0",
+    "supertest": "^1.2.0"
   }
 }

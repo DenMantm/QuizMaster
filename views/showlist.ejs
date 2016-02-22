@@ -20,7 +20,7 @@
    <% }%>
     <% for(var i=0; i<list.length; i++) {%>
     <div class="container-fluid" id="<%= list[i]._id %>">
-        <% if (user.local.username === list[i].owner) { %>
+        <% if (user.local.email === list[i].owner) { %>
     	<div class="row mine">
     	    <% } else { %>
     	   <div class="row notMine">

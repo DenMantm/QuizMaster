@@ -31,7 +31,7 @@ $('#submit_btn').click(function(){
   } else {
     $("#qNum").removeClass("has-error bg-danger");
   }
-  var pattern = /^(0([1-9]\d*))$/;
+  var pattern = /^(0|([1-9]\d*))$/;
   if (name !== '' && desc !== '' && (qnum === 'all' || pattern.test(qnum))) {
   $("#update_form").submit();
   } 
