@@ -344,7 +344,7 @@ console.log('USER: '+ req.body.email);
             console.log(err);
               return  res.send({"status": err});
 }
-            // check to see if theres already a user with that email
+            // check to see if theres already a email with that email
             if (user) {
                 return res.send({"status": 'emailExists'});
             }  else {
@@ -354,7 +354,7 @@ console.log('USER: '+ req.body.email);
             console.log(err);
               return  res.send({"status": err});
 }
-            // check to see if theres already a user with that email
+            // check to see if theres already a username with that email
             if (user) {
                 return res.send({"status": 'userExists'});
             }  else {
