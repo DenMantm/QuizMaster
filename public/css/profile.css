@@ -1,4 +1,6 @@
-    
+.hidden_container{
+    display:none;
+}
     .user-row {
     margin-bottom: 14px;
 }

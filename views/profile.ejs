@@ -2,7 +2,6 @@
 
 REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 
-
 -->
 <!doctype html>
 <html>
@@ -14,13 +13,10 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 <% include ./index_partials/navbar %>
 </div>
 
-
 <div class="container">
       <div class="row">
-        
         <div class='col-md-2'>
              <style>
-      
       #sidebar {
     background-color: #191919;
     padding: 10px;
@@ -49,10 +45,25 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
     background-color: #C72A25;
 }
     </style>
-    
+<script>
+  $(document).ready(function() {
+    //this function provides switching between elements first argument is which element to hide, second on which element to switch to
+     function switchMe(hiding,showing) {
+           $('#' + hiding).removeClass().addClass('animated zoomOutUp')
+               .one('webkitAnimationEnd oAnimationEnd', function() {
+                   $(this).removeClass().addClass('hidden_container');
+                    $('#'+showing).removeClass().addClass('animated zoomInDown');
+                   //$('#'+showing+' li').removeClass().addClass('');
+               });
+       }
+       $('#profile_button').click(function() {
+         switchMe('container_profile_details','container_profile_details');
+       });
+  });
+</script>    
     <ul id="sidebar" class="nav nav-pills nav-stacked" >
       <li class="active">
-        <a href="#">
+        <a id='profile_button' href="#">
           <span class="glyphicon glyphicon-off"></span>
   Overview</a>
       </li>
@@ -78,8 +89,9 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
       </li>
     </ul>
           </div>
-        <div class="col-md-7" >
-
+                                    <!--VIEW PROFILE DETAILS STARTING HERE-->
+        <div id='container_profile_details'>
+        <div class="col-md-7">
           <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title"><%= user.local.email %></h3>
@@ -91,61 +103,6 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                 <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src= '/getProgilePic'class="img-circle img-responsive">  
                 </br>
                  <input id='enableSavePicture' value='Change' data-original-title="Change Picture" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning"></input>
-                
- 
-<div id='saveImageModal' class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Change Profile Picture</h4>
-      </div>
-      <div class="modal-body">
-        
-        <p>File Upload</p>
-        
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-          Select an image to upload:
-          <input class="btn btn-sm btn-warning" type="file" name="image"> 
-             </br>
-            <input class="btn btn-sm btn-warning" type="submit" value="UploadImage">
-            </form>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-        <!--~~~~~~~~~~~~~~~~~~~MODAL DOR USER DELETION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
-<div id='deleteUserModal' class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Delete User Profile</h4>
-      </div>
-      <div class="modal-body">
-         <form action="/deleteUser" method="post">
-             <h4>Are you sure you want to delete your user profile?</h4>
-            <input name='password' type="password" class="form-control"  placeholder="Your Password">
-            </br>
-            <input type="submit" id='deleteUser' value='Delete' data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"></input>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-                
                 </div>
                 
                 <div class=" col-md-9 col-lg-9 "> 
@@ -198,7 +155,67 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
            <!----- finishing md5 here-->
            
         </div>
+        
+        </div><!--profile details finished-->
+        
+        
+        
+       <!-------------------------------------------------MODALS--------------------------------------------->
        
+        <!--~~~~~~~~~~~~~~~~~~~MODAL DOR USER DELETION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<div id='deleteUserModal' class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete User Profile</h4>
+      </div>
+      <div class="modal-body">
+         <form action="/deleteUser" method="post">
+             <h4>Are you sure you want to delete your user profile?</h4>
+            <input name='password' type="password" class="form-control"  placeholder="Your Password">
+            </br>
+            <input type="submit" id='deleteUser' value='Delete' data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"></input>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+                                                  
+                      <!--<                   !--SAVE IMAGE MODAL--                                                >-->
+      <div id='saveImageModal' class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Change Profile Picture</h4>
+      </div>
+      <div class="modal-body">
+        
+        <p>File Upload</p>
+        
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          Select an image to upload:
+          <input class="btn btn-sm btn-warning" type="file" name="image"> 
+             </br>
+            <input class="btn btn-sm btn-warning" type="submit" value="UploadImage">
+            </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->          
+                
+                
         
          <div class='col-md-3'>
            
