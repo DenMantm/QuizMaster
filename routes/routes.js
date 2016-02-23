@@ -103,26 +103,65 @@ module.exports = function(app, passport) {
 	//#################################	UPLOADING IMAGE FROM THE USER ###############################
 	//###############################################################################################
 
-	app.post('/upload', isLoggedIn, function(req, res) {
-		// Get the temporary location of the file
-		var tmp_path = req.files.image.path,
-			target_path = './upload/userPics/' + req.user.local.email;
-		// Move the file from the temporary location to the intended location
-		fs.rename(tmp_path, target_path, function(err) {
-			if (err) throw err;
-			// Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files.
-			fs.unlink(tmp_path, function() {
-				if (err) throw err;
-			});
-		});
-		//update profile image link in database
-		var update = {
+	// app.post('/upload', isLoggedIn, function(req, res) {
+	// 	// Get the temporary location of the file
+	// 	console.log(req.files);
+	// 	var tmp_path = req.files.image.path,
+	// 		target_path = './upload/userPics/' + req.user.local.email;
+	// 	// Move the file from the temporary location to the intended location
+	// 	fs.rename(tmp_path, target_path, function(err) {
+	// 		if (err) throw err;
+	// 		// Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files.
+	// 		fs.unlink(tmp_path, function() {
+	// 			if (err) throw err;
+	// 		});
+	// 	});
+	// 	//update profile image link in database
+	// 	var update = {
+	// 		'local.pictureUrl': "./upload/userPics/" + req.user.local.email
+	// 	};
+	// 	UserCtrl.updateOneElement(req.user, update);
+
+	// 	res.redirect(301, '/updateUser'); //redirecting to homepage
+	// });
+
+///REBUILDING FILE UPLOAD FOR EXPRESSS 4
+
+
+   	var formidable = require('formidable'),
+    fs = require('fs'),
+    path = require('path');
+
+    app.post('/upload', function(req, res) {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        // `file` is the name of the <input> field of type `file`
+        var old_path = files.file.path,
+            file_size = files.file.size,
+            file_ext = files.file.name.split('.').pop(),
+            index = old_path.lastIndexOf('/') + 1,
+            file_name = old_path.substr(index),
+            new_path = './upload/userPics/' + req.user.local.email;
+
+        fs.readFile(old_path, function(err, data) {
+            fs.writeFile(new_path, data, function(err) {
+                fs.unlink(old_path, function(err) {
+                    if (err) {
+                        res.status(500);
+                        res.json({'success': false});
+                    } else {
+             var update = {
 			'local.pictureUrl': "./upload/userPics/" + req.user.local.email
 		};
 		UserCtrl.updateOneElement(req.user, update);
 
 		res.redirect(301, '/updateUser'); //redirecting to homepage
-	});
+                    }
+                });
+            });
+        });
+    });
+});
 
 	//Uploading file REF:http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
 	//###############################################################################################               
