@@ -36,12 +36,12 @@ exports.checkqName = function(req,res) {
             console.log("Error: " + err);
         } else {
         if(results.length != 0) {
-            message = {text: "Quizz with such a name already exsists"};
+            message = {err: "Quizz with such a name already exsists"};
         } else {
             message = {text: "OK"};
         }
         console.log(message);
-        res.render('newquiz.ejs' , {message: message, user: req.user});
+        res.send(message)
         }
     });
 };

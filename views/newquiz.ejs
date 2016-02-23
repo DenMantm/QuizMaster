@@ -27,6 +27,8 @@
                 <div class="col-md-2">
                 </div>
             </div>
+  
+            
             <div class="row">
                 <div class="col-md-2">
                 </div>
@@ -48,8 +50,6 @@
                         <div class="form-group" id="step2">
                             <label for="qDescription">
                                 Step 2: Please provide a short description of your quizz (optional)
-                                <%= user.local.email%>
-                        <%= message.text%>
                             </label>
                             <textarea class="form-control" rows="3" id="qDescription" name="qDescription"></textarea>
                         </div>
@@ -95,9 +95,6 @@
                                 <label>
                                     <input type="checkbox" value="false" id="cb_shuffleAnswers" name="cb_shuffleAnswers"> Display answers in random order
                                     <input class="form-control" id="shuffleAnswers" name="shuffleAnswers" type="hidden"/>
-                                    <input class="form-control" id="owner" name="owner" type="hidden" value="<%= user.local.email%>"/>
-
-                                
                                 </label>
                             </div>
                         </div>
@@ -124,7 +121,13 @@
                                 </table>
                             </div>
                         </div>
-                        
+
+
+                    <div id="alert">
+                    </div>
+
+
+      
                         <button type="button" class="btn btn-danger" id="back">Back</button>
                         <button type="button" class="btn btn-success" id="next">Next</button>
                         <button type="submit" class="btn btn-default" id="submit">Submit</button>
