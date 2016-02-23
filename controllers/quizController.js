@@ -80,6 +80,33 @@ var quizController = function (quiz){
         });
     }
     
+    var check = function(req,res){
+        
+        console.log("CHECKING: " + req);
+        var query = quiz.find();
+        var search = req.body.qName;
+    
+        if (search.length > 0)
+        {
+            query.where({ qName: search});
+        }
+        query.exec(function(err, results) {
+            var message;
+            if (err) {
+                console.log("Error: " + err);
+            } else {
+            if(results.length != 0) {
+                message = {text: "Quizz with such a name already exsists"};
+            } else {
+                message = {text: "OK"};
+            }
+            console.log(message);
+            res.render('newquiz.ejs' , {message: message, user: req.user});
+            }
+        });
+        
+    }
+    
     var Delete = function(req,res){
         console.log("removing now")
         req.quiz.remove(function(err){
@@ -97,7 +124,8 @@ var quizController = function (quiz){
 	    IDget: IDget,
 	    put: put,
 	    patch: patch,
-	    Delete: Delete
+	    Delete: Delete,
+	    check:check
 	};
 };
 

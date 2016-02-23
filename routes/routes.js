@@ -75,6 +75,11 @@ module.exports = function(app, passport) {
 		return quizCtrl.editqz(req, res);
 	});
 
+	app.post('/checkName', function(req, res){
+		console.log("Checking: " + req)
+		return quizCtrl.checkqName(req, res);
+	});
+
 	// ==================================
 	// ========= UPDATE USER ============
 	// ==================================
