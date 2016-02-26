@@ -40,9 +40,6 @@ mongoose.connect(configDB.url); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
-
-
-
 // get information from html forms
 
 //HANDLING STATIC CONTENT

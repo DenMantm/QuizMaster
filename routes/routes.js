@@ -91,9 +91,26 @@ module.exports = function(app, passport) {
 
 
 
-	//POST method for user update
+	//POST method for user update limited method which first checks if user nam can be updated and is not taken :-)
 	app.post('/updateUser', isLoggedIn, function(req, res) {
-		UserCtrl.updateUser(req, res, req.user); //querying current user
+		
+		 	when(
+function(done) {
+
+console.log('1 running');
+
+UserCtrl.updateWithCheck(req,res,done);
+
+}
+).then(function() {
+
+	UserCtrl.updateUser(req,res,req.user);
+	console.log('2 running');
+
+
+});
+
+		
 	});
 	//Getting user info 
 	app.get('/updateUser', isLoggedIn, function(req, res) {
@@ -197,7 +214,7 @@ module.exports = function(app, passport) {
 	//###############################################################################################                   
 	//#################################	DELETING USER FROM DATABASE #################################
 	//###############################################################################################
-	app.post('/deleteUser',isLoggedIn, function(req, res) {
+	app.post('/deleteUser/ajax',isLoggedIn, function(req, res) {
 
 		var hashFromDB = req.user.local.password;
 		var plainPassFromUser = req.body.password;
@@ -209,19 +226,47 @@ module.exports = function(app, passport) {
 				console.log('The password matches!');
 				UserCtrl.removeElement(req.user);
 				req.logout();
-				res.render('./profile/profileDeleted');
-
+				res.send({status:'done'});
 			}
-
 			else {
-				console.log('The password does NOT match!');
-				res.render('./profile/profileNotDeleted');
+				res.send({status:'wrongPassword'});
 			}
 		});
 
 
 
 	});
+	
+	//###############################################################################################
+	//############################# Change password while logged in #################################
+	//###############################################################################################
+		app.post('/change_password/ajax', function(req, res) {
+		
+		//putting this just for now, latter will combine in one module::
+		
+				var hashFromDB = req.user.local.password;
+		var plainPassFromUser = req.body.password_old;
+
+		bcrypt.compare(plainPassFromUser, hashFromDB, function(err, matches) {
+			if (err)
+				console.log('Error while checking password');
+			else if (matches) {
+				console.log('The password matches!');
+				
+				require('../app/changePassword.js')(req.body.password_new, req.user);
+				
+				res.send({status:'done'});
+			}
+			else {
+				res.send({status:'wrongPassword'});
+			}
+		});
+			
+			
+         
+         
+	});
+	
 	//###############################################################################################
 	//#################################Verifying user e-mail by link#################################
 	//###############################################################################################
@@ -266,7 +311,7 @@ module.exports = function(app, passport) {
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
-	app.get('/', function(req, res) {
+	app.get('/',isLoggedIn, function(req, res) {
 		res.render('login_new.ejs', {
 			user: req.user // get the user out of session and pass to template
 		});
@@ -356,11 +401,9 @@ module.exports = function(app, passport) {
 			user: req.user // get the user out of session and pass to template
 		});
 	});
-
 	// =====================================
 	// LOGOUT ==============================
 	// =====================================
-
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
@@ -376,7 +419,7 @@ function isLoggedIn(req, res, next) {
 
 	// if they aren't redirect them to the home page
 	condition = false;
-	res.redirect('/');
+	res.redirect('/login');
 }
 
 //creating minleware to check ir that kind e-mail or nickname is already takem
@@ -392,7 +435,7 @@ console.log('USER: '+ req.body.email);
             if (user) {
                 return res.send({"status": 'emailExists'});
             }  else {
-            	        User.findOne({ 'local.email' :  req.body.username }, function(err, user) {
+            	        User.findOne({ 'local.username' :  req.body.username }, function(err, user) {
             // if there are any errors, return the error
             if (err){
             console.log(err);
@@ -415,31 +458,29 @@ console.log('USER: '+ req.body.email);
 //Asynchrosity generation function REF: 
 //http://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
 
-// var when = function() {
-//   var args = arguments;  // the functions to execute first
-//   return {
-//     then: function(done) {
-//       var counter = 0;
-//       for(var i = 0; i < args.length; i++) {
-//         // call each function with a function to call on done
-//         args[i](function() {
-//           counter++;
-//           if(counter === args.length) {  // all functions have notified they're done
-//             done();
-//           }
-//         });
-//       }
-//     }
-//   };
-// };
+var when = function() {
+  var args = arguments;  // the functions to execute first
+  return {
+    then: function(done) {
+      var counter = 0;
+      for(var i = 0; i < args.length; i++) {
+        // call each function with a function to call on done
+        args[i](function() {
+          counter++;
+          if(counter === args.length) {  // all functions have notified they're done
+            done();
+          }
+        });
+      }
+    }
+  };
+};
 //  	when(
 // function(done) {
-	
-	
-// user = UserCtrl.getUser(req.user,done);
+
 // console.log('1 running');
 
-
+// done();
 	
 // }
 // ).then(function() {
