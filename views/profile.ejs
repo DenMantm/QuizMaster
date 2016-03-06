@@ -160,7 +160,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                     <tbody>
                       <tr>
                         <td>Name:</td>
-                        <td><span id='details_static_name' class='fields'><%= user.local.name.firstName+' '+user.local.name.surname%></span>
+                        <td><span id='details_static_name' class='fields'><%= user.local.name.firstName+' '+user.local.name.surname%></span></td>
                       </tr>
                       <tr>
                         <td>Email</td>
@@ -168,13 +168,14 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                       </tr>
                       <tr>
                         <td>Verified:</td>
-                        <td><span><%=user.local.validEmail%></a></span></td>
+                        <td><span><%=user.local.validEmail%></span></td>
                       </tr>
+                      <tr>
                       <td>NickName:</td>
                         <td><span id='details_static_username' class='fields'><%=user.local.username%></span>
                       </tr>
                     <td>Age:</td>
-                        <td><span class='fields'><%=user.local.age%></span>
+                        <td><span class='fields'><%=user.local.age%></span></td>
                       </tr>
                       <tr>
                         <td>Created:</td>

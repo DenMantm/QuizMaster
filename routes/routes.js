@@ -28,7 +28,29 @@ module.exports = function(app, passport) {
 	// ==================================
 	// == CONTENT FOR API AND FTUFF =====
 	// ==================================
+		
+		//calling page
+		app.get('/apiQuiz', function(req, res) {
+		res.render('apiQuiz.ejs');//displaying page where you can add existing questions
+		});
+		
+		//returning existing topic list from the server
+		app.get('/apiQuiz/getTopicList', function(req, res) {
+			
+		var list = require('../from_jservice_API/best_topic_ids.json');
+			res.send(list);
+		});
+	
+	
+	// ================================================================
+	// ========= AIP Quiz, getting and storing list ===================
+	// ================================================================
+	
+	
+	
 	//I WILL MOVE THIS TO OTHER LOCATION AFTER< NOW ITS HERE FOR TESTING PURPOSES
+	
+	//when this function fired, it scans all database from jservice api and assebbles json, which is latter saver to disk
 	app.get('/apiCallGenerateList', function(req, res) {
 
   	var http = require('http');
@@ -40,7 +62,7 @@ module.exports = function(app, passport) {
 
 var options = {
   host: 'www.jservice.io',
-  path: '/api/categories?count=10&offset='+offset
+  path: '/api/categories?count=100&offset='+offset
 };
 
 var callback = function(response) {
@@ -85,15 +107,13 @@ var callback = function(response) {
 						saveToFile();
                         
                     }
-                    http.request(options, callback).end();
+                   // http.request(options, callback).end();
                     
   });
   
   function saveToFile(){
   	                    	var fs = require('fs');
-								
-									var outputFilename = './result.json';
-									
+									var outputFilename = './from_jservice_API/best_topic_ids.json';
 									fs.writeFile(outputFilename, JSON.stringify(topics, null, 4), function(err) {
 									    if(err) {
 									      console.log(err);
@@ -101,8 +121,6 @@ var callback = function(response) {
 									      console.log("JSON saved to " + outputFilename);
 									    }
 									}); 
-                    	
-                    	
                         console.log("::::Its time to stop;:::::" + topics.length);
                         //for (var i =0; i<topics.length;i++){
                            //console.log('topic: '+topics[i].title);
@@ -111,13 +129,13 @@ var callback = function(response) {
                        return;
   }
 }
-
+	
 	http.request(options, callback).end();
 	
 	});
-
-
-
+	
+	
+		
 	// ==================================
 	// == ROUTES FOR QUIZ GET, POST =====
 	// ==================================
@@ -171,14 +189,6 @@ var callback = function(response) {
 	app.post('/checkName', function(req, res){
 		console.log("Checking: " + req)
 		return quizCtrl.checkqName(req, res);
-	});
-	// ======================================
-	// ========= AIP Quiz ===================
-	// ======================================
-	
-	
-		app.get('/apiQuiz', function(req, res) {
-		res.render('apiQuiz.ejs');
 	});
 
 	// ==================================
