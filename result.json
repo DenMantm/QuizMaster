@@ -1,0 +1,382 @@
+[
+    {
+        "id": 754,
+        "title": "anagrams",
+        "clues_count": 91
+    },
+    {
+        "id": 211,
+        "title": "bodies of water",
+        "clues_count": 165
+    },
+    {
+        "id": 622,
+        "title": "holidays & observances",
+        "clues_count": 195
+    },
+    {
+        "id": 1195,
+        "title": "number, please",
+        "clues_count": 105
+    },
+    {
+        "id": 508,
+        "title": "common bonds",
+        "clues_count": 215
+    },
+    {
+        "id": 1800,
+        "title": "before & after",
+        "clues_count": 105
+    },
+    {
+        "id": 672,
+        "title": "colleges & universities",
+        "clues_count": 145
+    },
+    {
+        "id": 420,
+        "title": "weights & measures",
+        "clues_count": 190
+    },
+    {
+        "id": 223,
+        "title": "word origins",
+        "clues_count": 200
+    },
+    {
+        "id": 103,
+        "title": "transportation",
+        "clues_count": 245
+    },
+    {
+        "id": 89,
+        "title": "double talk",
+        "clues_count": 110
+    },
+    {
+        "id": 25,
+        "title": "science",
+        "clues_count": 250
+    },
+    {
+        "id": 49,
+        "title": "food",
+        "clues_count": 215
+    },
+    {
+        "id": 88,
+        "title": "geography",
+        "clues_count": 95
+    },
+    {
+        "id": 17,
+        "title": "u.s. states",
+        "clues_count": 110
+    },
+    {
+        "id": 51,
+        "title": "4-letter words",
+        "clues_count": 165
+    },
+    {
+        "id": 21,
+        "title": "animals",
+        "clues_count": 260
+    },
+    {
+        "id": 42,
+        "title": "sports",
+        "clues_count": 275
+    },
+    {
+        "id": 67,
+        "title": "television",
+        "clues_count": 235
+    },
+    {
+        "id": 78,
+        "title": "world capitals",
+        "clues_count": 140
+    },
+    {
+        "id": 7,
+        "title": "u.s. cities",
+        "clues_count": 245
+    },
+    {
+        "id": 41,
+        "title": "first ladies",
+        "clues_count": 127
+    },
+    {
+        "id": 50,
+        "title": "u.s. history",
+        "clues_count": 135
+    },
+    {
+        "id": 10,
+        "title": "children's literature",
+        "clues_count": 92
+    },
+    {
+        "id": 26,
+        "title": "fashion",
+        "clues_count": 125
+    },
+    {
+        "id": 37,
+        "title": "nursery rhymes",
+        "clues_count": 110
+    },
+    {
+        "id": 31,
+        "title": "the bible",
+        "clues_count": 225
+    },
+    {
+        "id": 83,
+        "title": "potent potables",
+        "clues_count": 185
+    },
+    {
+        "id": 99,
+        "title": "religion",
+        "clues_count": 130
+    },
+    {
+        "id": 119,
+        "title": "leftovers",
+        "clues_count": 95
+    },
+    {
+        "id": 105,
+        "title": "3-letter words",
+        "clues_count": 255
+    },
+    {
+        "id": 139,
+        "title": "5-letter words",
+        "clues_count": 110
+    },
+    {
+        "id": 136,
+        "title": "stupid answers",
+        "clues_count": 301
+    },
+    {
+        "id": 128,
+        "title": "the old testament",
+        "clues_count": 105
+    },
+    {
+        "id": 109,
+        "title": "state capitals",
+        "clues_count": 230
+    },
+    {
+        "id": 184,
+        "title": "musical instruments",
+        "clues_count": 175
+    },
+    {
+        "id": 197,
+        "title": "books & authors",
+        "clues_count": 110
+    },
+    {
+        "id": 163,
+        "title": "odds & ends",
+        "clues_count": 100
+    },
+    {
+        "id": 176,
+        "title": "business & industry",
+        "clues_count": 225
+    },
+    {
+        "id": 114,
+        "title": "history",
+        "clues_count": 230
+    },
+    {
+        "id": 267,
+        "title": "nature",
+        "clues_count": 155
+    },
+    {
+        "id": 218,
+        "title": "science & nature",
+        "clues_count": 115
+    },
+    {
+        "id": 287,
+        "title": "zoology",
+        "clues_count": 100
+    },
+    {
+        "id": 249,
+        "title": "homophones",
+        "clues_count": 120
+    },
+    {
+        "id": 236,
+        "title": "letter perfect",
+        "clues_count": 95
+    },
+    {
+        "id": 309,
+        "title": "the movies",
+        "clues_count": 130
+    },
+    {
+        "id": 306,
+        "title": "potpourriiii",
+        "clues_count": 320
+    },
+    {
+        "id": 253,
+        "title": "food & drink",
+        "clues_count": 190
+    },
+    {
+        "id": 264,
+        "title": "shakespeare",
+        "clues_count": 100
+    },
+    {
+        "id": 227,
+        "title": "hodgepodge",
+        "clues_count": 235
+    },
+    {
+        "id": 313,
+        "title": "americana",
+        "clues_count": 195
+    },
+    {
+        "id": 357,
+        "title": "organizations",
+        "clues_count": 150
+    },
+    {
+        "id": 369,
+        "title": "travel & tourism",
+        "clues_count": 146
+    },
+    {
+        "id": 442,
+        "title": "people",
+        "clues_count": 240
+    },
+    {
+        "id": 530,
+        "title": "world history",
+        "clues_count": 150
+    },
+    {
+        "id": 539,
+        "title": "museums",
+        "clues_count": 160
+    },
+    {
+        "id": 561,
+        "title": "rhyme time",
+        "clues_count": 215
+    },
+    {
+        "id": 648,
+        "title": "abbrev.",
+        "clues_count": 100
+    },
+    {
+        "id": 582,
+        "title": "u.s. geography",
+        "clues_count": 220
+    },
+    {
+        "id": 574,
+        "title": "literature",
+        "clues_count": 140
+    },
+    {
+        "id": 770,
+        "title": "pop music",
+        "clues_count": 195
+    },
+    {
+        "id": 705,
+        "title": "familiar phrases",
+        "clues_count": 105
+    },
+    {
+        "id": 680,
+        "title": "mythology",
+        "clues_count": 135
+    },
+    {
+        "id": 676,
+        "title": "19th century america",
+        "clues_count": 95
+    },
+    {
+        "id": 793,
+        "title": "nonfiction",
+        "clues_count": 145
+    },
+    {
+        "id": 777,
+        "title": "fruits & vegetables",
+        "clues_count": 140
+    },
+    {
+        "id": 780,
+        "title": "american history",
+        "clues_count": 265
+    },
+    {
+        "id": 897,
+        "title": "body language",
+        "clues_count": 105
+    },
+    {
+        "id": 1053,
+        "title": "languages",
+        "clues_count": 100
+    },
+    {
+        "id": 1079,
+        "title": "around the world",
+        "clues_count": 115
+    },
+    {
+        "id": 1114,
+        "title": "annual events",
+        "clues_count": 217
+    },
+    {
+        "id": 1145,
+        "title": "foreign words & phrases",
+        "clues_count": 115
+    },
+    {
+        "id": 1420,
+        "title": "quotations",
+        "clues_count": 115
+    },
+    {
+        "id": 2537,
+        "title": "brand names",
+        "clues_count": 105
+    },
+    {
+        "id": 3869,
+        "title": "word puzzles",
+        "clues_count": 100
+    },
+    {
+        "id": 6924,
+        "title": "websites",
+        "clues_count": 100
+    }
+]

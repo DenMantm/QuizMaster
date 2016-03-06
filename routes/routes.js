@@ -14,7 +14,8 @@
 var user,
 	condition = false, //this value is set accordingly if you are logged in or not
 	fs = require('fs'),
-	bcrypt = require('bcrypt-nodejs');
+	bcrypt = require('bcrypt-nodejs'),
+	$ = require('jquery');
 var quizCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
@@ -24,6 +25,98 @@ var User       		= require('../models/user.server.model');
 var LocalStrategy   = require('passport-local').Strategy;
 
 module.exports = function(app, passport) {
+	// ==================================
+	// == CONTENT FOR API AND FTUFF =====
+	// ==================================
+	//I WILL MOVE THIS TO OTHER LOCATION AFTER< NOW ITS HERE FOR TESTING PURPOSES
+	app.get('/apiCallGenerateList', function(req, res) {
+
+  	var http = require('http');
+  	var offset = 0;
+  	var counter = 0;
+  	var whenToStop = 250;
+  	
+  	var topics =[];
+
+var options = {
+  host: 'www.jservice.io',
+  path: '/api/categories?count=10&offset='+offset
+};
+
+var callback = function(response) {
+	var data = "";
+
+  //another chunk of data has been recieved, so append it to `str`
+  response.on('data', function (data_rec) {
+ data += data_rec;
+  	
+    console.log('chunkHere finished');
+    
+  });
+  response.on('error',function(){
+  	console.log('encountered error');
+  })
+
+  //the whole response has been recieved, so we just print it out here
+  response.on('end', function () {
+  	data = JSON.parse(data);
+	if(data[0] == undefined){
+		console.log('empty data set')
+		saveToFile();
+	}  	
+  	  	for(var i = 0; i < data.length;i++){
+                           //var b = new Object();
+                           //console.log(data[i]);
+                           //b = data[i];
+                           if(data[i].clues_count>90){
+                           topics.push(data[i]);
+                           console.log('PUTTING IN, clues count: ' + data[i].clues_count);
+                           
+                           }
+                           else console.log('skipping, clues count: '+ data[i].clues_count);
+                       }
+    console.log('Finishing'+ counter+"offset: "+offset);
+    offset+=100;
+    options.path = '/api/categories?count=100&offset='+offset;
+    
+                       counter++;
+                    if(counter == whenToStop){
+                    	
+						saveToFile();
+                        
+                    }
+                    http.request(options, callback).end();
+                    
+  });
+  
+  function saveToFile(){
+  	                    	var fs = require('fs');
+								
+									var outputFilename = './result.json';
+									
+									fs.writeFile(outputFilename, JSON.stringify(topics, null, 4), function(err) {
+									    if(err) {
+									      console.log(err);
+									    } else {
+									      console.log("JSON saved to " + outputFilename);
+									    }
+									}); 
+                    	
+                    	
+                        console.log("::::Its time to stop;:::::" + topics.length);
+                        //for (var i =0; i<topics.length;i++){
+                           //console.log('topic: '+topics[i].title);
+                           //console.log('clues: '+topics[i].clues_count);
+                       // }
+                       return;
+  }
+}
+
+	http.request(options, callback).end();
+	
+	});
+
+
 
 	// ==================================
 	// == ROUTES FOR QUIZ GET, POST =====
@@ -79,6 +172,14 @@ module.exports = function(app, passport) {
 		console.log("Checking: " + req)
 		return quizCtrl.checkqName(req, res);
 	});
+	// ======================================
+	// ========= AIP Quiz ===================
+	// ======================================
+	
+	
+		app.get('/apiQuiz', function(req, res) {
+		res.render('apiQuiz.ejs');
+	});
 
 	// ==================================
 	// ========= UPDATE USER ============
@@ -96,17 +197,13 @@ module.exports = function(app, passport) {
 		
 		 	when(
 function(done) {
-
-console.log('1 running');
-
+//first this
 UserCtrl.updateWithCheck(req,res,done);
 
 }
 ).then(function() {
-
+	//then this
 	UserCtrl.updateUser(req,res,req.user);
-	console.log('2 running');
-
 
 });
 

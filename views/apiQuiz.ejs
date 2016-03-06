@@ -1,0 +1,151 @@
+<!-- views/index.ejs 
+
+REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
+
+-->
+<!doctype html>
+<html>
+<head>
+<% include ./index_partials/head %>
+</head>
+<body>
+  <div class="container">
+  <% include ./index_partials/navbar %>
+  </div>
+
+<div class="container">
+      <div class="row">
+        <div class='col-md-2'>
+            <style>
+/*      #sidebar {*/
+/*    background-color: #191919;*/
+/*    padding: 10px;*/
+/*}*/
+/*#sidebar a:hover, a:focus {*/
+/*    color: #FFF;*/
+/*    text-decoration: none;*/
+/*}*/
+/*#sidebar.nav > li > a,*/
+/*#sidebar.nav > li > a:link {*/
+/*    background-color: #191919;*/
+/*    color: #FFF;*/
+/*}*/
+/*#sidebar.nav > li > a:hover,*/
+/*#sidebar.nav > li > a:focus {*/
+/*    background-color: #373737;*/
+/*}*/
+/*#sidebar.nav-pills > li.active > a,*/
+/*#sidebar.nav-pills > li.active > a:hover,*/
+/*#sidebar.nav-pills > li.active > a:focus {*/
+/*    color: #FFF;*/
+/*    background-color: #C72A25;*/
+/*}*/
+/*    </style>
+<script>
+
+  $(document).ready(function() {
+    //deleting user part 
+           //just login button:::::
+       $('#generateCall').click(function() {
+           var topics =[];
+           var offset = 100;
+           var whenToStop = 700;
+           var counter = 0;
+           for(var inn = 0 ; inn<whenToStop;inn++){
+               
+          
+           $.ajax({
+               type: "GET",
+               dataType: 'json',
+               url: "https://jservice.io/api/categories?count=100&offset=100"+offset,
+               success: function(data) {
+                                               //  if(inn===whenToStop){
+                            // console.log("RUNNING");
+                            // scanArray();
+                    for(var i = 0; i < data.length;i++){
+                           //var b = new Object();
+                           //console.log(data[i]);
+                           //b = data[i];
+                           if(data[i].clues_count>80){
+                           topics.push(data[i]);
+                           //console.log('PUTTING IN, clues count: ' + data[i].clues_count);
+                           }
+                           //else console.log('skipping, clues count: '+ data[i].clues_count);
+                       }
+                      
+
+                                //}
+                    
+           offset+=100;
+                   
+           
+               },
+               complete: function(){
+                   console.log('Call complete');
+                   counter++;
+                    if(counter == whenToStop){
+                        console.log("::::Its time to stop;:::::" + topics.length);
+                        for (var i =0; i<topics.length;i++){
+                           console.log('topic: '+topics[i].title);
+                           console.log('clues: '+topics[i].clues_count);
+                        }
+                        
+                    }
+                            
+                            
+                        }
+   
+           });
+        //   function scanArray(){
+        //       var i = topics.length-1;
+        //       while(i>0){
+        //           if(topics[i].clues_count<100){
+        //               topics.splice(i, 1);
+        //               i--;
+        //           }
+                   
+                   
+        //           i--;
+        //       }
+        //       console.log(topics);
+               
+        //   }
+
+           }
+           
+           
+       }); //finishing login button
+       
+  });
+</script>    
+
+
+
+    <ul id="sidebar" class="nav nav-pills nav-stacked" >
+      <li class="active">
+        <a id='profile_button' href="#">
+          <span class="glyphicon glyphicon-off"></span>
+  Overview</a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="glyphicon glyphicon-signal"></span>
+  Add Question</a>
+      </li>
+    </ul>
+          </div>
+
+        <div class="col-md-7">
+        <button id='generateCall'>call</button>
+        </div>
+
+        
+                                        
+         <div class='col-md-3'>
+           <img alt="User Pic" src= '/img/profile_fun_face.jpg'class="img-responsive">
+            </div>
+      </div>
+    </div>
+</body>
+</html>
+    
