@@ -14,7 +14,8 @@
 var user,
 	condition = false, //this value is set accordingly if you are logged in or not
 	fs = require('fs'),
-	bcrypt = require('bcrypt-nodejs');
+	bcrypt = require('bcrypt-nodejs'),
+	$ = require('jquery');
 var quizCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
@@ -24,7 +25,117 @@ var User       		= require('../models/user.server.model');
 var LocalStrategy   = require('passport-local').Strategy;
 
 module.exports = function(app, passport) {
+	// ==================================
+	// == CONTENT FOR API AND FTUFF =====
+	// ==================================
+		
+		//calling page
+		app.get('/apiQuiz', function(req, res) {
+		res.render('apiQuiz.ejs');//displaying page where you can add existing questions
+		});
+		
+		//returning existing topic list from the server
+		app.get('/apiQuiz/getTopicList', function(req, res) {
+			
+		var list = require('../from_jservice_API/best_topic_ids.json');
+			res.send(list);
+		});
+	
+	
+	// ================================================================
+	// ========= AIP Quiz, getting and storing list ===================
+	// ================================================================
+	
+	
+	
+	//I WILL MOVE THIS TO OTHER LOCATION AFTER< NOW ITS HERE FOR TESTING PURPOSES
+	
+	//when this function fired, it scans all database from jservice api and assebbles json, which is latter saver to disk
+	app.get('/apiCallGenerateList', function(req, res) {
 
+  	var http = require('http');
+  	var offset = 0;
+  	var counter = 0;
+  	var whenToStop = 250;
+  	
+  	var topics =[];
+
+var options = {
+  host: 'www.jservice.io',
+  path: '/api/categories?count=100&offset='+offset
+};
+
+var callback = function(response) {
+	var data = "";
+
+  //another chunk of data has been recieved, so append it to `str`
+  response.on('data', function (data_rec) {
+ data += data_rec;
+  	
+    console.log('chunkHere finished');
+    
+  });
+  response.on('error',function(){
+  	console.log('encountered error');
+  })
+
+  //the whole response has been recieved, so we just print it out here
+  response.on('end', function () {
+  	data = JSON.parse(data);
+	if(data[0] == undefined){
+		console.log('empty data set')
+		saveToFile();
+	}  	
+  	  	for(var i = 0; i < data.length;i++){
+                           //var b = new Object();
+                           //console.log(data[i]);
+                           //b = data[i];
+                           if(data[i].clues_count>90){
+                           topics.push(data[i]);
+                           console.log('PUTTING IN, clues count: ' + data[i].clues_count);
+                           
+                           }
+                           else console.log('skipping, clues count: '+ data[i].clues_count);
+                       }
+    console.log('Finishing'+ counter+"offset: "+offset);
+    offset+=100;
+    options.path = '/api/categories?count=100&offset='+offset;
+    
+                       counter++;
+                    if(counter == whenToStop){
+                    	
+						saveToFile();
+                        
+                    }
+                   // http.request(options, callback).end();
+                    
+  });
+  
+  function saveToFile(){
+  	                    	var fs = require('fs');
+									var outputFilename = './from_jservice_API/best_topic_ids.json';
+									fs.writeFile(outputFilename, JSON.stringify(topics, null, 4), function(err) {
+									    if(err) {
+									      console.log(err);
+									    } else {
+									      console.log("JSON saved to " + outputFilename);
+									    }
+									}); 
+                        console.log("::::Its time to stop;:::::" + topics.length);
+                        //for (var i =0; i<topics.length;i++){
+                           //console.log('topic: '+topics[i].title);
+                           //console.log('clues: '+topics[i].clues_count);
+                       // }
+                       return;
+  }
+}
+	
+	http.request(options, callback).end();
+	
+	});
+	
+	
+		
 	// ==================================
 	// == ROUTES FOR QUIZ GET, POST =====
 	// ==================================
@@ -95,9 +206,22 @@ module.exports = function(app, passport) {
 
 
 
-	//POST method for user update
+	//POST method for user update limited method which first checks if user nam can be updated and is not taken :-)
 	app.post('/updateUser', isLoggedIn, function(req, res) {
-		UserCtrl.updateUser(req, res, req.user); //querying current user
+		
+		 	when(
+function(done) {
+//first this
+UserCtrl.updateWithCheck(req,res,done);
+
+}
+).then(function() {
+	//then this
+	UserCtrl.updateUser(req,res,req.user);
+
+});
+
+		
 	});
 	//Getting user info 
 	app.get('/updateUser', isLoggedIn, function(req, res) {
@@ -112,26 +236,65 @@ module.exports = function(app, passport) {
 	//#################################	UPLOADING IMAGE FROM THE USER ###############################
 	//###############################################################################################
 
-	app.post('/upload', isLoggedIn, function(req, res) {
-		// Get the temporary location of the file
-		var tmp_path = req.files.image.path,
-			target_path = './upload/userPics/' + req.user.local.email;
-		// Move the file from the temporary location to the intended location
-		fs.rename(tmp_path, target_path, function(err) {
-			if (err) throw err;
-			// Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files.
-			fs.unlink(tmp_path, function() {
-				if (err) throw err;
-			});
-		});
-		//update profile image link in database
-		var update = {
+	// app.post('/upload', isLoggedIn, function(req, res) {
+	// 	// Get the temporary location of the file
+	// 	console.log(req.files);
+	// 	var tmp_path = req.files.image.path,
+	// 		target_path = './upload/userPics/' + req.user.local.email;
+	// 	// Move the file from the temporary location to the intended location
+	// 	fs.rename(tmp_path, target_path, function(err) {
+	// 		if (err) throw err;
+	// 		// Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files.
+	// 		fs.unlink(tmp_path, function() {
+	// 			if (err) throw err;
+	// 		});
+	// 	});
+	// 	//update profile image link in database
+	// 	var update = {
+	// 		'local.pictureUrl': "./upload/userPics/" + req.user.local.email
+	// 	};
+	// 	UserCtrl.updateOneElement(req.user, update);
+
+	// 	res.redirect(301, '/updateUser'); //redirecting to homepage
+	// });
+
+///REBUILDING FILE UPLOAD FOR EXPRESSS 4
+
+
+   	var formidable = require('formidable'),
+    fs = require('fs'),
+    path = require('path');
+
+    app.post('/upload', function(req, res) {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        // `file` is the name of the <input> field of type `file`
+        var old_path = files.file.path,
+            file_size = files.file.size,
+            file_ext = files.file.name.split('.').pop(),
+            index = old_path.lastIndexOf('/') + 1,
+            file_name = old_path.substr(index),
+            new_path = './upload/userPics/' + req.user.local.email;
+
+        fs.readFile(old_path, function(err, data) {
+            fs.writeFile(new_path, data, function(err) {
+                fs.unlink(old_path, function(err) {
+                    if (err) {
+                        res.status(500);
+                        res.json({'success': false});
+                    } else {
+             var update = {
 			'local.pictureUrl': "./upload/userPics/" + req.user.local.email
 		};
 		UserCtrl.updateOneElement(req.user, update);
 
 		res.redirect(301, '/updateUser'); //redirecting to homepage
-	});
+                    }
+                });
+            });
+        });
+    });
+});
 
 	//Uploading file REF:http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
 	//###############################################################################################               
@@ -162,7 +325,7 @@ module.exports = function(app, passport) {
 	//###############################################################################################                   
 	//#################################	DELETING USER FROM DATABASE #################################
 	//###############################################################################################
-	app.post('/deleteUser',isLoggedIn, function(req, res) {
+	app.post('/deleteUser/ajax',isLoggedIn, function(req, res) {
 
 		var hashFromDB = req.user.local.password;
 		var plainPassFromUser = req.body.password;
@@ -174,19 +337,47 @@ module.exports = function(app, passport) {
 				console.log('The password matches!');
 				UserCtrl.removeElement(req.user);
 				req.logout();
-				res.render('./profile/profileDeleted');
-
+				res.send({status:'done'});
 			}
-
 			else {
-				console.log('The password does NOT match!');
-				res.render('./profile/profileNotDeleted');
+				res.send({status:'wrongPassword'});
 			}
 		});
 
 
 
 	});
+	
+	//###############################################################################################
+	//############################# Change password while logged in #################################
+	//###############################################################################################
+		app.post('/change_password/ajax', function(req, res) {
+		
+		//putting this just for now, latter will combine in one module::
+		
+				var hashFromDB = req.user.local.password;
+		var plainPassFromUser = req.body.password_old;
+
+		bcrypt.compare(plainPassFromUser, hashFromDB, function(err, matches) {
+			if (err)
+				console.log('Error while checking password');
+			else if (matches) {
+				console.log('The password matches!');
+				
+				require('../app/changePassword.js')(req.body.password_new, req.user);
+				
+				res.send({status:'done'});
+			}
+			else {
+				res.send({status:'wrongPassword'});
+			}
+		});
+			
+			
+         
+         
+	});
+	
 	//###############################################################################################
 	//#################################Verifying user e-mail by link#################################
 	//###############################################################################################
@@ -231,7 +422,7 @@ module.exports = function(app, passport) {
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
-	app.get('/', function(req, res) {
+	app.get('/',isLoggedIn, function(req, res) {
 		res.render('login_new.ejs', {
 			user: req.user // get the user out of session and pass to template
 		});
@@ -321,11 +512,9 @@ module.exports = function(app, passport) {
 			user: req.user // get the user out of session and pass to template
 		});
 	});
-
 	// =====================================
 	// LOGOUT ==============================
 	// =====================================
-
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
@@ -341,7 +530,7 @@ function isLoggedIn(req, res, next) {
 
 	// if they aren't redirect them to the home page
 	condition = false;
-	res.redirect('/');
+	res.redirect('/login');
 }
 
 //creating minleware to check ir that kind e-mail or nickname is already takem
@@ -357,7 +546,7 @@ console.log('USER: '+ req.body.email);
             if (user) {
                 return res.send({"status": 'emailExists'});
             }  else {
-            	        User.findOne({ 'local.email' :  req.body.username }, function(err, user) {
+            	        User.findOne({ 'local.username' :  req.body.username }, function(err, user) {
             // if there are any errors, return the error
             if (err){
             console.log(err);
@@ -380,31 +569,29 @@ console.log('USER: '+ req.body.email);
 //Asynchrosity generation function REF: 
 //http://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
 
-// var when = function() {
-//   var args = arguments;  // the functions to execute first
-//   return {
-//     then: function(done) {
-//       var counter = 0;
-//       for(var i = 0; i < args.length; i++) {
-//         // call each function with a function to call on done
-//         args[i](function() {
-//           counter++;
-//           if(counter === args.length) {  // all functions have notified they're done
-//             done();
-//           }
-//         });
-//       }
-//     }
-//   };
-// };
+var when = function() {
+  var args = arguments;  // the functions to execute first
+  return {
+    then: function(done) {
+      var counter = 0;
+      for(var i = 0; i < args.length; i++) {
+        // call each function with a function to call on done
+        args[i](function() {
+          counter++;
+          if(counter === args.length) {  // all functions have notified they're done
+            done();
+          }
+        });
+      }
+    }
+  };
+};
 //  	when(
 // function(done) {
-	
-	
-// user = UserCtrl.getUser(req.user,done);
+
 // console.log('1 running');
 
-
+// done();
 	
 // }
 // ).then(function() {

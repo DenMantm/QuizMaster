@@ -26,13 +26,8 @@ exports.getPostNewPassword = function(req,res){
         }
         else{
             if(doc.local.key===req.body.key){
-                
-                
-                
                 //creating separate module for changing password, here passing new password to the module
-                
                 require('../app/changePassword.js')(req.body.password,doc);
-                
                 res.render('login.ejs',{message:'Password succesfully changed'});
             }
             else{
@@ -101,6 +96,27 @@ var link = "http://"+req.get('host')+"/recoverPassword/"+doc.local.email+'/'+doc
 };
 //update certain fields in user object, passing argument 
 //- updateFields - which consists of necesarry update info
+//passing done function here as parameter, if all would be on, this function is returned and excecuted
+exports.updateWithCheck = function(req,res,done){
+    //check if this nickname is already taken....
+            User.findOne({ 'local.username' :  req.body.username }, function(err, user) {
+            // if there are any errors, return the error
+            if (err){
+            console.log(err);
+                return res.send({"status": err});
+}
+            // check to see if theres already a username with that email
+            if (user) {
+                if(req.body.username == user.local.username){
+                  return done();
+                }
+                return res.send({"status": 'userExists'});
+            } 
+            else {
+                    return done();
+                     }
+        });
+};
 exports.updateUser = function(req,res,user){
     var email = user.local.email;
     console.log(email);
@@ -110,12 +126,13 @@ exports.updateUser = function(req,res,user){
     doc.local.name.firstName = req.body.name;
     doc.local.name.surname = req.body.surname;
     doc.local.username = req.body.username;
-    doc.local.age = req.body.age;
+    //doc.local.age = req.body.age;
     doc.save(function(err){
         if(err){console.log('Error while saving');
         }
     });
-    res.redirect(301, '/updateUser'); //redirecting to homepage
+    res.send({status:'done'});
+    //res.redirect(301, '/updateUser'); //redirecting to homepage
 });
 };
 

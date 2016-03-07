@@ -1,0 +1,438 @@
+<!-- views/index.ejs 
+
+REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
+
+-->
+<!doctype html>
+<html>
+<head>
+<% include ./index_partials/head %>
+</head>
+<body>
+  <div class="container">
+  <% include ./index_partials/navbar %>
+  </div>
+            <style>
+/*      #sidebar {*/
+/*    background-color: #191919;*/
+/*    padding: 10px;*/
+/*}*/
+/*#sidebar a:hover, a:focus {*/
+/*    color: #FFF;*/
+/*    text-decoration: none;*/
+/*}*/
+/*#sidebar.nav > li > a,*/
+/*#sidebar.nav > li > a:link {*/
+/*    background-color: #191919;*/
+/*    color: #FFF;*/
+/*}*/
+/*#sidebar.nav > li > a:hover,*/
+/*#sidebar.nav > li > a:focus {*/
+/*    background-color: #373737;*/
+/*}*/
+/*#sidebar.nav-pills > li.active > a,*/
+/*#sidebar.nav-pills > li.active > a:hover,*/
+/*#sidebar.nav-pills > li.active > a:focus {*/
+/*    color: #FFF;*/
+/*    background-color: #C72A25;*/
+/*}*/
+/*    </style>
+<script>
+
+  $(document).ready(function() {
+    //deleting user part 
+           //just login button:::::
+    //   $('#generateCall').click(function() {
+    //       var topics =[];
+    //       var offset = 100;
+    //       var whenToStop = 700;
+    //       var counter = 0;
+    //       for(var inn = 0 ; inn<whenToStop;inn++){
+               
+          
+    //       $.ajax({
+    //           type: "GET",
+    //           dataType: 'json',
+    //           url: "https://jservice.io/api/categories?count=100&offset=100"+offset,
+    //           success: function(data) {
+    //                                           //  if(inn===whenToStop){
+    //                         // console.log("RUNNING");
+    //                         // scanArray();
+    //                 for(var i = 0; i < data.length;i++){
+    //                       //var b = new Object();
+    //                       //console.log(data[i]);
+    //                       //b = data[i];
+    //                       if(data[i].clues_count>80){
+    //                       topics.push(data[i]);
+    //                       //console.log('PUTTING IN, clues count: ' + data[i].clues_count);
+    //                       }
+    //                       //else console.log('skipping, clues count: '+ data[i].clues_count);
+    //                   }
+                      
+
+    //                             //}
+                    
+    //       offset+=100;
+                   
+           
+    //           },
+    //           complete: function(){
+    //               console.log('Call complete');
+    //               counter++;
+    //                 if(counter == whenToStop){
+    //                     console.log("::::Its time to stop;:::::" + topics.length);
+    //                     for (var i =0; i<topics.length;i++){
+    //                       console.log('topic: '+topics[i].title);
+    //                       console.log('clues: '+topics[i].clues_count);
+    //                     }
+                        
+    //                 }
+                            
+                            
+    //                     }
+   
+    //       });
+    //     //   function scanArray(){
+    //     //       var i = topics.length-1;
+    //     //       while(i>0){
+    //     //           if(topics[i].clues_count<100){
+    //     //               topics.splice(i, 1);
+    //     //               i--;
+    //     //           }
+                   
+                   
+    //     //           i--;
+    //     //       }
+    //     //       console.log(topics);
+               
+    //     //   }
+
+    //       }
+           
+           
+    //   }); //finishing login button
+       
+       //DISREGARD ABOVE, I WILL REMOVE IT LATTER< FOR NOW JUS LET IT STAY.. :)
+       
+        function switchMe(hiding,showing) {
+           $('#' + hiding).removeClass().addClass('animated bounceOut')
+           //old naim: zoomOutUp zoomInDown
+               .one('webkitAnimationEnd oAnimationEnd', function() {
+                   $(this).removeClass().addClass('hidden_container');
+                    $('#'+showing).removeClass().addClass('animated zoomIn');
+                   //$('#'+showing+' li').removeClass().addClass('');
+               });
+       }
+               //------------------STARTING TO HANDLE SWITCH_SIDE MENU--------------------------------
+      
+       var current = 'api_quiz_window_questions';
+       var switch_to ='';
+       
+       $('#api_quiz_details_button').click(function() {
+        switch_to = 'api_quiz_window_info';
+        switchMe(current,switch_to);
+        current = 'api_quiz_window_info';
+       });
+       
+        $('#api_quiz_questions_button').click(function() {
+        switch_to = 'api_quiz_window_questions';
+        switchMe(current,switch_to);
+        current = 'api_quiz_window_questions';
+       });
+       
+  });
+</script>    
+<div class="container">
+      <div class="row">
+        <div class='col-md-2'>
+
+
+    <ul id="sidebar" class="nav nav-pills nav-stacked" >
+      
+            <li class="active">
+        <a id="api_quiz_questions_button" href="#">
+          <span class="glyphicon glyphicon-signal"></span>
+  Add Question</a>
+      </li>
+      
+      
+      
+      <li>
+        <a id='api_quiz_details_button' href="#">
+          <span class="glyphicon glyphicon-off"></span>
+  Overview</a>
+      </li>
+
+    </ul>
+          </div>
+    <div id='api_quiz_window_info' class='hidden_container'>
+        <div class="col-md-10">
+        <!--<button id='generateCall'>call</button>-->
+                  <div class="panel panel-info">
+            <div class="panel-heading">
+              <p style="float:left;" class=" text-info"> <%=new Date().toJSON().slice(0,10) +" "+ new Date().toJSON().slice(11,16)%> </p>
+            <h5 style="float:right;">Oweral Quiz information</h5>
+            </br>
+            </br>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                </br>
+                </div>
+                <div class=" col-md-12 col-lg-12 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>NameOfTheQuiz:</td>
+                        <td><span id='api_quiz_name'>Quiz1</span>
+                      </tr>
+                      <tr>
+                        <td>Topic: </td>
+                        <td><spanid='api_quiz_topic'>Unknown Topic</a></span></td>
+                      </tr>
+                      <td>QuestionCount</td>
+                        <td><span id='api_quiz_questionCount' class='fields'>00</span>
+                      </tr>
+                      <tr>
+                        <td>Created:</td>
+                        <td>2000/02/12</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+           <!----- finishing md5 here-->
+        </div><!----- finishing info container-->
+        
+        <!--ADD QUESTION ONTO THIS QUIZ-->
+        
+         <div id='api_quiz_window_questions' class='animated zoomInDown'>
+        <div class="col-md-10">
+        <!--<button id='generateCall'>call</button>-->
+                  <div class="panel panel-info">
+            <div class="panel-heading">
+              <p style="float:left;" class=" text-info"> <%=new Date().toJSON().slice(0,10) +" "+ new Date().toJSON().slice(11,16)%> </p>
+            <h5 style="float:right;">Adding new Questions+</h5>
+            </br>
+            </br>
+            </div>
+            <div class="panel-body">
+                <h3>Questions already attached to the quiz:</h3>
+                <div class="list-group" id="api_quiz_sub_window_attachedQuestions">
+
+                    
+                </div>
+            <!--FINISHING ATTACHED QUESTIONS HERE-->
+            
+            <hr>
+            <script>
+               // var  workspace = document.getElementById('api_quiz_sub_window_avalableTopics_list')
+               //global variable
+               var userQuestions = [];
+               var tempArray =[];
+               var topicx = '';
+            //   GLOBAL FUNCTIONS
+                                function removeQuestionFromList(id){
+                                    
+                                }
+                                function addQuestionToList(index){
+                                    //data.topic = topic.topic;
+                                    
+                                    var data = tempArray[index];
+                                    
+                                    userQuestions.push(data);
+
+                        var tmp = $('<a/>', {
+                            class:"list-group-item",
+                            id:data.id,
+                            style:"",
+                        }).appendTo('#api_quiz_sub_window_attachedQuestions');
+                        
+                        //description
+                         $('<h4/>', {
+                            class:'list-group-item-heading',
+                            style:"",
+                            text:"Dificulty: " + data.value + " Topic: "+topicx
+                        }).appendTo(tmp);
+                        
+                        //Question itself
+                        $('<h4/>', {
+                            class:'list-group-item-heading',
+                            style:"",
+                            text: data.question
+                        }).appendTo(tmp);
+                        
+                        //answer
+                         $('<p/>', {
+                            style:"",
+                            class:'list-group-item-text',
+                            text: "Answer: "+data.answer
+                        }).appendTo(tmp);
+                        
+                        
+                        $('<a/>', {
+                            id: 'add_button_'+data.id,
+                            href: 'javascript:removeQuestionFromList('+data.id+')',
+                            style:"margin-left:10px;color:red;",
+                            text: 'Remove'
+                        }).appendTo(tmp);
+                                    
+                                    
+                                }
+                                function displayQuestions(id,topic){
+                                        //setting global variable topic
+                                        topicx = topic.topic;
+                                                      $.ajax({
+                              type: "GET",
+                              dataType: 'json',
+                              url: "https://jservice.io/api/category?id="+id,
+                              success: function(data) {
+                                    //change topic of the HEad
+                                    tempArray =[];
+                                        document.getElementById("api_quiz_topics_title").innerHTML = 'Questions for topic: <b>'+topic.topic+"</b>";
+                                        document.getElementById("api_quiz_sub_window_avalableQuestion_list").innerHTML = "";
+                                        //add question code here
+                                 // data = JSON.parse(data);
+                                    for(var i = 0;i<data.clues_count;i++){
+                                        tempArray.push(data.clues[i]);
+                                        addQuestionElement(data.clues[i],i+1);
+                                        
+                                      
+                              }
+                              },
+                              complete:function(){
+                                  
+                                        //after compreting load do something
+                                        
+                                    }
+                              })//end ajax
+                    }//end function
+                        
+                        //generating question here
+                        function addQuestionElement(data,index){
+                        var tmp = $('<a/>', {
+                            class:"list-group-item",
+                            style:"",
+                        }).appendTo('#api_quiz_sub_window_avalableQuestion_list');
+                        
+                        //description
+                         $('<h4/>', {
+                            class:'list-group-item-heading',
+                            style:"",
+                            text: "Question No: " + index + " Dificulty: " + data.value
+                        }).appendTo(tmp);
+                        
+                        //Question itself
+                        $('<h4/>', {
+                            class:'list-group-item-heading',
+                            style:"",
+                            text: data.question
+                        }).appendTo(tmp);
+                        
+                        //answer
+                         $('<p/>', {
+                            style:"",
+                            class:'list-group-item-text',
+                            text: "Answer: "+data.answer
+                        }).appendTo(tmp);
+                        
+                        
+                        $('<a/>', {
+                            id: 'add_button_'+data.id,
+                            href: 'javascript:addQuestionToList('+index+')',
+                            style:"margin-left:10px;",
+                            text: 'Add'
+                        }).appendTo(tmp);
+                        
+                    }
+               
+               
+                $(document).ready(function() {
+                    
+                    function generateListElement(id,topic,count){
+                       
+                        var tmp = $('<a/>', {
+                            id: id,
+                            class:"list-group-item",
+                            style:"float:left",
+                            href: 'javascript:displayQuestions('+id+",{topic:'"+topic+"'})",
+                            text: topic
+                        }).appendTo('#api_quiz_sub_window_avalableTopics_list');
+                        
+                        $('<span/>', {
+                            id: id,
+                            class:'badge',
+                            style:"margin-left:10px;",
+                            text: count
+                        }).appendTo(tmp);
+                    }
+              $.ajax({
+              type: "GET",
+              dataType: 'json',
+              url: "apiQuiz/getTopicList",
+              success: function(data) {
+                  //data = JSON.parse(data);
+                    for(var i = 0;i<data.length;i++){
+                        
+                        generateListElement(data[i].id,data[i].title,data[i].clues_count);
+              }
+              },
+              complete:function(){
+                  
+                        //after compreting load do something
+                        
+                    }
+              })
+        //   });
+           
+    //         $.get("apiQuiz/getTopicList", function(data, status){
+    //                                 // data = JSON.parse(data);
+    //               console.log(data);
+    //                 for(var i = 0;i<data.length;i++){
+    //                     console.log('running');
+    //                     generateListElement(data[i].id,data[i].title,data[i].clues_count);
+    //                 }
+    // });
+
+                   // generateListElement(001,'topic goes here',11);
+      
+                });
+            </script>
+            
+            <div class='row' id="api_quiz_sub_window_avalableTopics">
+                <h3>Please select topic and then question to add:</h3>
+                
+                <ul class="list-group" id="api_quiz_sub_window_avalableTopics_list">
+                    <!--Here we stick in content-->
+                </ul>
+                
+                </div>
+                
+                 <div id="api_quiz_sub_window_avalableQuestions">
+                <h3 id='api_quiz_topics_title'>Questions for topic: (not yet selected)</h3>
+                <ul class="list-group" id="api_quiz_sub_window_avalableQuestion_list">
+                    <!--Here we stick in content-->
+                </ul>
+                </div>
+                
+                <br>
+                </hr>
+                <!--STARTIN QUESTION AREA HERE::-->
+                <br>
+                <br>
+
+                
+                
+              </div>
+            </div>
+          </div>
+           <!----- finishing md5 here-->
+        </div><!----- finishing info container-->
+    
+      </div>
+    </div>
+</body>
+</html>
+    

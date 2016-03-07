@@ -9,58 +9,110 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 <% include ./index_partials/head %>
 </head>
 <body>
-        <div class="container">
-<% include ./index_partials/navbar %>
-</div>
+  <div class="container">
+  <% include ./index_partials/navbar %>
+  </div>
 
 <div class="container">
       <div class="row">
         <div class='col-md-2'>
-             <style>
-      #sidebar {
-    background-color: #191919;
-    padding: 10px;
-}
-
-#sidebar a:hover, a:focus {
-    color: #FFF;
-    text-decoration: none;
-}
-
-#sidebar.nav > li > a,
-#sidebar.nav > li > a:link {
-    background-color: #191919;
-    color: #FFF;
-}
-
-#sidebar.nav > li > a:hover,
-#sidebar.nav > li > a:focus {
-    background-color: #373737;
-}
-
-#sidebar.nav-pills > li.active > a,
-#sidebar.nav-pills > li.active > a:hover,
-#sidebar.nav-pills > li.active > a:focus {
-    color: #FFF;
-    background-color: #C72A25;
-}
-    </style>
+            <style>
+/*      #sidebar {*/
+/*    background-color: #191919;*/
+/*    padding: 10px;*/
+/*}*/
+/*#sidebar a:hover, a:focus {*/
+/*    color: #FFF;*/
+/*    text-decoration: none;*/
+/*}*/
+/*#sidebar.nav > li > a,*/
+/*#sidebar.nav > li > a:link {*/
+/*    background-color: #191919;*/
+/*    color: #FFF;*/
+/*}*/
+/*#sidebar.nav > li > a:hover,*/
+/*#sidebar.nav > li > a:focus {*/
+/*    background-color: #373737;*/
+/*}*/
+/*#sidebar.nav-pills > li.active > a,*/
+/*#sidebar.nav-pills > li.active > a:hover,*/
+/*#sidebar.nav-pills > li.active > a:focus {*/
+/*    color: #FFF;*/
+/*    background-color: #C72A25;*/
+/*}*/
+/*    </style>
 <script>
   $(document).ready(function() {
+    //deleting user part 
+           //just login button:::::
+       $('#deleteUser').click(function() {
+           $.ajax({
+               type: "POST",
+               dataType: 'json',
+               data: {
+                   "password": $('#delete_password').val()
+               },
+               url: "/deleteUser/ajax",
+               success: function(data) {
+                   if (data.status === 'wrongPassword') {
+                       $('#message_delete_user').show();
+                       document.getElementById("message_delete_user").innerHTML = "Wrong password entered";
+                       document.getElementById('delete_password').style.borderColor = "red";
+                       shakeMe('message');
+                   }
+                   if (data.status === 'done') {
+                       window.location.href = '/index';
+                   }
+               }
+           });
+       }); //finishing login button
+    
     //this function provides switching between elements first argument is which element to hide, second on which element to switch to
      function switchMe(hiding,showing) {
-           $('#' + hiding).removeClass().addClass('animated zoomOutUp')
+           $('#' + hiding).removeClass().addClass('animated bounceOut')
+           //old naim: zoomOutUp zoomInDown
                .one('webkitAnimationEnd oAnimationEnd', function() {
                    $(this).removeClass().addClass('hidden_container');
-                    $('#'+showing).removeClass().addClass('animated zoomInDown');
+                    $('#'+showing).removeClass().addClass('animated zoomIn');
                    //$('#'+showing+' li').removeClass().addClass('');
                });
        }
+               //------------------STARTING TO HANDLE SWITCH_SIDE MENU--------------------------------
+               
+               
+       var current = 'container_profile_details';
+       var switch_to ='';
+       
        $('#profile_button').click(function() {
-         switchMe('container_profile_details','container_profile_details');
+        switch_to = 'container_profile_details';
+        switchMe(current,switch_to);
+        current = 'container_profile_details';
        });
+       
+        $('#profile_edit_button').click(function() {
+        switch_to = 'container_edit_profile';
+        switchMe(current,switch_to);
+        current = 'container_edit_profile';
+       });
+       
+        $('#profile_edit_password').click(function() {
+        switch_to = 'container_edit_password';
+        switchMe(current,switch_to);
+        current = 'container_edit_password';
+       });
+       
+       
+       
   });
 </script>    
+
+<!--<div class="btn-group-vertical">-->
+<!--  <button id='profile_button' type="button" class="btn btn-primary">Overview</button>-->
+<!--  <button id='profile_edit_button' type="button" class="btn btn-primary">Edit Profile</button>-->
+<!--  <button id='profile_edit_password' type="button" class="btn btn-primary">Edit password</button>-->
+<!--</div>-->
+
+
     <ul id="sidebar" class="nav nav-pills nav-stacked" >
       <li class="active">
         <a id='profile_button' href="#">
@@ -68,12 +120,12 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
   Overview</a>
       </li>
       <li>
-        <a href="#">
+        <a id='profile_edit_button' href="#">
           <span class="glyphicon glyphicon-user"></span>
   Edit Profile</a>
       </li>
       <li>
-        <a href="#">
+        <a id='profile_edit_password' href="#">
           <span class="glyphicon glyphicon-lock"></span>
   Access / Password</a>
       </li>
@@ -90,7 +142,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
     </ul>
           </div>
                                     <!--VIEW PROFILE DETAILS STARTING HERE-->
-        <div id='container_profile_details'>
+        <div id='container_profile_details' class='animated zoomInDown'>
         <div class="col-md-7">
           <div class="panel panel-info">
             <div class="panel-heading">
@@ -100,21 +152,15 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
             <div class="panel-body">
               <div class="row">
                   <!--<%= user.local.pictureUrl%> -->
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src= '/getProgilePic'class="img-circle img-responsive">  
+                <div class="col-md-12 col-lg-12 " align="center"> <img alt="User Pic" src= '/getProgilePic'class="img-circle img-responsive">
                 </br>
-                 <input id='enableSavePicture' value='Change' data-original-title="Change Picture" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning"></input>
                 </div>
-                
-                <div class=" col-md-9 col-lg-9 "> 
+                <div class=" col-md-12 col-lg-12 "> 
                   <table class="table table-user-information">
-                <form action="/updateUser" method="post">
                     <tbody>
                       <tr>
                         <td>Name:</td>
-                        <td><span class='fields'><%= user.local.name.firstName+' '+user.local.name.surname%></span>
-                        <input name='name' value=<%= user.local.name.firstName%> type="text" class="form-control editProfileField fix"  placeholder="name">
-                        <input name='surname' value=<%= user.local.name.surname%> type="text" class="form-control editProfileField fix"  placeholder="surname"></td>
-                      
+                        <td><span id='details_static_name' class='fields'><%= user.local.name.firstName+' '+user.local.name.surname%></span></td>
                       </tr>
                       <tr>
                         <td>Email</td>
@@ -122,15 +168,14 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                       </tr>
                       <tr>
                         <td>Verified:</td>
-                        <td><span><%=user.local.validEmail%></a></span></td>
+                        <td><span><%=user.local.validEmail%></span></td>
                       </tr>
+                      <tr>
                       <td>NickName:</td>
-                        <td><span class='fields'><%=user.local.username%></span>
-                        <input name='username' value=<%= user.local.username%> type="text" class="form-control editProfileField"  placeholder="NickName"></td>
+                        <td><span id='details_static_username' class='fields'><%=user.local.username%></span>
                       </tr>
                     <td>Age:</td>
-                        <td><span class='fields'><%=user.local.age%></span>
-                        <input name='age' value=<%= user.local.age%> type="text" class="form-control editProfileField"  placeholder="Age"></td>
+                        <td><span class='fields'><%=user.local.age%></span></td>
                       </tr>
                       <tr>
                         <td>Created:</td>
@@ -141,29 +186,195 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                 </div>
               </div>
             </div>
-                 <div class="panel-footer">
-                        <a id='enableDeleteUser' data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-                        <span class="pull-right">
-                            <a id='enableEdit' data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                            <input id='enableSave' value='Save' data-original-title="Save details" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning"></input>
-                            <input id='enableCancel' value='Cancel' data-original-title="cancel" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"></input>
-                        </span>
-                    </div>
-            </form>
-          </div>
-          
-           <!----- finishing md5 here-->
-           
-        </div>
+            
+            
+      <div class="panel-footer">
         
+      <a id='enableDeleteUser' data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                    </div>
+          </div>
+           <!----- finishing md5 here-->
+        </div>
         </div><!--profile details finished-->
         
         
+        <!------------------------------------------------------STARTING EDIT DETAILS------------------------------------------------>
         
-       <!-------------------------------------------------MODALS--------------------------------------------->
-       
-        <!--~~~~~~~~~~~~~~~~~~~MODAL DOR USER DELETION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+        <div id='container_edit_profile' class='hidden_container'>
+          <div class="col-md-7">
+            
+                      <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= user.local.email %></h3>
+              <p class=" text-info"> <%=new Date().toJSON().slice(0,10) +" "+ new Date().toJSON().slice(11,16)%> </p>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+            
+                <form class="form-horizontal" role="form">
+                           <div class="form-group">
+            <label class="col-lg-3 control-label">Avatar:</label>
+            <div class="col-lg-8">
+          <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src= '/getProgilePic'class="img-circle img-responsive">  
+                </div>
+               <input id='enableSavePicture' value='Change' data-original-title="Change Picture" data-toggle="tooltip" class="btn btn-sm btn-warning"></input>
+            </div>
+          </div>
+                 
+                  
+          <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+              <input id='change_details_name' class="form-control" type="text" value=<%= user.local.name.firstName%>>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+              <input id='change_details_surname' class="form-control" type="text" value=<%= user.local.name.surname%>>
+            </div>
+          </div>
+          <!--<div class="form-group">-->
+          <!--  <label class="col-lg-3 control-label">Time Zone:</label>-->
+          <!--  <div class="col-lg-8">-->
+          <!--    <div class="ui-select">-->
+          <!--      <select id="user_time_zone" class="form-control">-->
+          <!--        <option value="Hawaii">(GMT-10:00) Hawaii</option>-->
+          <!--        <option value="Alaska">(GMT-09:00) Alaska</option>-->
+          <!--        <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>-->
+          <!--        <option value="Arizona">(GMT-07:00) Arizona</option>-->
+          <!--        <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>-->
+          <!--        <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>-->
+          <!--        <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>-->
+          <!--        <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>-->
+          <!--      </select>-->
+          <!--    </div>-->
+          <!--  </div>-->
+          <!--</div>-->
+          <div class="form-group">
+            <label class="col-md-3 control-label">Username:</label>
+            <div class="col-md-8">
+              <input id='change_details_username' class="form-control" type="text" value=<%= user.local.username%>>
+            </div>
+          </div>
+                    <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <div style='display:none;' id='message_change_details' class="alert alert-danger"></div>
+              <input id='profile_change_details' type="button" class="btn btn-primary" value="Save Changes">
+              <span></span>
+              <input type="reset" class="btn btn-default" value="Cancel">
+            </div>
+          </div>
+        </form>  
+        
 
+              </div>
+              
+            </div>
+            
+      <div class="panel-footer">
+
+        <br>
+       
+                    </div>
+          </div>
+            
+          
+          <!--<input name='age' value=<%= user.local.age%> type="text" class="form-control editProfileField"  placeholder="Age"></td>-->
+          <!--<input name='name' value=<%= user.local.name.firstName%> type="text" class="form-control editProfileField fix"  placeholder="name">-->
+          <!--<input name='surname' value=<%= user.local.name.surname%> type="text" class="form-control editProfileField fix"  placeholder="surname"></td>-->
+          <!--<input name='username' value=<%= user.local.username%> type="text" class="form-control editProfileField"  placeholder="NickName"></td>-->
+                           
+          <!-- <input id='enableSavePicture' value='Change' data-original-title="Change Picture" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning"></input>-->
+                
+                
+          <!-- <span class="pull-right">-->
+          <!--  <a id='enableEdit' data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>-->
+          <!--                  <input id='enableSave' value='Save' data-original-title="Save details" data-toggle="tooltip" type="submit" class="btn btn-sm btn-warning"></input>-->
+          <!--                  <input id='enableCancel' value='Cancel' data-original-title="cancel" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"></input>-->
+          <!--              </span>-->
+                        
+                      
+                      
+          </div>
+        </div>
+        
+        <!----------------------------------------------------------------FINISHING EDIT DETAILS-------------------------------------------------->
+        
+        
+        
+        
+        <!----------------------------------------------------------------STARTING CHANGE PASSWORD------------------------------------------------>
+        
+        
+          <div id='container_edit_password' class='hidden_container'>
+          <div class="col-md-7">
+            <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= user.local.email %></h3>
+              <p class=" text-info"> <%=new Date().toJSON().slice(0,10) +" "+ new Date().toJSON().slice(11,16)%> </p>
+            </div>
+            <div class="panel-body">
+               <div class="row">
+              
+            <h1><span class="fa fa-sign-in"></span>Change Password</h1>
+	<!-- show any messages that come back with authentication -->
+    
+	<!-- LOGIN FORM -->
+	    <!--HIDDEN VALUES::-->
+	 <!--   <input id='key'type="hidden" name="key" value="your-field-value"/>-->
+	 <!--   <input id='email'type="hidden" name="email" value="your-field-value"/>-->
+	    
+		<!--<div class="form-group">-->
+		<!--	<label>New Password:</label>-->
+		<!--	<input id='password' type="password" class="form-control input-lg" name="password">-->
+		<!--</div>-->
+		<!--<div class="form-group">-->
+		<!--	<label>Comfirm Password:</label>-->
+		<!--	<input id='password_comfirm' type="password" class="form-control input-lg" name="password_comfirm">-->
+		<!--</div>-->
+		        <form class="form-horizontal" role="form">
+		          <div class="form-group">
+            <label class="col-md-3 control-label">Old Password</label>
+            <div class="col-md-8">
+              <input id='password_change_password_old' class="form-control" type="password" >
+            </div>
+          </div>
+          		          <div class="form-group">
+            <label class="col-md-3 control-label">New Password</label>
+            <div class="col-md-8">
+              <input id='password_change_password_new' class="form-control" type="password" >
+            </div>
+          </div>
+          		          <div class="form-group">
+            <label class="col-md-3 control-label">Confirm new Password</label>
+            <div class="col-md-8">
+              <input id='password_change_password_verify' class="form-control" type="password" >
+            </div>
+          </div>
+                                        <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-7">
+              <div id='message_change_password' style='display:none;' class="alert alert-danger"></div>
+              <!--<input type="button" class="btn btn-primary" value="Save Changes">-->
+              <button id='profile_change_password' type="button" class="btn btn-success">Change Password</button>
+            </div>
+          </div>
+	    </form>
+              
+              </div>
+
+            </div>
+      <div class="panel-footer">
+      
+            <br>
+      </div>
+          </div>
+          </div>
+        </div>
+       <!-------------------------------------------------MODALS--------------------------------------------->
+        <!--~~~~~~~~~~~~~~~~~~~MODAL DOR USER DELETION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <div id='deleteUserModal' class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -172,12 +383,13 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
         <h4 class="modal-title">Delete User Profile</h4>
       </div>
       <div class="modal-body">
-         <form action="/deleteUser" method="post">
+         <form >
              <h4>Are you sure you want to delete your user profile?</h4>
-            <input name='password' type="password" class="form-control"  placeholder="Your Password">
+            <input id='delete_password' name='password' type="password" class="form-control"  placeholder="Your Password">
             </br>
-            <input type="submit" id='deleteUser' value='Delete' data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"></input>
+            <input type="button" id='deleteUser' value='Delete' data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"></input>
         </form>
+        <div style='display:none;' id='message_delete_user' class="alert alert-danger"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -187,7 +399,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
                                                   
-                      <!--<                   !--SAVE IMAGE MODAL--                                                >-->
+                      <!--<                   !--SAVE IMAGE MODAL--                                  >-->
       <div id='saveImageModal' class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -196,16 +408,13 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
         <h4 class="modal-title">Change Profile Picture</h4>
       </div>
       <div class="modal-body">
-        
         <p>File Upload</p>
-        
         <form action="/upload" method="POST" enctype="multipart/form-data">
           Select an image to upload:
-          <input class="btn btn-sm btn-warning" type="file" name="image"> 
+          <input class="btn btn-sm btn-warning" type="file" name="file">
              </br>
             <input class="btn btn-sm btn-warning" type="submit" value="UploadImage">
             </form>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -213,17 +422,10 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->          
-                
-                
-        
+</div><!-- /.modal -->
          <div class='col-md-3'>
-           
-           <img alt="User Pic" src= '/img/profile_fun_face.jpg'class="img-responsive">  
-           
+           <img alt="User Pic" src= '/img/profile_fun_face.jpg'class="img-responsive">
             </div>
-        
-        
       </div>
     </div>
 </body>

@@ -27,7 +27,6 @@ var Quiz = require('./models/quiz.server.model');
 var configDB = require('./config/database.js');
 
 // set up our express application
-
 app.use(logger('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json());
@@ -39,9 +38,6 @@ app.use(bodyParser.urlencoded({
 mongoose.connect(configDB.url); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
-
-
-
 
 // get information from html forms
 

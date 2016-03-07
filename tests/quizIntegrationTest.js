@@ -5,8 +5,6 @@ mongoose = require('mongoose'),
 quiz = mongoose.model('Quiz'),
 agent = request.agent(app);
 
-
-
 describe('Quiz Crud Test', function(){
     it('Should allow a quiz to be posted and return an _id', function(done){
         var quizPOST =   {
