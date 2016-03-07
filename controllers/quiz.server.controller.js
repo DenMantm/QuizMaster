@@ -3,7 +3,6 @@ var Quiz = require('../models/quiz.server.model.js');
 
 //getting info from body object, which is subbmitted by POST methodfrom front end
 exports.create = function(req) {
-    console.log(req)
     var entry = new Quiz ({
         qName: req.body.qName,
         qDescription: req.body.qDescription,
@@ -40,8 +39,7 @@ exports.checkqName = function(req,res) {
         } else {
             message = {text: "OK"};
         }
-        console.log(message);
-        res.send(message)
+        res.send(message);
         }
     });
 };
@@ -95,4 +93,16 @@ exports.updateqz = function(body) {
         console.log("rawResponce: " + rawResponce);
     });
     //redirect to homepage
+};
+
+exports.Questions = function(req,res) {
+    var id = req.query.id;
+    var query = Quiz.findOne();
+    query.sort({ owner: 'desc' }).where({_id: id})
+    .exec(function(err,results){
+        res.render('questions.ejs', {settings: results});
+        console.log(results)
+        console.log("Error: " + err);
+    });
+
 };

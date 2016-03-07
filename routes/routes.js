@@ -49,6 +49,10 @@ module.exports = function(app, passport) {
 		res.redirect(301, '/showquiz'); //redirecting to homepage
 });
 
+	app.get('/questions', function(req, res){
+		return quizCtrl.Questions(req, res);
+	});
+
 	app.post('/updateqz' , function(req, res) {
 		quizCtrl.updateqz(req.body);
 		res.redirect(301, '/showquiz');
