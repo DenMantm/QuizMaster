@@ -20,8 +20,8 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ REMOVE QUESTIONS FROM THE LIST @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             
             
-                                function removeQuestionFromList(id){
-                                    var id = "added_"+id;
+                                function removeQuestionFromList(idx){
+                                    var id = "added_"+idx;
                                     console.log(id);
                                     
                                     for(var i =0;i<userQuestions.length;i++){
@@ -31,25 +31,35 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                                             userQuestions.splice(i, 1);
                                             
                                             console.log('removing element no: '+i);
-                                            $( "#"+id).remove();
+                                        $("#"+id).addClass('animated zoomOut').one('webkitAnimationEnd oAnimationEnd', function() {
+                                         $(this).remove();
+                                     })
+                                     
+                                     $("#question_"+idx).removeClass().addClass('list-group-item animated zoomIn');
+                                            //Some magic here, returning back question if topic is the same
                                         };
                                     }
                                 }
-                                
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ADD QUESTIONS TO USER LIST @@@@@@@@@@@@@@@@@@@@@@@
+            
+            
                                 function addQuestionToList(index){
-                                    
-                                   
-
                                     //data.topic = topic.topic;
                                   //informing that question is already there
                                     var data = tempArray[index-1];
                                     data.tempTopic = topicx;
+                                    data.answerCount = 1;
+                                    data.answer = [data.answer];
+                                    
+                                    for(var i = 0; i<userQuestions.length;i++){
+                                        if(userQuestions[i].id === data.id){
+                                            alert('Question already added');
+                                            return;
+                                        }
+                                    }
                                     userQuestions.push(data);
-                                    
-                                     //$("#question_"+data.id).remove();
-                                     //addClass('animated zoomIn')
-                                    
+                                     $("#question_"+data.id).addClass('makeUsed');
+
                                     //adding line to inform that question is takken
                         var tmp = $('<a/>', {
                             class:"list-group-item animated zoomIn",
@@ -108,34 +118,60 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                 }
                                 
               //@@@@@@@@@@@@@@@@@@@@@@@@ EDIT QUESTION IN THE LIST @@@@@@@@@@@@@@@@@@@@
-
-                                      
+	                       //     function editQuestionInList(data){
+	                       // // var instance = new editQuestionInListx(data);
+                        //     //return instance;
+	                       //     }
                                function editQuestionInList(data){
-                                   
+
+                                   //getting all necesarry
+               //changing button and href in the button                    
                var button_edit = document.getElementById('edit_button_'+data);
                button_edit.innerHTML = "Hide Edit";
                button_edit.href = 'javascript:hideEditQuestionInList('+data+')'
                            // href: 'javascript:editQuestionInList('+data.id+')',
-                                   
                                   //id to attach to it::
                                   //added_"+data
                             //finding question field:    
-                                  var question = document.getElementById('question_h_'+data);
-                                  
+                            var question = document.getElementById('question_h_'+data);
                                   console.log(data);
-                            var tmp = $('<div/>', {
+                        var tmp = $('<div/>', {
                             //class:"list-group-item",
                             class:"form-group has-warning has-feedback",
                             id:"edit_"+data
                             //style:"border:1px solid black",
+                            
                         }).appendTo('#added_'+data);
-
                             $('<h3/>', {
                             class:'',
                             style:"",
                             text:'Edit Question:'
+                        }).appendTo(tmp);
+
+                        //TOPIC
+                        
+                           $('<label/>', {
+                            class:'control-label',
+                            for:"input_topic"+data,
+                            style:"",
+                            text:'Topic: '
  
                         }).appendTo(tmp);
+                        
+                           var tmp1 = $('<input/>', {
+                            class:'form-control',
+                            id:"input_question"+data,
+                            style:"width:200px;",
+                            value: "topicHere"
+                        }).appendTo(tmp);
+                                 
+                                  
+                          $('<span/>', {
+                            class:'glyphicon glyphicon-warning-sign form-control-feedback',
+                            style:""
+                        }).appendTo(tmp1);
+                        
+                        //QUESTION:::
                         
                            $('<label/>', {
                             class:'control-label',
@@ -145,8 +181,6 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
  
                         }).appendTo(tmp);
                         
-                                 
-                                  
                            var tmp2 = $('<input/>', {
                             class:'form-control',
                             id:"input_question"+data,
@@ -159,19 +193,132 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                             class:'glyphicon glyphicon-warning-sign form-control-feedback',
                             style:""
                         }).appendTo(tmp2);
-                                  
-                                  
-                                  
-                                  
-                              };
+
+
+
+                        //ANSWERS HERE::
+                        $('<h3/>', {
+                            class:'',
+                            style:"",
+                            text:'Answers:'
+                        }).appendTo(tmp);
+                             
+                               
+                        $('<div/>', {
+                            class:'',
+                            id:"question_answer_"+data,
+                            style:""
+ 
+                        }).appendTo(tmp);
+                               
+                        $('<a/>', {
+                            id: 'add_button_'+data,
+                            href: 'javascript:addAnswer('+data+',false)',
+                            style:"margin-left:10px;",
+                            text: 'Add Answer'
+                        }).appendTo(tmp);
+
+
+                        addAnswer(data,true);
+                               }     
+
+
+
+
                                                         
                                 
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ADD ANSWERE HERE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                function removeAnswer(remObj,id,qcounter){
+                    
+                            for(var i = 0; i<userQuestions.length;i++){
+                                 
+                              if(userQuestions[i].id === id){
+                                  
+                                  userQuestions[i].answerCount--;
+                                  userQuestions[i].answer[qcounter-1] = null;
+                                  
+                                        }
+                                    }
+                    $(remObj).remove();
+                }
+
+                function addAnswer(data,condition){
+                    
+                  var qobject;
+                  var counter;
+                  
+                             for(var i = 0; i<userQuestions.length;i++){
+                                 
+                              if(userQuestions[i].id === data){
+                                  
+                                  qobject = userQuestions[i];
+                                  
+                                  //sets marker on current question
+                                  counter = qobject.answerCount;
+                                        }
+                                    }
+      
+                        if(condition){
+                            for(var i = 0;i<qobject.answerCount;i++){
+                                generateA(qobject,i+1);
+                            }
+                        }
+                        else{
+                            qobject.answerCount++;
+                            counter = qobject.answerCount;
+                           generateA(qobject,counter);
+                           
+                        }//finishing else
+                        
+                        
+                         function generateA(qobject,counter){
+
+                        var tmp = $('<div/>', {
+                            class:'',
+                            id:"answer_"+counter+"_"+qobject.id,
+                            style:""
+                        }).appendTo("#question_answer_"+qobject.id);
+                        
+                        
+                        $('<label/>', {
+                            class:'control-label',
+                            for:"answer_topic"+qobject.id+"_"+counter,
+                            style:"",
+                            text: "Answer "+counter+":"
+ 
+                        }).appendTo(tmp);
+                        
+                           var tmp1 = $('<input/>', {
+                            class:'form-control',
+                            id:"answer_topic"+qobject.id+"_"+counter,
+                            style:"width:200px;",
+                            value: qobject.answer[counter-1]
+                        }).appendTo(tmp);
+                                 
+                                  
+                          $('<span/>', {
+                            class:'glyphicon glyphicon-warning-sign form-control-feedback',
+                            style:""
+                        }).appendTo(tmp1);
+                        
+                        if(counter>1){
+                        $('<a/>', {
+                            id: 'delete_button_'+data,
+                            href: 'javascript:removeAnswer(answer_'+counter+'_'+qobject.id+','+qobject.id+','+counter+')',
+                            style:"margin-left:10px;color:red",
+                            text: 'Remove Answer'
+                        }).appendTo(tmp);
+                        }
+                        
+                        
+                        }//finishinng generate q
+                        
+                    
+                }
+            
                                 
               //@@@@@@@@@@@@@@@@@@@@@@@ DISPLAY QUESTIONS WHEN PRESSING TOPIC @@@@@@@@@@@@@@@@@
-                                
-                                
-                                
-                                
+
                                 function displayQuestions(id,topic){
                                         //setting global variable topic
                                         topicx = topic.topic;
@@ -207,12 +354,22 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         
                         
                         
-                        function addQuestionElement(data,index){
+                        function addQuestionElement(data,index,fromWhere){
+                           
+                         if(fromWhere){   
+                        var tmp = $('<a/>', {
+                            class:"list-group-item animated zoomIn",
+                            id:"question_"+data.id,
+                            style:"",
+                        }).prependTo('#api_quiz_sub_window_avalableQuestion_list');
+                         }
+                         else{
                         var tmp = $('<a/>', {
                             class:"list-group-item animated zoomIn",
                             id:"question_"+data.id,
                             style:"",
                         }).appendTo('#api_quiz_sub_window_avalableQuestion_list');
+                         }
                         
                         //description
                          $('<h4/>', {
@@ -444,6 +601,9 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
   <% include ./index_partials/navbar %>
   </div>
             <style>
+            .makeUsed{
+                background-color:#d3d3d3;
+            }
 /*      #sidebar {*/
 /*    background-color: #191919;*/
 /*    padding: 10px;*/
