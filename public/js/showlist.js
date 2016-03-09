@@ -24,6 +24,18 @@ $(document).ready(function() {
 }
         
     });
+    $("#btn_questions").click(function() {
+
+    var id = "/questions?id=" +
+            $(this)
+            .parent()
+            .parent()
+            .parent()
+            .attr("id");
+            location.href = id;
+
+    });
+    
     $("#btn_edit").click(function() {
         var id = "/editqz?id=" +
             $(this)

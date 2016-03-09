@@ -160,10 +160,18 @@ var callback = function(response) {
 		res.redirect(301, '/showquiz'); //redirecting to homepage
 });
 
+	app.get('/questions', function(req, res){
+		return quizCtrl.Questions(req, res);
+	});
+
 	app.post('/updateqz' , function(req, res) {
 		quizCtrl.updateqz(req.body);
 		res.redirect(301, '/showquiz');
 	});
+	
+	app.post('/addQuestion' , function(req,res){
+		quizCtrl.addQuestion(req);
+	})
 	// ==================================
 	// ========== SHOW QUIZ =============
 	// ==================================
