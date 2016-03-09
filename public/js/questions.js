@@ -18,6 +18,47 @@ $(document).ready(function() {
                     '</div>'+
                     '<div id="new' + (answers+1) + '"></div>';
         document.getElementById('new' + answers).innerHTML = data;
+        $("#new" + answers).addClass("new");
+        $('[type="checkbox"]').bootstrapSwitch();
+    });
+    
+    var getUrlParameter = function(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+    //building json object
+    $("#btnAddQuestion").click(function(){
+        var subQuestion = {questionText: $("#newQuestion").val(), answers: []};
+
+        //building
+
+        $('.new').each(function( index ) {
+            var index2 = index +1;
+            var search  = "#answer" + index2;
+            var fanswer = $(search).val();
+            var fcorrect = true;
+            subQuestion.answers.push({ answer: fanswer, correct: fcorrect});
+
+        });
+        subQuestion.id = getUrlParameter("id");
+        
+        $.ajax({
+        dataType : "text json",
+          type: "POST",
+          url: "/addQuestion",
+          data: subQuestion,
+          cache: false
+        });
     });
     
     
@@ -68,4 +109,5 @@ $(document).ready(function() {
             location.href = id;
     
     });
+    
 });

@@ -12,7 +12,8 @@ exports.create = function(req) {
         design: req.body.design,
         viewCount: req.body.viewCount,
         questions: req.body.questions,
-        owner: req.user.local.email
+        owner: req.user.local.email,
+        questions : []
     });
     entry.save();
     //redirect to homepage
@@ -98,11 +99,53 @@ exports.updateqz = function(body) {
 exports.Questions = function(req,res) {
     var id = req.query.id;
     var query = Quiz.findOne();
-    query.sort({ owner: 'desc' }).where({_id: id})
+    query.where({_id: id})
     .exec(function(err,results){
         res.render('questions.ejs', {settings: results});
-        console.log(results)
+        console.log(results);
         console.log("Error: " + err);
     });
+    
+exports.addQuestion = function(req) {
+    var id = req.body.id;
+    var body =  req.body;
+    console.log("id: " + id);
+    Quiz.findById(id, function(err, quiz){
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("before: " + req);
+            delete req.body.id;
+            console.log("after: " + req);
+            quiz.questions.push(req.body);
+    
+            var qNumber = quiz.questions.length;
+            console.log("number of questions:" +qNumber);
+            
+        //     body.answers.forEach(function(element, index, array){
+			     //   //var newQuiz = element.toJSON();
+        //         quiz.questions[qNumber - 1].answers = "test" + index;
+        //     })
+        //     console.log(quiz);
+            quiz.save();
+        }
+    } );
+
+    //   var body =  req.body;
+    // delete body.id;
+    
+
+    
+    // var condition = { _id: id };
+    // var update = {$push: {
+    //     questions: body}
+    // };
+    // console.log(update);
+    // Quiz.update(condition, update, function(err, numberAffected, rawResponce) {
+    //     console.log("Error: " + err);
+    //     console.log("numberAffected: " + numberAffected);
+    //     console.log("rawResponce: " + JSON.stringify(rawResponce));
+    // });
+};
 
 };
