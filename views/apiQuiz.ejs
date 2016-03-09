@@ -17,6 +17,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
             //   GLOBAL FUNCTIONS
             
             
+            
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ REMOVE QUESTIONS FROM THE LIST @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             
             
@@ -40,7 +41,12 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                                         };
                                     }
                                 }
+                                
+                                
+                                
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ADD QUESTIONS TO USER LIST @@@@@@@@@@@@@@@@@@@@@@@
+            
+            
             
             
                                 function addQuestionToList(index){
@@ -82,7 +88,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                             text: "Question: "+data.question
                         }).appendTo(tmp);
                         
-                        //answer
+                        //answer + functs
                          $('<p/>', {
                             style:"",
                             class:'list-group-item-text',
@@ -105,19 +111,49 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         }).appendTo(tmp);
                         
                                 }
+                                
+                                
+                                
+                                
                 //@@@@@@@@@@@@@@@@@@@@@ HIDE EDITABLE DETAILS @@@@@@@@@@@@@@@@@@@@@@@@@
+                
+                
+                
                 
                 function hideEditQuestionInList(id){
                     
+                      for(var i = 0; i<userQuestions.length;i++){
+                              if(userQuestions[i].id === id){
+                                 
+                                 for(var g = userQuestions[i].answer.length; g>0; g--){
+                                     console.log(g);
+                                     if(userQuestions[i].answer[g] == null){
+                                         console.log(g+ " is null");
+                                    userQuestions[i].answer.splice(g, 1);
+                                         
+                                     }
+                                 }
+                                       console.log(userQuestions[i].answer.length)
+                                       
+                                        }
+                                    }
+
                var button_edit = document.getElementById('edit_button_'+id);
                button_edit.innerHTML = "Edit";
                button_edit.href = 'javascript:editQuestionInList('+id+')';
                
+               //converting some things back to normal
+               
                $("#edit_"+id).remove();
                
                 }
+                
+                
                                 
               //@@@@@@@@@@@@@@@@@@@@@@@@ EDIT QUESTION IN THE LIST @@@@@@@@@@@@@@@@@@@@
+              
+              
+              
 	                       //     function editQuestionInList(data){
 	                       // // var instance = new editQuestionInListx(data);
                         //     //return instance;
@@ -217,34 +253,54 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                             style:"margin-left:10px;",
                             text: 'Add Answer'
                         }).appendTo(tmp);
-
+                        
+                        
+                        
+                        //SAVE BUTTON
+                        
+                        
+                        //<input id='profile_change_details' type="button" class="btn btn-primary" value="Save Changes">
+                         $('<a/>', {
+                            href: 'javascript:saveQuestionChanges('+data+')',
+                            class:"btn btn-primary",
+                            type:'button',
+                            style:"margin-left:10px;float:right';",
+                            text:"Save Changes"
+                        }).appendTo(tmp);
+                        
 
                         addAnswer(data,true);
                                }     
 
+           
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ REMOVE ANSWERE HERE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-
-
-                                                        
-                                
-                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ADD ANSWERE HERE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 function removeAnswer(remObj,id,qcounter){
                     
                             for(var i = 0; i<userQuestions.length;i++){
                                  
                               if(userQuestions[i].id === id){
                                   
-                                  userQuestions[i].answerCount--;
+                                  //userQuestions[i].answerCount--;
                                   userQuestions[i].answer[qcounter-1] = null;
                                   
                                         }
                                     }
-                    $(remObj).remove();
+                    $(remObj).hide();  
+                    $(remObj).val("");
                 }
+                
+                
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ADD ANSWERE HERE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                
+                
 
                 function addAnswer(data,condition){
                     
+                    //object 
                   var qobject;
+                  
+                  //thbis just takes answer count from the object
                   var counter;
                   
                              for(var i = 0; i<userQuestions.length;i++){
@@ -265,6 +321,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         }
                         else{
                             qobject.answerCount++;
+                            qobject.answer.push("");
                             counter = qobject.answerCount;
                            generateA(qobject,counter);
                            
@@ -315,6 +372,55 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         
                     
                 }
+                
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Save Question changes button @@@@@@@@@@@@@@@@@@@@@@@@
+                
+                            function saveQuestionChanges(data){
+                                
+                                //function to reset all nulls to zeros::
+                       // console.log('running');
+                    for(var i = 0; i<userQuestions.length;i++){
+                              if(userQuestions[i].id === data){
+                                 for(var g = 0; g<userQuestions[i].answer.length; g++){
+                                     
+                                     //var answ = $("#answer_topic"+data+"_"+(g+1)).val();
+                                     var htmansw = document.getElementById("answer_topic"+data+"_"+(g+1)).value;
+                                   userQuestions[i].answer[g] = htmansw;
+                                 }
+                                       console.log(userQuestions[i].answer)
+                                       
+                                        }
+                              }
+                                //cleaning empty question answers
+                                
+                            for(var i = 0; i<userQuestions.length;i++){
+                              
+                              if(userQuestions[i].id === data){
+                                 for(var g = userQuestions[i].answer.length; g>0; g--){
+                                     console.log(g);
+                                     if(userQuestions[i].answer[g] == null||userQuestions[i].answer[g] == ""){
+
+                                    userQuestions[i].answer.splice(g, 1);
+                                    userQuestions[i].answerCount = userQuestions[i].answer.length;
+                                         
+                                     }
+                                 }
+                                       console.log(userQuestions[i].answer.length)
+                                       
+                                        }
+                              }
+                                
+                                //Generating fresh question list
+                                
+                                document.getElementById("question_answer_"+data).innerHTML = "";
+                         // $("#question_answer_"+data).innerHTML = "";
+                          
+                          addAnswer(data,true);
+                
+
+                                
+                                
+                            }
             
                                 
               //@@@@@@@@@@@@@@@@@@@@@@@ DISPLAY QUESTIONS WHEN PRESSING TOPIC @@@@@@@@@@@@@@@@@
@@ -378,6 +484,8 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                             text: "Question_id:" + data.id + ", Dificulty: " + data.value
                         }).appendTo(tmp);
                         
+                        
+                        
                         //Question itself
                         $('<h4/>', {
                             class:'list-group-item-heading',
@@ -385,12 +493,16 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                             text: "Question: "+data.question
                         }).appendTo(tmp);
                         
+                        
+                        
                         //answer
                          $('<p/>', {
                             style:"",
                             class:'list-group-item-text',
                             text: "Answer: "+data.answer
                         }).appendTo(tmp);
+
+
 
                             $('<a/>', {
                             id: 'add_button_'+data.id,
