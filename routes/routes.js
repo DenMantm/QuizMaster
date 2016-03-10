@@ -533,11 +533,13 @@ function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
 		
 		//HERE CHECKING IF USER IS VALIDATED HIS E_MAIL ADDRESS
-		if(!req.user.local.validEmail){
-		//condition = true;
-		return res.render('./profile/pleaseValidateEmail.ejs',{user:req.user});
-		}
-		else
+		
+		//DISABLING FOR NOW E_MAIL VALIDATION TRIGGER
+		// if(!req.user.local.validEmail){
+		// //condition = true;
+		// return res.render('./profile/pleaseValidateEmail.ejs',{user:req.user});
+		// }
+		// else
 		return next();
 	}
 
