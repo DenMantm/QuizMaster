@@ -1,0 +1,26 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html>
+<head>
+
+<% include ../index_partials/head %>
+
+
+</head>
+<body>
+<div class="container">
+	
+
+</div>
+<div class="container">
+
+	<div class="jumbotron text-center">
+		<h3><span class="fa fa-lock"></span>Your profile is not yet validated, please check your <%=user.local.email%> mailbox and
+		press provided link to verify your e-mail</h3>
+		<a href="/logout" class="btn btn-default"><span class="fa fa-user"></span>logout</a>
+		<a href="/logout" class="btn btn-default"><span class="fa fa-user"></span>Send verification e-mail again</a>
+	</div>
+
+</div>
+</body>
+</html>

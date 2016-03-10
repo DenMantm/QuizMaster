@@ -385,17 +385,22 @@ UserCtrl.updateWithCheck(req,res,done);
 	//###############################################################################################
 	//#################################Verifying user e-mail by link#################################
 	//###############################################################################################
-	app.get('/verifyEmail/:key', isLoggedIn, function(req, res) {
-
+	app.get('/verifyEmail/:key', function(req, res) {
+		
+		if (!req.isAuthenticated()) {
+				res.send('<h3>You have to be logged in to verify your profile, please login here: <a href="/login">WebSite</a></h3>');
+				return;
+			}
+		
+		
 		if (req.params.key == req.user.local.key) {
-
 			//update profile image link in database
 			var update = {
 				'local.validEmail': true
 			};
 			UserCtrl.updateOneElement(req.user, update);
 
-			res.send('Your e-mail is now verified');
+			res.send('<h4>Your e-mail is now verified link to website: <a href="/login">WebSite</a></h4>');
 		}
 		else {
 			res.send('This is invalid key: ' + req.params.key);
@@ -526,7 +531,13 @@ UserCtrl.updateWithCheck(req,res,done);
 function isLoggedIn(req, res, next) {
 	// if user is authenticated in the session, carry on
 	if (req.isAuthenticated()) {
-		condition = true;
+		
+		//HERE CHECKING IF USER IS VALIDATED HIS E_MAIL ADDRESS
+		if(!req.user.local.validEmail){
+		//condition = true;
+		return res.render('./profile/pleaseValidateEmail.ejs',{user:req.user});
+		}
+		else
 		return next();
 	}
 
