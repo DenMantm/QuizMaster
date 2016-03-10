@@ -26,17 +26,17 @@
     	   <div class="row notMine">
     	    <% } %>
     		<div class="col-md-2">
-    		    <% if (user.local.username === list[i].owner) { %>
+    		    <% if (user.local.email === list[i].owner) { %>
     
-                <a class="btn icon-btn btn-primary" id="btn_questions">
+                <a class="btn icon-btn btn-primary btn_questions">
                 <span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>
                 Questions
                 </a>
-                <a class="btn icon-btn btn-info" id="btn_edit">
+                <a class="btn icon-btn btn-info btn_edit">
                 <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>
                 Edit
                 </a>
-                <a class="btn icon-btn btn-warning" id="btn_remove" method="post">
+                <a class="btn icon-btn btn-warning btn_remove" method="post">
                 <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
                 Remove
                 </a>

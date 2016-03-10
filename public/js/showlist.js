@@ -9,7 +9,7 @@ $(document).ready(function() {
             $(".notMine").show();
         }
     });
-    $("#btn_remove").click(function() {
+    $(".btn_remove").click(function() {
         if (confirm("Are you sure?"))
 {
     var id = "/removeqz?id=" +
@@ -24,7 +24,7 @@ $(document).ready(function() {
 }
         
     });
-    $("#btn_questions").click(function() {
+    $(".btn_questions").click(function() {
 
     var id = "/questions?id=" +
             $(this)
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
     });
     
-    $("#btn_edit").click(function() {
+    $(".btn_edit").click(function() {
         var id = "/editqz?id=" +
             $(this)
             .parent()
