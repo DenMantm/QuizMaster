@@ -1,6 +1,5 @@
 var Quiz = require('../models/quiz.server.model.js');
 
-
 //getting info from body object, which is subbmitted by POST methodfrom front end
 exports.create = function(req) {
     var entry = new Quiz ({
@@ -106,46 +105,43 @@ exports.Questions = function(req,res) {
         console.log("Error: " + err);
     });
     
-exports.addQuestion = function(req) {
-    var id = req.body.id;
-    var body =  req.body;
-    console.log("id: " + id);
+exports.addQuestion = function(body) {
+    var list = "";
+    //get the ID of Quiz provided in body
+    var id = body.id;
+    //get a number of answers provided in body
+    var answNum = body.answNum;
+    console.log("Question ID:"  + id);
+    //console.log("Received from server:"  + JSON.stringify(body));
+    //get the correct quizz and assign it to quiz variable by passing it in the function
     Quiz.findById(id, function(err, quiz){
         if (err) {
             console.log(err);
         } else {
-            console.log("before: " + req);
-            delete req.body.id;
-            console.log("after: " + req);
-            quiz.questions.push(req.body);
-    
-            var qNumber = quiz.questions.length;
-            console.log("number of questions:" +qNumber);
+            //delete id and number of answers value from body as we wont want to pass those to the DB
+            delete body.id;
+            delete body.answNum;
+            console.log("Userhas provided: " +  answNum + " answers");
+            //add the question to the array of questions
             
-        //     body.answers.forEach(function(element, index, array){
-			     //   //var newQuiz = element.toJSON();
-        //         quiz.questions[qNumber - 1].answers = "test" + index;
-        //     })
-        //     console.log(quiz);
+            //console.log(quiz);
+            //get the number of questions in the quiz in order to pull new question's ID
+            // var index = quiz.questions.length-1;
+            // var questionID = quiz.questions[index]._id
+
+            quiz.questions.push({questionText : body.questionText , answers: []});
+            //get the number of questions in the quiz in order to pull new question's ID
+            var index = quiz.questions.length-1;
+            //console.log(quiz);
+            for (var i=0; i < answNum;i++){
+                quiz.questions[index].answers.push({answer: body["answer" + i],correct: body["correct" + i]});
+            }
+
             quiz.save();
+
         }
     } );
 
-    //   var body =  req.body;
-    // delete body.id;
-    
-
-    
-    // var condition = { _id: id };
-    // var update = {$push: {
-    //     questions: body}
-    // };
-    // console.log(update);
-    // Quiz.update(condition, update, function(err, numberAffected, rawResponce) {
-    //     console.log("Error: " + err);
-    //     console.log("numberAffected: " + numberAffected);
-    //     console.log("rawResponce: " + JSON.stringify(rawResponce));
-    // });
 };
 
 };

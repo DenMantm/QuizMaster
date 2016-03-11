@@ -38,25 +38,50 @@ $(document).ready(function() {
 };
     //building json object
     $("#btnAddQuestion").click(function(){
-        var subQuestion = {questionText: $("#newQuestion").val(), answers: []};
+        var count = 0
+        var item = new Object();
+        
+        $('.new').each(function( index ) {
+            count++;
+            var index2 = index + 1;
+            var sAnswer  = "#answer" + index2;
+            var sCorrect  = "#cb_correct" + index2;
+            var fanswer = $(sAnswer).val();
+            var fcorrect = $(sCorrect).val();
+            
+            item["answer"+index] = fanswer
+            item["correct"+index] = fcorrect
+        });
+        item.questionText = $("#newQuestion").val();
+        item.id =  getUrlParameter("id");
+        item.answNum =  count;
+        
+        
+        // var subQuestion = '{"questionText": "' +  $("#newQuestion").val() + '","answers":[]}';
+        // console.log(subQuestion)
+        // var obj = JSON.parse(subQuestion);
+        
 
         //building
-
-        $('.new').each(function( index ) {
-            var index2 = index +1;
-            var search  = "#answer" + index2;
-            var fanswer = $(search).val();
-            var fcorrect = true;
-            subQuestion.answers.push({ answer: fanswer, correct: fcorrect});
-
-        });
-        subQuestion.id = getUrlParameter("id");
+        // var count = 0
+        // $('.new').each(function( index ) {
+        //     count++;
+        //     var index2 = index +1;
+        //     var search  = "#answer" + index2;
+        //     var fanswer = $(search).val();
+        //     var fcorrect = true;
+        //     obj['answers'].push({ answer: fanswer, correct: fcorrect});
+        // });
+        // obj['id'] =  getUrlParameter("id");
+        // obj['answNum'] =  count;
+        // //subQuestion.id = getUrlParameter("id");
+        // var text = JSON.stringify(obj)
+        // console.log("created an object: " + text); 
         
         $.ajax({
-        dataType : "text json",
           type: "POST",
           url: "/addQuestion",
-          data: subQuestion,
+          data:  item,
           cache: false
         });
     });

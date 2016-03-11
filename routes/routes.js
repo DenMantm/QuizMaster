@@ -170,7 +170,7 @@ var callback = function(response) {
 	});
 	
 	app.post('/addQuestion' , function(req,res){
-		quizCtrl.addQuestion(req);
+		quizCtrl.addQuestion(req.body);
 	})
 	// ==================================
 	// ========== SHOW QUIZ =============
