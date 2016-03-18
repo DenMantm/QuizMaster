@@ -106,39 +106,36 @@ exports.Questions = function(req,res) {
     });
     
 exports.addQuestion = function(body) {
-    var list = "";
-    //get the ID of Quiz provided in body
+    //get the ID of Quiz provided in the body
     var id = body.id;
     //get a number of answers provided in body
     var answNum = body.answNum;
-    console.log("Question ID:"  + id);
-    //console.log("Received from server:"  + JSON.stringify(body));
     //get the correct quizz and assign it to quiz variable by passing it in the function
     Quiz.findById(id, function(err, quiz){
         if (err) {
             console.log(err);
         } else {
-            //delete id and number of answers value from body as we wont want to pass those to the DB
+            //delete id value from body as we wont want to pass those to the DB
             delete body.id;
-            delete body.answNum;
-            console.log("Userhas provided: " +  answNum + " answers");
-            //add the question to the array of questions
             
-            //console.log(quiz);
-            //get the number of questions in the quiz in order to pull new question's ID
-            // var index = quiz.questions.length-1;
-            // var questionID = quiz.questions[index]._id
+            //push the guestion with initial settings and empty array of answers which we will populate below
+            quiz.questions.push({
+                questionText: body.questionText,
+                answers: [],
+                qType: body.type,
+                anwsNum: answNum
+            });
 
-            quiz.questions.push({questionText : body.questionText , answers: []});
-            //get the number of questions in the quiz in order to pull new question's ID
+            //get the number of questions already added in order to push the answers to the latest question
             var index = quiz.questions.length-1;
-            //console.log(quiz);
+            //loop through all answers provided
             for (var i=0; i < answNum;i++){
+                //push each answer to the array of 
+                
                 quiz.questions[index].answers.push({answer: body["answer" + i],correct: body["correct" + i]});
-            }
-
+            }            
+            //save your work in DB
             quiz.save();
-
         }
     } );
 

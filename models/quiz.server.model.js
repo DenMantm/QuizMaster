@@ -5,6 +5,8 @@ var Schema = mongoose.Schema;
 //pre-define sub-documents
 var subQuestions = {
     questionText: String,
+    qType: String,
+    anwsNum: Number,
     topic: String,
         picture: String,
         answers: [subAnswers]

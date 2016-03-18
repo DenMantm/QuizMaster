@@ -1,138 +1,141 @@
 var answers = 2;
 
 $(document).ready(function() {
-    
+
     //add another answer
-    $("#btnAddAnswer").click(function(){
-        answers ++ ;
-        var data=   '<div class="row">' + 
-                        '<label htmlFor="inputName" class="col-sm-2" control-label>Answer ' + answers + ':</label>' +
-                        '<div class="col-sm-10">' +
-                            '<input type="text" id="answer' + answers + '" class="form-control" placeholder="Answer" required/>'+
-                            '<div class="cb_correct' + answers + '">'+
-                                '<label>'+
-                                '<input type="checkbox" value="false" id="cb_correct' + answers + '" name="cb_correct' + answers + '"> Correct'+
-                                '</label>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div id="new' + (answers+1) + '"></div>';
+    $("#btnAddAnswer").click(function() {
+        answers++;
+        var data = '<div class="row">' +
+            '<label htmlFor="inputName" class="col-sm-2" control-label>Answer ' + answers + ':</label>' +
+            '<div class="col-sm-10">' +
+            '<input type="text" id="answer' + answers + '" class="form-control" placeholder="Answer" required/>' +
+            '<div class="cb_correct' + answers + '">' +
+            '<label>' +
+            '<input type="checkbox" value="false" id="cb_correct' + answers + '" name="cb_correct' + answers + '"> Correct' +
+            '</label>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div id="new' + (answers + 1) + '"></div>';
         document.getElementById('new' + answers).innerHTML = data;
         $("#new" + answers).addClass("new");
         $('[type="checkbox"]').bootstrapSwitch();
     });
-    
+
+    //function used to get the paramaeter from the current page address
     var getUrlParameter = function(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
 
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
 
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
         }
-    }
-};
+    };
     //building json object
-    $("#btnAddQuestion").click(function(){
-        var count = 0
+    $("#btnAddQuestion").click(function() {
+        //count -> number of answers
+        var count = 0;
+        //creating new one dimentional object
         var item = new Object();
-        
-        $('.new').each(function( index ) {
+        //counting correct answers for validation and setting a question type
+        var numOfCorrect = 0;
+        //looping through divs with answers
+        $('.new').each(function(index) {
             count++;
-            var index2 = index + 1;
-            var sAnswer  = "#answer" + index2;
-            var sCorrect  = "#cb_correct" + index2;
-            var fanswer = $(sAnswer).val();
-            var fcorrect = $(sCorrect).val();
+            var iterate = index + 1;
             
-            item["answer"+index] = fanswer
-            item["correct"+index] = fcorrect
+            //creating strings which will reffer to the each answer id
+            var sAnswer = "#answer" + iterate;
+            var sCorrect = "#cb_correct" + iterate;
+            
+            //assigning users values to variables
+            var fcorrect;
+            var fanswer = $(sAnswer).val();
+            //reset the answer field
+            $(sAnswer).val('');
+            if ($(sCorrect).is(":checked")) {
+                fcorrect = true;
+                numOfCorrect++;
+            }
+            else {
+                fcorrect = false;
+            }
+            
+            //adding user values to object
+            item["answer" + index] = fanswer;
+            item["correct" + index] = fcorrect;
         });
+        
+        //adding wuestion text to object
         item.questionText = $("#newQuestion").val();
-        item.id =  getUrlParameter("id");
-        item.answNum =  count;
+        $("#newQuestion").val('');
+        //passing id in the object by taking it from url
+        item.id = getUrlParameter("id");
         
-        
-        // var subQuestion = '{"questionText": "' +  $("#newQuestion").val() + '","answers":[]}';
-        // console.log(subQuestion)
-        // var obj = JSON.parse(subQuestion);
-        
-
-        //building
-        // var count = 0
-        // $('.new').each(function( index ) {
-        //     count++;
-        //     var index2 = index +1;
-        //     var search  = "#answer" + index2;
-        //     var fanswer = $(search).val();
-        //     var fcorrect = true;
-        //     obj['answers'].push({ answer: fanswer, correct: fcorrect});
-        // });
-        // obj['id'] =  getUrlParameter("id");
-        // obj['answNum'] =  count;
-        // //subQuestion.id = getUrlParameter("id");
-        // var text = JSON.stringify(obj)
-        // console.log("created an object: " + text); 
-        
-        $.ajax({
-          type: "POST",
-          url: "/addQuestion",
-          data:  item,
-          cache: false
-        });
-    });
-    
-    
-    //switch button for displaying all qiestions or not
-    $('[name="cb_displayMine"]').on('switchChange.bootstrapSwitch', function(event, state) {
-        if (state) {
-            $(".notMine").hide();
-        }
-        else {
-            //undo all above if user change the switch state to off
-            $(".notMine").show();
+        //checking number of correct answers
+        item.answNum = count;
+        if (numOfCorrect == 0) {
+            alert("You must provide at least one correct answer.");
+        } else {
+            if (numOfCorrect > 1) {
+                item.type = "multi";
+            }
+            else {
+                item.type = "single";
+            }
+            
+            //posting object to router
+            $.ajax({
+                type: "POST",
+                url: "/addQuestion",
+                data: item,
+                cache: false,
+                success: function(){
+                    location.reload();
+                    $("#newQuestion").val('');
+                },
+                error: function() {
+                    alert("No data found.");
+                }
+            });
         }
     });
-    $("#btn_remove").click(function() {
-        if (confirm("Are you sure?"))
-{
-    var id = "/removeqz?id=" +
-            $(this)
+
+
+    $(".btn_remove").click(function() {
+        if (confirm("Are you sure?")) {
+            var id = "/removeQuest?id=" +
+                $(this)
+                .parent()
+                .parent()
+                .attr("id");
+            $.post(id, function() {
+                location.href = "/showquiz";
+            });
+        }
+    });
+
+    $(".btn_edit").click(function() {
+        var main = $(this)
             .parent()
-            .parent()
-            .parent()
-            .attr("id");
-        $.post(id, function() {
-            location.href = "/showquiz";
-        });
-}
+            .parent();
+            
+        var question = main.children("div.question").text();
+        var answers = main.children("div.answer").text();
         
-    });
-    $("#btn_questions").click(function() {
-
-    var id = "/questions?id=" +
-            $(this)
-            .parent()
-            .parent()
-            .parent()
-            .attr("id");
-            location.href = id;
+        alert(answers);
+        
+        
+       /* var id = "/editQest?id=" + getUrlParameter("id") + "&q=" + 
+            main.attr("id");
+        location.href = id;*/
 
     });
-    
-    $("#btn_edit").click(function() {
-        var id = "/editqz?id=" +
-            $(this)
-            .parent()
-            .parent()
-            .parent()
-            .attr("id");
-            location.href = id;
-    
-    });
-    
+
 });
