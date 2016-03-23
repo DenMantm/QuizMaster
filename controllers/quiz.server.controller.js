@@ -1,6 +1,5 @@
 var Quiz = require('../models/quiz.server.model.js');
 
-
 //getting info from body object, which is subbmitted by POST methodfrom front end
 exports.create = function(req) {
     var entry = new Quiz ({
@@ -106,15 +105,25 @@ exports.Questions = function(req,res) {
         console.log("Error: " + err);
     });
     
+<<<<<<< HEAD
 exports.addQuestion = function(req) {
     var id = req.body.id;
     var body =  req.body;
     console.log(JSON.stringify(body));
     console.log("id: " + id);
+=======
+exports.addQuestion = function(body) {
+    //get the ID of Quiz provided in the body
+    var id = body.id;
+    //get a number of answers provided in body
+    var answNum = body.answNum;
+    //get the correct quizz and assign it to quiz variable by passing it in the function
+>>>>>>> 3c75f9d17524bb69eb638d20dbf4eab02c6c291a
     Quiz.findById(id, function(err, quiz){
         if (err) {
             console.log(err);
         } else {
+<<<<<<< HEAD
             console.log("before: " + req);
             delete req.body.id;
             console.log("after: " + req);
@@ -127,31 +136,32 @@ exports.addQuestion = function(req) {
     
             var qNumber = quiz.questions.length;
             console.log("number of questions:" +qNumber);
+=======
+            //delete id value from body as we wont want to pass those to the DB
+            delete body.id;
+>>>>>>> 3c75f9d17524bb69eb638d20dbf4eab02c6c291a
             
-        //     body.answers.forEach(function(element, index, array){
-			     //   //var newQuiz = element.toJSON();
-        //         quiz.questions[qNumber - 1].answers = "test" + index;
-        //     })
-        //     console.log(quiz);
+            //push the guestion with initial settings and empty array of answers which we will populate below
+            quiz.questions.push({
+                questionText: body.questionText,
+                answers: [],
+                qType: body.type,
+                anwsNum: answNum
+            });
+
+            //get the number of questions already added in order to push the answers to the latest question
+            var index = quiz.questions.length-1;
+            //loop through all answers provided
+            for (var i=0; i < answNum;i++){
+                //push each answer to the array of 
+                
+                quiz.questions[index].answers.push({answer: body["answer" + i],correct: body["correct" + i]});
+            }            
+            //save your work in DB
             quiz.save();
         }
     } );
 
-    //   var body =  req.body;
-    // delete body.id;
-    
-
-    
-    // var condition = { _id: id };
-    // var update = {$push: {
-    //     questions: body}
-    // };
-    // console.log(update);
-    // Quiz.update(condition, update, function(err, numberAffected, rawResponce) {
-    //     console.log("Error: " + err);
-    //     console.log("numberAffected: " + numberAffected);
-    //     console.log("rawResponce: " + JSON.stringify(rawResponce));
-    // });
 };
 
 };
