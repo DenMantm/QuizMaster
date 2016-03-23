@@ -105,41 +105,18 @@ exports.Questions = function(req,res) {
         console.log("Error: " + err);
     });
     
-<<<<<<< HEAD
-exports.addQuestion = function(req) {
-    var id = req.body.id;
-    var body =  req.body;
-    console.log(JSON.stringify(body));
-    console.log("id: " + id);
-=======
 exports.addQuestion = function(body) {
     //get the ID of Quiz provided in the body
     var id = body.id;
     //get a number of answers provided in body
     var answNum = body.answNum;
     //get the correct quizz and assign it to quiz variable by passing it in the function
->>>>>>> 3c75f9d17524bb69eb638d20dbf4eab02c6c291a
     Quiz.findById(id, function(err, quiz){
         if (err) {
             console.log(err);
         } else {
-<<<<<<< HEAD
-            console.log("before: " + req);
-            delete req.body.id;
-            console.log("after: " + req);
-            
-            var objectx = {"questionText":"qweweq","answers":[{"answer":"213","correct":true},{"answer":"qwe213","correct":true},{"answer":"123123","correct":true}],"id":"56d87e3d746792d80357f4f7"}
-            
-            
-            
-            quiz.questions.push(JSON.parse(req.body));
-    
-            var qNumber = quiz.questions.length;
-            console.log("number of questions:" +qNumber);
-=======
             //delete id value from body as we wont want to pass those to the DB
             delete body.id;
->>>>>>> 3c75f9d17524bb69eb638d20dbf4eab02c6c291a
             
             //push the guestion with initial settings and empty array of answers which we will populate below
             quiz.questions.push({

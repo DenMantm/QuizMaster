@@ -38,56 +38,6 @@ $(document).ready(function() {
         }
     };
     //building json object
-<<<<<<< HEAD
-    $("#btnAddQuestion").click(function(){
-        var subQuestion = {questionText: $("#newQuestion").val(), answers: [] };
-
-        //building
-
-        $('.new').each(function( index ) {
-            var index2 = index +1;
-            var search  = "#answer" + index2;
-            var fanswer = $(search).val();
-            var fcorrect = true;
-            subQuestion.answers.push({ answer: fanswer, correct: fcorrect} );
-            
-        });
-        subQuestion.id = getUrlParameter("id");
-        console.log(JSON.stringify(subQuestion));
-        $.ajax({
-        dataType : "text",
-          type: "POST",
-          url: "/addQuestion",
-          data: JSON.stringify(subQuestion),
-          cache: false
-        });
-    });
-    
-    
-    //switch button for displaying all qiestions or not
-    $('[name="cb_displayMine"]').on('switchChange.bootstrapSwitch', function(event, state) {
-        if (state) {
-            $(".notMine").hide();
-        }
-        else {
-            //undo all above if user change the switch state to off
-            $(".notMine").show();
-        }
-    });
-    $("#btn_remove").click(function() {
-        if (confirm("Are you sure?"))
-{
-    var id = "/removeqz?id=" +
-            $(this)
-            .parent()
-            .parent()
-            .parent()
-            .attr("id");
-        $.post(id, function() {
-            location.href = "/showquiz";
-        });
-}
-=======
     $("#btnAddQuestion").click(function() {
         //count -> number of answers
         var count = 0;
@@ -127,7 +77,6 @@ $(document).ready(function() {
         $("#newQuestion").val('');
         //passing id in the object by taking it from url
         item.id = getUrlParameter("id");
->>>>>>> 3c75f9d17524bb69eb638d20dbf4eab02c6c291a
         
         //checking number of correct answers
         item.answNum = count;
