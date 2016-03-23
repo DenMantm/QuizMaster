@@ -27,6 +27,5 @@ var quizSchema = new Schema({
     questions: [subQuestions]
 });
 
-
 //exports the model making it available in other files
 module.exports = mongoose.model('Quiz', quizSchema);

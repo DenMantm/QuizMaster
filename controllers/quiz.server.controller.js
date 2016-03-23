@@ -109,6 +109,7 @@ exports.Questions = function(req,res) {
 exports.addQuestion = function(req) {
     var id = req.body.id;
     var body =  req.body;
+    console.log(JSON.stringify(body));
     console.log("id: " + id);
     Quiz.findById(id, function(err, quiz){
         if (err) {
@@ -117,7 +118,12 @@ exports.addQuestion = function(req) {
             console.log("before: " + req);
             delete req.body.id;
             console.log("after: " + req);
-            quiz.questions.push(req.body);
+            
+            var objectx = {"questionText":"qweweq","answers":[{"answer":"213","correct":true},{"answer":"qwe213","correct":true},{"answer":"123123","correct":true}],"id":"56d87e3d746792d80357f4f7"}
+            
+            
+            
+            quiz.questions.push(JSON.parse(req.body));
     
             var qNumber = quiz.questions.length;
             console.log("number of questions:" +qNumber);

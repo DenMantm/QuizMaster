@@ -38,7 +38,7 @@ $(document).ready(function() {
 };
     //building json object
     $("#btnAddQuestion").click(function(){
-        var subQuestion = {questionText: $("#newQuestion").val(), answers: []};
+        var subQuestion = {questionText: $("#newQuestion").val(), answers: [] };
 
         //building
 
@@ -47,16 +47,16 @@ $(document).ready(function() {
             var search  = "#answer" + index2;
             var fanswer = $(search).val();
             var fcorrect = true;
-            subQuestion.answers.push({ answer: fanswer, correct: fcorrect});
-
+            subQuestion.answers.push({ answer: fanswer, correct: fcorrect} );
+            
         });
         subQuestion.id = getUrlParameter("id");
-        
+        console.log(JSON.stringify(subQuestion));
         $.ajax({
-        dataType : "text json",
+        dataType : "text",
           type: "POST",
           url: "/addQuestion",
-          data: subQuestion,
+          data: JSON.stringify(subQuestion),
           cache: false
         });
     });
