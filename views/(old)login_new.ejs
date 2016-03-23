@@ -1,0 +1,180 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html>
+<head>
+
+<% include ./index_partials/head %>
+</head>
+<body>
+    <div class="container">
+	<!--<% include ./index_partials/navbar %>-->
+	</div>
+<h1 class="animated rotateIn" />Some</h1>
+
+<div style='background-image: url("img/textures/texture1.jpg");' class="cta-mail">
+    <div class="container text-center">
+        <h2>Want more Bootstrap themes &amp; templates?</h2>
+        <h4>Subscribe to our mailing list to receive an update when new items arrive!</h4>
+        <!--<a href="/logout" class="btn btn-default"><span class="fa fa-user"></span>SingUp</a>-->
+		<!--<a href="/profile" class="btn btn-default"><span class="fa fa-user"></span>Login</a>-->
+		 <a class="btn btn-info" href="#signup_modal" data-toggle="modal"><h4><i class="glyphicon glyphicon-eye-open"></i>Signup</h4></a>
+		<a class="btn btn-success" href="#login_modal" data-toggle="modal"><h4><i class="glyphicon glyphicon-eye-open"></i>Login</h4></a>
+        </div>
+        <!-- End MailChimp Signup Form -->
+    </div>
+
+
+                 <!----------------------------------Starting Login Modal Content----------------------------------------------->
+                
+		 <!-- Modal -->
+    <div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-login_modal">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+                    <h2 style='float:left;'><i class="glyphicon glyphicon-user"></i>Login</h2>
+                </div>
+                <div class="modal-body">
+
+                	
+	<!-- LOGIN FORM -->
+	<div id='login_content'>
+	<form action="/login" method="post">
+		<div class="form-group">
+			<label style='float:left;'>Email</label>
+			<input id='email' type="text" class="form-control input-lg" name="email">
+		</div>
+		<div class="form-group">
+			<label style='float:left;' >Password</label>
+			<input id='password' type="password" class="form-control input-lg" name="password">
+		</div>
+			</form>
+<div style='display:none;' id='message' class="alert alert-danger"></div>
+                
+    <button id='Login_index' type="submit" class="btn btn-success">Login</button>
+	<hr>
+	<p>Forgot password? <a href="#recover_modal" data-dismiss="modal"  data-toggle="modal">Recovere password</a></p>
+	<p>Need an account? <a href="#signup_modal" data-dismiss="modal"  data-toggle="modal">Signup</a></p>
+	<!--<a class="btn btn-success" href="#signup_modal" data-dismiss="modal"  data-toggle="modal"><h4><i class="glyphicon glyphicon-eye-open"></i>Login</h4></a>-->
+    </div>     
+
+        </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- Modal -->
+       <br />
+    
+    <!-- Modal -->
+    
+                <!------------------------------------------finishing login modal content---------------------------------------->
+                
+                
+                <!----------------------------------------------Singup modal content--------------------------------------------->
+    
+    		 <!-- Modal -->
+    <div class="modal fade" id="signup_modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-signup_modal">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+                    <h2 style='float:left;'><i class="glyphicon glyphicon-plus"></i>Signup</h2>
+                </div>
+                <div class="modal-body">
+                    
+                    	<!-- LOGIN FORM -->
+	          <form class="form-horizontal" action="/signup" method="POST">
+          <fieldset>
+            <div id="legend">
+              <legend class="">Registration details:</legend>
+            </div>
+            
+            <div class="control-group">
+              <label class="control-label" for="username">Username</label>
+              <div class="controls">
+                <input type="text" id="username_signup" name="username" placeholder="" class="form-control input-lg">
+                <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+              </div>
+            </div>
+         
+            <div class="control-group">
+              <label class="control-label" for="email">E-mail</label>
+              <div class="controls">
+                <input type="email" id="email_signup" name="email" placeholder="" class="form-control input-lg">
+                <p class="help-block">Please provide your E-mail</p>
+              </div>
+            </div>
+         
+            <div class="control-group">
+              <label class="control-label" for="password">Password</label>
+              <div class="controls">
+                <input type="password" id="password_signup" name="password" placeholder="" class="form-control input-lg">
+                <p class="help-block">Password should be at least 6 characters</p>
+              </div>
+            </div>
+         
+            <div class="control-group">
+              <label class="control-label" for="password_confirm_signup">Password (Confirm)</label>
+              <div class="controls">
+                <input type="password" id="password_confirm_signup" name="password_confirm" placeholder="" class="form-control input-lg">
+                <p class="help-block">Please confirm password</p>
+              </div>
+            </div>
+         
+            <div class="control-group">
+              <!-- Button -->
+              <div class="controls">
+                
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <div style='display:none;' id='message_signup' class="alert alert-danger"></div>
+        <button id='signup_index' type="submit" class="btn btn-success">Register</button>
+	<hr>
+    
+    <p>Need to login? <a href="#login_modal" data-dismiss="modal"  data-toggle="modal">Login</a></p>                
+	<p>Forgot password? <a href="#recover_modal" data-dismiss="modal"  data-toggle="modal">Recovere password</a></p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- Modal -->
+            <!-------------------------------------------Finishing Signup Content------------------------------------------->
+            
+            
+            <!-------------------------------------------Password Recovery Content------------------------------------------->
+        		 <!-- Modal -->
+    <div class="modal fade" id="recover_modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-recover_modal">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+                    <h2 style='float:left;'><i class="glyphicon glyphicon-lock"></i>Recover Password</h2>
+                </div>
+                <div class="modal-body">
+                    
+                    	<!-- LOGIN FORM -->
+	<form action="/retrievePassword" method="post">
+		<div class="form-group">
+			<label>Email</label>
+			<input id='email_retrieve' type="text" class="form-control input-lg" name="email">
+		</div>
+	</form>
+	<div style='display:none;' id='message_retrieve' class="alert alert-danger"></div>
+	<button id='retrieve_index' type="submit" class="btn btn-success">Send renewal link</button>
+	<hr>
+                    
+	<p>Need to login? <a href="#login_modal" data-dismiss="modal"  data-toggle="modal">Login</a></p>
+	<p>Need an account? <a href="#signup_modal" data-dismiss="modal"  data-toggle="modal">Signup</a></p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- Modal -->
+            <!------------------------------------------finishing recovery content------------------------------------------->
+
+
+
+</body>
+</html>
