@@ -48,6 +48,7 @@ $(document).ready(function() {
         //looping through divs with answers
         $('.new').each(function(index) {
             count++;
+            console.log(count)
             var iterate = index + 1;
             
             //creating strings which will reffer to the each answer id

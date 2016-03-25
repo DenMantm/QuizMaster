@@ -173,10 +173,6 @@ var callback = function(response) {
 		quizCtrl.addQuestion(req.body);
 		res.redirect(req.get('referer'));
 	});
-	// ==================================
-	// ========== SHOW QUIZ =============
-	// ==================================
-	
 
 	
 	app.get('/showquiz', function(req, res) {
@@ -186,10 +182,17 @@ var callback = function(response) {
 	
 	app.post('/removeqz', function(req, res) {
 		quizCtrl.removeq(req);
-		console.log('redirecting') ;
+		console.log('received removeqz') ;
 		res.redirect(301, '../index'); //redirecting to homepage
 		console.log('redirected') ;
 	});
+	
+	app.post('/removeQuest', function(req, res) {
+		quizCtrl.removeQest(req);
+		console.log("Redirecting to the: " + req.get('referer'))
+		res.redirect(req.get('referer'));
+	});
+	
 	
 	app.get('/editqz', function(req, res){
 		return quizCtrl.editqz(req, res);

@@ -1,4 +1,5 @@
 var Quiz = require('../models/quiz.server.model.js');
+var mongoose = require('mongoose');
 
 //getting info from body object, which is subbmitted by POST methodfrom front end
 exports.create = function(req) {
@@ -101,9 +102,9 @@ exports.Questions = function(req,res) {
     query.where({_id: id})
     .exec(function(err,results){
         res.render('questions.ejs', {settings: results});
-        console.log(results);
         console.log("Error: " + err);
     });
+};
     
 exports.addQuestion = function(body) {
     //get the ID of Quiz provided in the body
@@ -141,4 +142,32 @@ exports.addQuestion = function(body) {
 
 };
 
+
+exports.removeQest = function(req) {
+    //get question id
+    var qid = req.query.id;
+    //create mongoose IbjectID
+    var id = mongoose.Types.ObjectId(qid);
+    //search conditions
+    var conditions = { };
+    //edit conditions
+    var update = { $pull: { questions: { _id: id } } };
+    //edit options
+    var options = { multi: true };
+    //Execute query
+    Quiz.update(conditions, update, options, function(err) {
+        console.log(err);
+    });
+};
+
+exports.editQest = function(req) {
+    var qid = req.query.id;
+    console.log("Searching for id: : " + qid);
+    var id = mongoose.Types.ObjectId(qid);
+    var conditions = { };
+    var update = { $pull: { questions: { _id: id } } };
+    var options = { multi: true };
+    Quiz.update(conditions, update, options, function(err) {
+        console.log(err);
+    });
 };
