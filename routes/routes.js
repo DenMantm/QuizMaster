@@ -207,9 +207,15 @@ var callback = function(response) {
 	// ========= UPDATE USER ============
 	// ==================================
 
-
-	app.get('/x', function(req, res) {
-		res.render('login_new.ejs');
+	//test function here on returning myQuizes
+	app.get('/myQuizList', function(req, res) {
+		quizCtrl.myQuizList(req,res);
+	});
+	app.post('/saveModifiedQuiz', function(req, res){
+		console.log("Checking: " + req)
+		
+		quizCtrl.saveModifiedQuiz(req,res);
+		
 	});
 
 

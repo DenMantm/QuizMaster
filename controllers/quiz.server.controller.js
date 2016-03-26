@@ -45,6 +45,43 @@ exports.checkqName = function(req,res) {
     });
 };
 
+//ADDING EXTRA METHOD TO RETURN ONLY OWNED QUIZES::
+exports.myQuizList = function(req,res) {
+    Quiz.find({owner:req.user.local.email}, function(err,result){
+        
+        if(err){
+            console.log("Error: " + err);
+        }
+        else{
+             res.send(result);
+        }
+        
+    });
+
+    
+};
+
+exports.saveModifiedQuiz = function(req,res){
+    
+var condition = {_id: req.body._id};
+//var parsedBody = JSON.parse(body);
+//console.log(body.qDescription);
+var update = req.body;
+
+Quiz.update(condition,update,
+function(err, numberAffected,rawResponse){
+    if(!err){
+    console.log("CHANGING THIS");
+    }
+    
+    else
+    console.log("Error: "+err);
+});
+  
+};
+
+
+
 exports.list = function(req,res) {
     var query = Quiz.find();
     query.sort({ owner: 'desc' })
