@@ -605,7 +605,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                       for(var i = 0; i<myQuizes.length;i++){
                           
                           
-    var tmp = $('<div/>', {class:"col-sm-6 col-md-4"}).appendTo('#generatingUserQuizes');
+    var tmp = $('<div/>', {class:"col-sm-6 col-md-4",style:"clear:right"}).appendTo('#generatingUserQuizes');
     var tmp2 = $('<div/>', {class:"thumbnail"}).appendTo(tmp);
     
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@ HAVE TO CHANGE THIS TO MORE APPROPRIATE SRC @@@@@@@@@@@@@@@@@@@@@
@@ -614,7 +614,9 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
     
     var tmp3 = $('<div/>', {class:"caption"}).appendTo(tmp2);
         $('<h3/>', { text:myQuizes[i].qName }).appendTo(tmp3);
-             $('<p/>', { text:myQuizes[i].qDescription }).appendTo(tmp3);
+         var tmp5 = $('<div/>', { style:"overflow-y: scroll;height:80px" }).appendTo(tmp3);
+             $('<p/>', { text:myQuizes[i].qDescription }).appendTo(tmp5);
+            
               var tmp4 = $('<p/>', { text:'' }).appendTo(tmp3);
               $('<a/>', { href:"javascript:quizSelection("+i+")", class:"btn btn-primary", role:"button",text:'Edit Quiz'}).appendTo(tmp4);
                           
