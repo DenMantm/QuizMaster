@@ -5,6 +5,9 @@ var mongoose = require('mongoose');
 exports.create = function(req) {
     var entry = new Quiz ({
         qName: req.body.qName,
+        //not sure why default values dont work, no time to investigate, insetring manually
+        topic:"Non specific",
+        picture: "img/quizIcons/default.png",
         qDescription: req.body.qDescription,
         qNumber: req.body.qNumber,
         shuffleQuestion: req.body.shuffleQuestion,

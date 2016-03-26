@@ -116,7 +116,57 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         
                                 }
                                 
+                                //Some activity here:::
                                 
+                                
+                                                function addMyQuestionToList(index){
+                                 data = userQuestions[index];
+
+                                    //adding line to inform that question is takken
+                        var tmp = $('<a/>', {
+                            class:"list-group-item animated zoomIn",
+                            id:"added_"+data.id,
+                            style:"",
+                        }).appendTo('#api_quiz_sub_window_attachedQuestions');
+                        
+                        //description
+                         $('<h4/>', {
+                            class:'list-group-item-heading',
+                            style:"",
+                            text:"Question_id:" + data.id +", Dificulty: " + data.value + ", Topic: "+data.tempTopic
+                        }).appendTo(tmp);
+                        
+                        //Question itself
+                        $('<h4/>', {
+                            class:'list-group-item-heading',
+                            id:'question_h_'+data.id,
+                            style:"",
+                            text: "Question: "+data.question
+                        }).appendTo(tmp);
+                        
+                        //answer + functs
+                         $('<p/>', {
+                            style:"",
+                            class:'list-group-item-text',
+                            text: "Answer: "+data.answer
+                        }).appendTo(tmp);
+                        
+                        
+                        $('<a/>', {
+                            id: 'add_button_'+data.id,
+                            href: 'javascript:removeQuestionFromList('+data.id+')',
+                            style:"margin-left:10px;color:red;",
+                            text: 'Remove'
+                        }).appendTo(tmp);
+                        
+                        $('<a/>', {
+                            id: 'edit_button_'+data.id,
+                            href: 'javascript:editQuestionInList('+data.id+')',
+                            style:"margin-left:10px;color:blue;",
+                            text: 'Edit'
+                        }).appendTo(tmp);
+                        
+                                }                
                                 
                                 
                 //@@@@@@@@@@@@@@@@@@@@@ HIDE EDITABLE DETAILS @@@@@@@@@@@@@@@@@@@@@@@@@
@@ -163,6 +213,14 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         //     //return instance;
 	                       //     }
                                function editQuestionInList(data){
+                                   var tmpQuestion;
+                           for(var i = 0; i<userQuestions.length;i++){
+                                 
+                              if(userQuestions[i].id === data){
+                                  tmpQuestion = userQuestions[i];
+                                  
+                                        }
+                                    }
 
                                    //getting all necesarry
                //changing button and href in the button                    
@@ -200,9 +258,9 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         
                            var tmp1 = $('<input/>', {
                             class:'form-control',
-                            id:"input_question"+data,
+                            id:"input_topic"+data,
                             style:"width:200px;",
-                            value: "topicHere"
+                            value: tmpQuestion.tempTopic
                         }).appendTo(tmp);
                                  
                                   
@@ -225,7 +283,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                             class:'form-control',
                             id:"input_question"+data,
                             style:"",
-                            value: question.innerHTML
+                            value: tmpQuestion.question
                         }).appendTo(tmp);
                                  
                                   
@@ -240,7 +298,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         $('<h3/>', {
                             class:'',
                             style:"",
-                            text:'Answers:'
+                            text:'Answers:(first answer always right one)'
                         }).appendTo(tmp);
                              
                                
@@ -381,6 +439,15 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                 
                             function saveQuestionChanges(data){
                                 
+                                var tmpTopic = document.getElementById('input_topic'+data).value;
+                                var tmpQuestion = document.getElementById('input_question'+data).value
+                                
+                                if(tmpQuestion==""||tmpTopic==""){
+                                    alert('Please dont Leave Question and Topic Fields blank');
+                                    return;
+                                }
+                                document.getElementById("question_h_"+data).innerHTML = "Question: " + tmpQuestion;
+ 
                                 //function to reset all nulls to zeros::
                        // console.log('running');
                     for(var i = 0; i<userQuestions.length;i++){
@@ -392,7 +459,6 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                                    userQuestions[i].answer[g] = htmansw;
                                  }
                                        console.log(userQuestions[i].answer)
-                                       
                                         }
                               }
                                 //cleaning empty question answers
@@ -400,6 +466,8 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                             for(var i = 0; i<userQuestions.length;i++){
                               
                               if(userQuestions[i].id === data){
+                                  userQuestions[i].question = tmpQuestion;
+                                  userQuestions[i].tempTopic = tmpTopic;
                                  for(var g = userQuestions[i].answer.length; g>0; g--){
                                      console.log(g);
                                      if(userQuestions[i].answer[g] == null||userQuestions[i].answer[g] == ""){
@@ -516,6 +584,11 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                         }).appendTo(tmp);
                         
                     }
+                    
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ This function allows to save edited quiz to database
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        
                     function saveQuiz(objectToSave){
                                                       $.ajax({
         url: "saveModifiedQuiz",
@@ -559,10 +632,57 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
            $('#api_quiz_sub_window_avalableTopics').hide();
            $('#api_quiz_window_questions').hide();
            $('#api_quiz_window_finish').hide();
+           
+           
+           //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+           //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Starting to populate arrays with data from database and change thing in DOM
+           //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+           
+           document.getElementById("api_quiz_name").innerHTML = selQuiz.qName;
+           document.getElementById("api_quiz_topic").innerHTML = selQuiz.topic;
+           document.getElementById("api_quiz_questionCount").innerHTML = selQuiz.questions.length;
+           
+           //assembling propper array ith qestios:
+           for(var i = 0; i < selQuiz.questions.length;i++){
+               var answer = [];
+               for(var g = 0; g < selQuiz.questions[i].answers.length;g++){
+               answer.push(selQuiz.questions[i].answers[g].answer)
+                   
+               }
+               
+               userQuestions.push({question:   selQuiz.questions[i].questionText,
+                                   answerCount: selQuiz.questions[i].answers.length,
+                                   tempTopic:   selQuiz.questions[i].topic,
+                                   id:i,
+                                   answerCount:answer.length,
+                                   answer:answer
+               });
+               addMyQuestionToList(i);
+              // selQuiz.questions[i]
+           }
             
         }
                     
   $(document).ready(function() {
+      
+      //saving quiz
+      $("#finishAndCreate").click(function(){
+          var subQuestions = [];
+          for(var i = 0; i < userQuestions.length;i++){
+              
+               userQuestions[i].question
+               
+              
+          }
+          
+          
+          
+          
+          
+          saveQuiz(selQuiz);
+      })
+      
+      
       
           function showSelectQuiz(){
              document.getElementById("api_quiz_select_button").parentNode.className ="active";
@@ -607,10 +727,9 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                           
     var tmp = $('<div/>', {class:"col-sm-6 col-md-4",style:"clear:right"}).appendTo('#generatingUserQuizes');
     var tmp2 = $('<div/>', {class:"thumbnail"}).appendTo(tmp);
-    
+        console.log(myQuizes[i].picture);
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@ HAVE TO CHANGE THIS TO MORE APPROPRIATE SRC @@@@@@@@@@@@@@@@@@@@@
-    
-            $('<img/>', {src:"img/quizIcons/default.png", class:"thumbnail_image_list" }).appendTo(tmp2);
+            $('<img/>', {src: myQuizes[i].picture, class:"thumbnail_image_list" }).appendTo(tmp2);
     
     var tmp3 = $('<div/>', {class:"caption"}).appendTo(tmp2);
         $('<h3/>', { text:myQuizes[i].qName }).appendTo(tmp3);
@@ -1036,7 +1155,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                       </tr>
                       <tr>
                         <td>Topic: </td>
-                        <td><spanid='api_quiz_topic'>Unknown Topic</a></span></td>
+                        <td><span id='api_quiz_topic'>Unknown Topic</a></span></td>
                       </tr>
                       <td>QuestionCount</td>
                         <td><span id='api_quiz_questionCount' class='fields'>00</span>
@@ -1110,7 +1229,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                   <div class="panel panel-info">
             <div class="panel-heading">
               <p style="float:left;" class=" text-info"> <%=new Date().toJSON().slice(0,10) +" "+ new Date().toJSON().slice(11,16)%> </p>
-            <h5 style="float:right;">Oweral Quiz information</h5>
+            <h5 style="float:right;">Finalizing everything</h5>
             </br>
             </br>
             </div>
@@ -1120,6 +1239,8 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                 </div>
                 <div class=" col-md-12 col-lg-12 "> 
                     <h3>Finishing stage container here</h3>
+                    <!--<button id="finishAndCreate"></button>-->
+              <p><a href="javascript:void(0)" id="finishAndCreate" class="btn btn-primary" role="button">Finish</a></p>
                 </div>
               </div>
             </div>

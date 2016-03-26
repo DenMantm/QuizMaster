@@ -7,8 +7,8 @@ var subQuestions = {
     questionText: String,
     qType: String,
     anwsNum: Number,
-    topic: String,
-        picture: String,
+    topic: {type:String, default:'Non specific'},
+    picture: {type:String, default:'img/quizIcons/default.png'},
         answers: [subAnswers]
     };
 
