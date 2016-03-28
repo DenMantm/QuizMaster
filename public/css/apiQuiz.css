@@ -1,3 +1,30 @@
 .thumbnail_image_list{
-    height: 200px; width:150px;
+    height: 200px; width:200px;
 }
+            .makeUsed{
+                background-color:#d3d3d3;
+            }
+/*      #sidebar {*/
+/*    background-color: #191919;*/
+/*    padding: 10px;*/
+/*}*/
+/*#sidebar a:hover, a:focus {*/
+/*    color: #FFF;*/
+/*    text-decoration: none;*/
+/*}*/
+/*#sidebar.nav > li > a,*/
+/*#sidebar.nav > li > a:link {*/
+/*    background-color: #191919;*/
+/*    color: #FFF;*/
+/*}*/
+/*#sidebar.nav > li > a:hover,*/
+/*#sidebar.nav > li > a:focus {*/
+/*    background-color: #373737;*/
+/*}*/
+/*#sidebar.nav-pills > li.active > a,*/
+/*#sidebar.nav-pills > li.active > a:hover,*/
+/*#sidebar.nav-pills > li.active > a:focus {*/
+/*    color: #FFF;*/
+/*    background-color: #C72A25;*/
+/*}*/
+/*    

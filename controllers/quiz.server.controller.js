@@ -65,16 +65,17 @@ exports.myQuizList = function(req,res) {
 };
 
 exports.saveModifiedQuiz = function(req,res){
-    
 var condition = {_id: req.body._id};
 //var parsedBody = JSON.parse(body);
 //console.log(body.qDescription);
 var update = req.body;
+console.log( JSON.stringify(req.body));
 
 Quiz.update(condition,update,
 function(err, numberAffected,rawResponse){
     if(!err){
     console.log("CHANGING THIS");
+    res.send("ok");
     }
     
     else
