@@ -332,13 +332,18 @@
                                  
                               if(userQuestions[i].id === id){
                                   
+                                  
+                                  console.log(userQuestions[i].id);
+                                  
+                                  
                                   //userQuestions[i].answerCount--;
-                                  userQuestions[i].answer[qcounter-1] = null;
+                                  userQuestions[i].answer.splice(qcounter-1,1);
                                   
                                         }
                                     }
-                    $(remObj).hide();  
                     $(remObj).val("");
+                    $(remObj).hide();  
+                    
                 }
                 
                 

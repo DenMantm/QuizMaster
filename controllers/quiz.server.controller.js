@@ -75,7 +75,6 @@ Quiz.update(condition,update,
 function(err, numberAffected,rawResponse){
     if(!err){
     console.log("CHANGING THIS");
-    res.send("ok");
     }
     
     else
