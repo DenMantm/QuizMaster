@@ -211,3 +211,13 @@ exports.editQest = function(req) {
         console.log(err);
     });
 };
+
+exports.start = function(req,res) {
+    var id = req.query.id;
+    var query = Quiz.findOne();
+    query.where({_id: id})
+    .exec(function(err,results){
+        res.render('test.ejs', {settings: results});
+        console.log("Error: " + err);
+    });
+};

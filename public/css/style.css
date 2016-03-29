@@ -367,11 +367,11 @@ body {
 
 .footer-distributed form input::-moz-placeholder {
 	opacity: 1;
-	color:  ##000000;
+	color:  #000000;
 }
 
 .footer-distributed form input:-ms-input-placeholder{
-	color:  ##000000;
+	color:  #000000;
 }
 
 /* The magnify glass icon */

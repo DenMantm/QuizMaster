@@ -199,9 +199,12 @@ var callback = function(response) {
 	});
 
 	app.post('/checkName', function(req, res){
-		console.log("Checking: " + req)
 		return quizCtrl.checkqName(req, res);
 	});
+	
+	app.get('/quiz', function(req, res){
+		return quizCtrl.start(req, res);
+	});	
 
 	// ==================================
 	// ========= UPDATE USER ============

@@ -1,8 +1,11 @@
 var answers = 2;
 
 $(document).ready(function() {
-
-    //add another answer
+    /* ===================================
+    ====     add another answer       ====
+    ====       on the form            ====
+    =================================== */
+    
     $("#btnAddAnswer").click(function() {
         answers++;
         var data = '<div class="row">' +
@@ -37,7 +40,12 @@ $(document).ready(function() {
             }
         }
     };
-    //building json object
+    
+    /* ===================================
+    ====    Save changes from the     ====
+    ====      new question form       ====
+    =================================== */
+    
     $("#btnAddQuestion").click(function() {
         //count -> number of answers
         var count = 0;
@@ -108,16 +116,23 @@ $(document).ready(function() {
         }
     });
 
-
+    /* ===================================
+    ====     Remove the question      ====
+    ====      from the database       ====
+    =================================== */
+    
     $(".btn_remove").click(function() {
         if (confirm("Are you sure?")) {
+        //Aquire question id from html id
             var id = "/removeQuest?id=" +
                 $(this)
                 .parent()
                 .parent()
                 .attr("id");
+                
+        //post the generated url
             $.post(id, function() {
-                location.href = "/showquiz";
+                location.reload(); 
             });
         }
     });
@@ -130,7 +145,7 @@ $(document).ready(function() {
         var question = main.children("div.question").text();
         var answers = main.children("div.answer").text();
         
-        alert(answers);
+        console.log(question);
         
         
        /* var id = "/editQest?id=" + getUrlParameter("id") + "&q=" + 

@@ -1,0 +1,67 @@
+#qBox {
+	padding-top: 20px;
+	padding-bottom: 21px;
+	overflow: hidden
+}
+
+.true {
+	color: #444;
+	background: transparent url(../img/quizIcons/quiz-tick.png) no-repeat 0px center;
+}
+
+.false {
+	color: #444;
+	background: transparent url(../img/quizIcons/quiz-cross.png) no-repeat 0px center;
+}
+
+#qBox p {
+	padding: 5px 0;
+	font-size: 19px;
+	line-height: 21px;
+	font-weight: normal;
+	text-align: left;
+}
+
+.form label {
+	margin: 5px 0;
+	padding: 5px 5px 5px 5px;
+	font-size: 16px;
+	line-height: 16px;
+	font-weight: normal;
+	text-align: left;
+	border: 2px solid transparent;
+	float: left;
+	clear: none;
+}
+
+.head {
+	margin: 5px 0;
+	padding: 5px 5px 5px 5px;
+	font-size: 16px;
+	line-height: 16px;
+	font-weight: normal;
+	text-align: left;
+}
+
+#srate,
+#acorrect,
+#awrong {
+	margin: 5px 0;
+	padding: 5px 25px 23px 5px;
+	font-size: 16px;
+	line-height: 16px;
+	font-weight: normal;
+	text-align: right;
+}
+
+.cratio {
+	margin: 5px 0;
+	padding: 5px 5px 5px 40px;
+	font-size: 16px;
+	line-height: 16px;
+	font-weight: normal;
+	text-align: left;
+	border: 2px solid transparent;
+	float: left;
+	clear: none;
+}
