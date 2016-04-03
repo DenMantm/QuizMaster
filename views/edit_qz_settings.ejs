@@ -80,11 +80,14 @@
                     <div class="form-group">
                         <% if (settings.qNumber !=='all') { %>
                             <input type="checkbox" value="true" name="cb_shuffleQuestion" id="cb_shuffleQuestion" disabled="true" checked>
+                            <input class="form-control" id="shuffleQuestion" name="shuffleQuestion" type="hidden" value="true"/>
                         <% } else { %>
                         <% if (settings.shuffleQuestion) { %>
                             <input type="checkbox" value="true" name="cb_shuffleQuestion" id="cb_shuffleQuestion" checked>
+                            <input class="form-control" id="shuffleQuestion" name="shuffleQuestion" type="hidden" value="true"/>
                         <% } else { %>
                             <input type="checkbox" value="true" name="cb_shuffleQuestion" id="cb_shuffleQuestion">
+                            <input class="form-control" id="shuffleQuestion" name="shuffleQuestion" type="hidden" value="false"/>
                         <% }}%>
 
                     </div>
