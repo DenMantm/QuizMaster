@@ -5,20 +5,71 @@
 
 <% include ./index_partials/head %>
 
-
+<link rel="stylesheet" href="css/index_logged.css"/>
 </head>
 <body>
-<div class="container">
+<div style="width:100%" class="container">
 	
 <% include ./index_partials/navbar %>
 
 </div>
-<div class="container">
+<div style="width:100%; padding:0;" class="container">
+	<!--<div class="jumbotron text-center">-->
+	<!--	<h1><span class="fa fa-lock"></span>Welcome!</h1>-->
+	<!--	<a href="/logout" class="btn btn-default"><span class="fa fa-user"></span>Logout</a>-->
+	<!--	<a href="/profile" class="btn btn-default"><span class="fa fa-user"></span>Profile</a>-->
+	<!--</div>-->
+	<div id="main_choice_area">
 
-	<div class="jumbotron text-center">
-		<h1><span class="fa fa-lock"></span>Welcome!</h1>
-		<a href="/logout" class="btn btn-default"><span class="fa fa-user"></span>Logout</a>
-		<a href="/profile" class="btn btn-default"><span class="fa fa-user"></span>Profile</a>
+	        <div style="width:65%" class="container">
+            <div class="row">
+                <div class="choice_box col-lg-2 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-5x fa-download text-primary"></i>
+                        <span style="font-size:4.0em;" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        <h3>Create New Quiz</h3>
+                        <p class="text-muted">With cross platform functionality you can use your desktop, Apple or Android device</p>
+						
+                    </div>
+                </div>
+                <div class="choice_box col-lg-2 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-5x fa-question text-primary"></i>
+                    <span style="font-size:4.0em;" class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                        <h3>Edit My Quizes</h3>
+						<p class="text-muted">Submit your own questions, or choose from a category selection of over 160,000 questions</p>
+                    </div>
+                </div>
+                <div class="choice_box col-lg-2 col-md-6 text-center">
+                    <div class="service-box">
+					    <i class="fa fa-5x fa-share text-primary"></i>
+	                <span style="font-size:4.0em;" class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        <h3>Search existing quizs</h3>
+                        <p class="text-muted">You decide who can take your quizzes, they can be public or private, giving you total control.</p>
+                    </div>
+                </div>
+                <div class="choice_box col-lg-2 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-5x fa-pencil-square-o text-primary"></i>
+                                <span style="font-size:4.0em;" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                        <h3>Monitor Results</h3>
+                        <p class="text-muted">Real time statistics generated so you can see who is taking your quizzes and how they are performing</p>
+                    </div>
+                </div>
+                
+                                <div class="choice_box col-lg-2 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-5x fa-pencil-square-o text-primary"></i>
+         <span style="font-size:4.0em;" class="
+glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        <h3>My Settings</h3>
+                        <p class="text-muted">Real time statistics generated so you can see who is taking your quizzes and how they are performing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		
 	</div>
 
 </div>
