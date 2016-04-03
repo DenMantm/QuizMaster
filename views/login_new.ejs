@@ -20,7 +20,28 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
 	
 	<link rel="stylesheet" href="font-awesome/css/font-awesome-animation.min.css">
-
+<script>
+$(document).ready(function(){
+    //Signup button
+    $('.signup_ancher').click(function(){
+         $('#signup_modal').modal({
+        show: 'true'
+    }); 
+    })
+    //login Button
+        $('.login_ancher').click(function(){
+         $('#login_modal').modal({
+        show: 'true'
+    }); 
+    })
+    //recover password
+        $('.recover_ancher').click(function(){
+         $('#recover_modal').modal({
+        show: 'true'
+    }); 
+})
+ })
+</script>
 </head>
 
 
@@ -49,10 +70,10 @@
 						<a class="page-scroll" href="#how-it-works">How It Works</a>
                     </li>
                     <li>
-                        <a class="page-scroll btn btn-success" href="#login_modal" data-toggle="modal">Log In</a>
+                        <a class="login_ancher btn btn-success" href="javascript:void(0)" data-toggle="modal">Log In</a>
 					</li>
 					<li>
-						<a href="#signup_modal" data-toggle="modal" class="btn btn-primary btn-xl page-scroll">Sign Up Now</a>
+						<a href="javascript:void(0)" data-toggle="modal" class="signup_ancher btn btn-primary btn-xl">Sign Up Now</a>
 					</li>
 				
 					
@@ -69,7 +90,7 @@
             <div class="header-content-inner">
                 <h1>Welcome to QuizMaster</h1>
 				<p>Build, take and monitor quizzes, all for free! </p>
-                <a href= "#signup_modal" class="btn btn-primary btn-xl page-scroll" data-toggle="modal">Sign Up Now</a>
+                <a href= "javascript:void(0)" class="signup_ancher btn btn-primary btn-xl" data-toggle="modal">Sign Up Now</a>
             </div>
         </div>
         <div>
@@ -179,7 +200,6 @@
                 </div>
                 <div class="modal-body">
 
-                	
 	<!-- LOGIN FORM -->
 	<div id='login_content'>
 	<form action="/login" method="post">
@@ -196,8 +216,8 @@
                 
     <button id='Login_index' type="submit" class="btn btn-success">Login</button>
 	<hr>
-	<p>Forgot password? <a href="#recover_modal" data-dismiss="modal"  data-toggle="modal">Recovere password</a></p>
-	<p>Need an account? <a href="#signup_modal" data-dismiss="modal"  data-toggle="modal">Signup</a></p>
+	<p>Forgot password? <a class="recover_ancher" href="javascript:void(0)" data-dismiss="modal"  data-toggle="modal">Recovere password</a></p>
+	<p>Need an account? <a class="signup_ancher" href="javascript:void(0)" data-dismiss="modal"  data-toggle="modal">Signup</a></p>
 	<!--<a class="btn btn-success" href="#signup_modal" data-dismiss="modal"  data-toggle="modal"><h4><i class="glyphicon glyphicon-eye-open"></i>Login</h4></a>-->
     </div>     
 
@@ -276,8 +296,8 @@
         <button id='signup_index' type="submit" class="btn btn-success">Register</button>
 	<hr>
     
-    <p>Need to login? <a href="#login_modal" data-dismiss="modal"  data-toggle="modal">Login</a></p>                
-	<p>Forgot password? <a href="#recover_modal" data-dismiss="modal"  data-toggle="modal">Recovere password</a></p>
+    <p>Need to login? <a class="login_ancher" href="javascript:void(0)" data-dismiss="modal"  data-toggle="modal">Login</a></p>                
+	<p>Forgot password? <a class="recover_ancher" href="javascript:void(0)" data-dismiss="modal"  data-toggle="modal">Recovere password</a></p>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -308,8 +328,8 @@
 	<button id='retrieve_index' type="submit" class="btn btn-success">Send renewal link</button>
 	<hr>
                     
-	<p>Need to login? <a href="#login_modal" data-dismiss="modal"  data-toggle="modal">Login</a></p>
-	<p>Need an account? <a href="#signup_modal" data-dismiss="modal"  data-toggle="modal">Signup</a></p>
+	<p>Need to login? <a class="login_ancher" href="javascript:void(0)" data-dismiss="modal"  data-toggle="modal">Login</a></p>
+	<p>Need an account? <a class="signup_ancher" href="javascript:void(0)" data-dismiss="modal"  data-toggle="modal">Signup</a></p>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
