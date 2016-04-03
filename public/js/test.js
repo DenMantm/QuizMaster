@@ -28,11 +28,17 @@
 
           var $questions = data.questions;
           qNum = $questions.length;
-
+          var questionsNum = data.qNumber;
+          var maxQuestion
+          if (questionsNum == 'all') {
+            maxQuestion = $questions.length;
+          } else {
+            maxQuestion = Number(data.qNumber)
+          }
 
           //########## create an array of random numbers for questions ###########    
           var arr = [];
-
+          alert(data.qNumber)
           if (data.shuffleQuestion) {
 
               while (arr.length < qNum) {
@@ -46,10 +52,8 @@
                   }
                   if (!found) arr[arr.length] = randomnumber;
               }
-
-              //######### if shuffleQuestion is false just create array of sorted numbers ##############
-          }
-          else {
+        //######### if shuffleQuestion is false just create array of sorted numbers ##############
+          } else {
               while (arr.length < qNum) {
                   arr[arr.length] = arr.length + 1
               }
@@ -61,7 +65,7 @@
           //########## GENERATE NEXT QUESTION #############
 
           function nextQuestion(i) {
-
+            
               var newElement = document.createElement('div');
 
               //pull the question number from random number array
@@ -104,8 +108,8 @@
                       }
                       if (!found) arrA[arrA.length] = randomnumber;
                   }
-              }
-              else {
+              } else {
+                  //######### if shuffleQuestion is false just create array of sorted numbers ##############
                   while (arr.length < qNum) {
                       arrA[arrA.length] = arrA.length + 1
                   }
@@ -125,8 +129,10 @@
 
               document.getElementById("main-mid").appendChild(newElement);
 
-              console.log(question.correct);
+              if (count == maxQuestion - 1) {
+                document.getElementById("main-bot").innerHTML = '<button type="button" id="fbtn" class="btn btn-default btn-sm btn-block" data-toggle="modal">Finish</button>';
 
+              }
           }
 
           nextQuestion(count, "main-mid");
@@ -162,26 +168,39 @@
 
           function ferfreshButton() {
               $("#qbtn").click(function() {
+                //getting name of div with latest question
                   var current = "#question" + count;
+                //serialize form will generate string "answer=x" where x is a number of selected answer
                   var answer = $(current).serialize();
+                //check if any answer has been selected before progressing
                   if (answer.length === 0) {
                       alert("Select your answer.");
                   }
                   else {
                       var next = "q" + count;
+                      //check the number of answer selected using regular expression
                       var matches = answer.match(/answer=(\d+)/);
+                      //check the first found
                       var answNum = Number(matches[1]);
+                      
                       var currentAnsw = "#question" + count + " #answer" + answNum;
+                      
+                      //check if the selected answer is the same as correct answer
                       if (answNum === question.correct) {
+                        //mark selected answer acordingly to the correct attribute (true or false) - true in this case, this will generate the green tick
                           $(currentAnsw).addClass(question.st[answNum]);
+                        // update correct answers count
                           updateCorrect();
                       }
                       else {
+                        // update incorrect answers count
                           updateWrong();
+                        //mark selected answer acordingly to the correct attribute (true or false) - false in this case, this will generate red cross
                           $(currentAnsw).addClass(question.st[answNum]);
                           var rightAnsw = "#question" + count + " #answer" + question.correct;
+                        //add true class to the correct answer which will generate green tick
                           $(rightAnsw).addClass("true");
-                          console.log("updating: " + rightAnsw)
+
                       }
                       $(currentAnsw).addClass(question.st[answNum]);
                       $("html, body").animate({
