@@ -106,7 +106,7 @@ $(document).ready(function() {
             //posting object to router
             $.ajax({
                 type: "POST",
-                url: "/editQuestion",
+                url: "/addQuestion",
                 data: item,
                 cache: false,
                 success: function(){
