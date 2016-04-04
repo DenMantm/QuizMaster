@@ -14,31 +14,34 @@
           </div>
           <div id="new1" class="new">
           <div class="row">
-            <label htmlFor="inputName" class="col-sm-2" control-label>Answer 1:</label>
+            <label htmlFor="inputName" class="col-sm-2" control-label>
+             Answer 1:</label>
             <div class="col-sm-10">
-              <input type="text" id="answer1" class="form-control" placeholder="Answer" required/>
-              <div class="cb_correct1">
+              <input type="text" class="answer form-control" placeholder="Answer" required/>
+              <div>
                 <label>
-                <input type="checkbox" value="false" id="cb_correct1" name="cb_correct1"> Correct
+                <input type="checkbox" value="false" class="cb_correct" name="cb_correct1"> Correct
                 </label>
+      
             </div>
             </div>
           </div>
           </div>
           <div id="new2" class="new">
           <div class="row">
-            <label htmlFor="inputName" class="col-sm-2" control-label>Answer 2:</label>
+            <label htmlFor="inputName" class="col-sm-2" control-label><button type="button" onclick="nRemove(2)" class="btn btn-danger btn-sm btn-round"><span class="glyphicon glyphicon-trash"></span></button>
+             Answer 2:</label>
             <div class="col-sm-10">
-              <input type="text" id="answer2" class="form-control" placeholder="Answer" required/>
-            <div class="cb_correct1">
+              <input type="text" id="answer2" class="answer form-control" placeholder="Answer" required/>
+            <div>
                 <label>
-                    <input type="checkbox" value="false" id="cb_correct2" name="cb_correct2"> Correct
+                    <input type="checkbox" value="false" id="cb_correct2" class="cb_correct" name="cb_correct2"> Correct
                 </label>
                 </div>
             </div>
           </div>
           </div>
-        <div id="new3"></div>
+        <div id="free"></div>
         </div>
         <div class="modal-footer">
           <button id="btnAddAnswer" class="btn btn-primary">Add another answer</button>

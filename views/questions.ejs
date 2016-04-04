@@ -29,7 +29,7 @@
               <div class="answers">
                 <% for(var y=0; y<settings.questions[i].answers.length; y++) {%>
                   <div class="answer">
-                    Answer<%= y %> 
+                    Answer <%= y+1 %> 
                     <span class="answer-text">
                       <%= settings.questions[i].answers[y].answer %>
                     </span>
@@ -50,11 +50,11 @@
               <div class="buttons">
                 <a class="btn icon-btn btn-info btn_edit" data-toggle="modal" data-target="#editQuestion">
                 <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>
-                Edit
+                Edit question
                 </a>
                 <a class="btn icon-btn btn-warning btn_remove" method="post">
                 <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
-                Remove
+                Remove question
                 </a>
               </div>
             </div>
