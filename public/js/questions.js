@@ -6,7 +6,7 @@ var editableQuestionId = '';
 $(document).ready(function() {
     /* ===================================
     ====     add another answer       ====
-    ====       on the form            ====
+    ===   on the new question form    ====
     =================================== */
     
     $("#btnAddAnswer").click(function() {
@@ -28,6 +28,32 @@ $(document).ready(function() {
         $('[type="checkbox"]').bootstrapSwitch();
     });
 
+    /* ===================================
+    ====     add another answer       ====
+    ===   on the new question form    ====
+    =================================== */
+    
+    $("#btnAddAnswerE").click(function() {
+        var data =          '<div class="row">' +
+                            '<label htmlFor="inputName" class="col-sm-2" control-label>Answer' + editableAnswers + ':</label>' + 
+                            '<div class="col-sm-10">' + 
+                            '<input type="text" id="eanswer' + editableAnswers + '" class="form-control" value="" required/>' + 
+                            '<div class="cb_correct' + editableAnswers + '">' + 
+                            '<label>' + 
+                            '<input type="checkbox" id="cb_ecorrect' + editableAnswers + '" name="cb_ecorrect' + editableAnswers + '"> Correct' +
+                            '</label>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div id="enew' + (editableAnswers + 1) + '"></div>';
+                            var divName = 'enew' + (editableAnswers)
+        document.getElementById(divName).innerHTML = data;
+        $("#" + divName).addClass("new_edit");
+        $('[type="checkbox"]').bootstrapSwitch();
+        editableAnswers++;
+    });
+    
+    
     //function used to get the paramaeter from the current page address
     var getUrlParameter = function(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -134,7 +160,7 @@ $(document).ready(function() {
         var numOfCorrect = 0;
         //looping through divs with answers
         $('.new_edit').each(function(index) {
-
+            console.log(index)
             count++;
             var iterate = index + 1;
             
@@ -219,7 +245,7 @@ $(document).ready(function() {
 
     /* ===================================
     ====     Open question to be      ====
-    ====            edited           ====
+    ====            edited            ====
     =================================== */
     
     $(".btn_edit").click(function() {
@@ -245,8 +271,9 @@ $(document).ready(function() {
                     if(id == $questions[i]._id) {
                         var question = $questions[i]
                         $("#editQuestion1").val(question.questionText);
+                        editableAnswers = question.answers.length + 1;
                         for(var x=0; x<question.answers.length;x++) {
-                            html = html + '<div id="new' + (x+1) + '" class="new_edit">' + 
+                            html = html + '<div id="enew' + (x+1) + '" class="new_edit">' + 
                             '<div class="row">' +
                             '<label htmlFor="inputName" class="col-sm-2" control-label>Answer' + (x+1) + ':</label>' + 
                             '<div class="col-sm-10">' + 
@@ -268,6 +295,7 @@ $(document).ready(function() {
                             '</div>' +
                             '</div>'
                         }
+                        html = html + '<div id="enew' + (editableAnswers) + '">';
                             document.getElementById('new0').innerHTML = html;
                             $('[type="checkbox"]').bootstrapSwitch();
                     }
