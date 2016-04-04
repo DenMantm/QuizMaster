@@ -38,7 +38,6 @@
 
           //########## create an array of random numbers for questions ###########    
           var arr = [];
-          alert(data.qNumber)
           if (data.shuffleQuestion) {
 
               while (arr.length < qNum) {
@@ -70,7 +69,6 @@
 
               //pull the question number from random number array
               var qNumber = arr[i] - 1;
-              alert(qNumber)
               question.text = $questions[qNumber].questionText;
               question.answer = [];
               question.st = [];
@@ -78,7 +76,9 @@
               var $answers = $questions[qNumber].answers;
               var x = 0;
               $.each($answers, function(index, item) {
+                  
                   question.answer[x] = item.answer;
+                  console.log("found question" + item.answer)
                   question.st[x] = item.correct;
                   if (question.st[x] === "true") {
                       question.correct = x;
@@ -110,11 +110,10 @@
                   }
               } else {
                   //######### if shuffleQuestion is false just create array of sorted numbers ##############
-                  while (arr.length < qNum) {
+                  while (arrA.length < aNum) {
                       arrA[arrA.length] = arrA.length + 1
                   }
               }
-
 
               for (var z = 0; z < arrA.length; z++) {
                   var w = arrA[z] - 1;
