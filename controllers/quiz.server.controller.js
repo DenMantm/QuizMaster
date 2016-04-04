@@ -182,6 +182,39 @@ exports.addQuestion = function(body) {
 
 };
 
+exports.editQuestion = function(body) {
+    //get the ID of Quiz provided in the body
+    var id = body.id;
+    //get a number of answers provided in body
+    var answNum = body.answNum;
+    //get the correct quizz and assign it to quiz variable by passing it in the function
+    Quiz.findById(id, function(err, quiz){
+        if (err) {
+            console.log(err);
+        } else {
+            //delete id value from body as we wont want to pass those to the DB
+            delete body.id;
+            //push the guestion with initial settings and empty array of answers which we will populate below
+            console.log("found " + quiz.questions.length + "number of questions, and searching for question ID " + body.qid)
+            
+            for (var i=0 ; i< quiz.questions.length ; i++){
+                if (quiz.questions[i]._id == body.qid) {
+                    quiz.questions[i].questionText = body.questionText
+                    quiz.questions[i].answers = []
+                    quiz.questions[i].qType = body.type
+                    quiz.questions[i].anwsNum = answNum
+                    for (var x=0; x < answNum;x++){
+                        quiz.questions[i].answers.push({answer: body["answer" + x],correct: body["correct" + x]});
+                    }
+                }
+            }
+      
+            quiz.save();
+        }
+    } );
+
+};
+
 
 exports.removeQest = function(req) {
     //get question id

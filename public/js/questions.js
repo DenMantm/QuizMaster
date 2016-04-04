@@ -89,8 +89,7 @@ $(document).ready(function() {
         $("#newQuestion").val('');
         //passing id in the object by taking it from url
         item.id = getUrlParameter("id");
-        item.qid = editableQuestionId;
-        
+    
         //checking number of correct answers
         item.answNum = count;
         if (numOfCorrect == 0) {
@@ -122,7 +121,7 @@ $(document).ready(function() {
     
     /* ===================================
     ====    Save changes from the     ====
-    ====      edit question form       ====
+    ====      edit question form      ====
     =================================== */
     
         $("#btnEditQuestion").click(function() {
@@ -163,10 +162,11 @@ $(document).ready(function() {
         });
         
         //adding wuestion text to object
-        item.questionText = $("#newQuestion").val();
-        $("#newQuestion").val('');
+        item.questionText = $("#editQuestion1").val();
+        $("#editQuestion1").val('');
         //passing id in the object by taking it from url
         item.id = getUrlParameter("id");
+        item.qid = editableQuestionId;
         
         //checking number of correct answers
         item.answNum = count;
@@ -183,7 +183,7 @@ $(document).ready(function() {
             //posting object to router
             $.ajax({
                 type: "POST",
-                url: "/addQuestion",
+                url: "/editQuestion",
                 data: item,
                 cache: false,
                 success: function(){
@@ -217,6 +217,11 @@ $(document).ready(function() {
         }
     });
 
+    /* ===================================
+    ====     Open question to be      ====
+    ====            edited           ====
+    =================================== */
+    
     $(".btn_edit").click(function() {
         
         var id = $(this)
@@ -269,12 +274,6 @@ $(document).ready(function() {
                 }
             });
         }
-        
-        
-
-       /* var id = "/editQest?id=" + getUrlParameter("id") + "&q=" + 
-            main.attr("id");
-        location.href = id;*/
 
     });
 

@@ -173,6 +173,11 @@ var callback = function(response) {
 		quizCtrl.addQuestion(req.body);
 		res.redirect(req.get('referer'));
 	});
+	
+		app.post('/editQuestion' , function(req,res){
+		quizCtrl.editQuestion(req.body);
+		res.redirect(req.get('referer'));
+	});
 
 	
 	app.get('/showquiz', function(req, res) {
