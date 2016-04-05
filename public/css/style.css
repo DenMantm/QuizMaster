@@ -206,7 +206,8 @@ header .header-content {
 
 header .header-content .header-content-inner h1 {
     margin-top: 0;
-	color:rgba(235,25,35);
+	/*color:rgba(235,25,35);*/
+	color:white;
     margin-bottom: 0;
     text-shadow:2px 2px #000000;
     font-weight: 700;
@@ -217,7 +218,8 @@ header .header-content .header-content-inner p {
     margin-bottom: 10px;
 	font-size: 16px;
     font-weight: 700;
-    color:rgba(236,27,35,.9);
+    /*color:rgba(236,27,35,.9);*/
+    color: white;
 }
 
 @media(min-width:768px) {
@@ -255,9 +257,9 @@ header .header-content .header-content-inner p {
     }
 }
 
-.text-primary {
-    color: #e60000;
-}
+/*.text-primary {*/
+/*    color: #e60000;*/
+/*}*/
 
 .btn-default {
     border-color: #fff;

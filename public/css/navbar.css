@@ -28,6 +28,9 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     margin-top: 10px;
     /*font-size:1.5em;*/
 }
+
+/*MAINCONTAINER HERE IS FOR MAIN AREA*/
+
 .mainContainer{
     margin-top:15px;
     width:80%;
@@ -38,7 +41,7 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 
 .plavce_for_banner{
     width:100%;
-    height:100px;
+    height:120px;
 /*    background: rgba(237,237,237,1);*/
 /*background: -moz-linear-gradient(left, rgba(237,237,237,1) 0%, rgba(246,246,246,1) 53%, rgba(255,255,255,1) 100%);*/
 /*background: -webkit-gradient(left top, right top, color-stop(0%, rgba(237,237,237,1)), color-stop(53%, rgba(246,246,246,1)), color-stop(100%, rgba(255,255,255,1)));*/
@@ -47,4 +50,12 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 /*background: -ms-linear-gradient(left, rgba(237,237,237,1) 0%, rgba(246,246,246,1) 53%, rgba(255,255,255,1) 100%);*/
 /*background: linear-gradient(to right, rgba(237,237,237,1) 0%, rgba(246,246,246,1) 53%, rgba(255,255,255,1) 100%);*/
 /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ffffff', GradientType=1 );*/
+}
+.plavce_for_banner > h1{
+    text-shadow: 2px 2px #000000;
+    font-weight: 700;
+    color:white;
+    font-size:4.5em;
+text-align: center;
+    margin-top: 54px
 }
