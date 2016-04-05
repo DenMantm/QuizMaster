@@ -1,9 +1,12 @@
 var answers = 2;
 
+var editableAnswers = 0;
+var editableQuestionId = '';
+
 $(document).ready(function() {
     /* ===================================
     ====     add another answer       ====
-    ====       on the form            ====
+    ===   on the new question form    ====
     =================================== */
     
     $("#btnAddAnswer").click(function() {
@@ -25,6 +28,32 @@ $(document).ready(function() {
         $('[type="checkbox"]').bootstrapSwitch();
     });
 
+    /* ===================================
+    ====     add another answer       ====
+    ===   on the new question form    ====
+    =================================== */
+    
+    $("#btnAddAnswerE").click(function() {
+        var data =          '<div class="row">' +
+                            '<label htmlFor="inputName" class="col-sm-2" control-label>Answer' + editableAnswers + ':</label>' + 
+                            '<div class="col-sm-10">' + 
+                            '<input type="text" id="eanswer' + editableAnswers + '" class="form-control" value="" required/>' + 
+                            '<div class="cb_correct' + editableAnswers + '">' + 
+                            '<label>' + 
+                            '<input type="checkbox" id="cb_ecorrect' + editableAnswers + '" name="cb_ecorrect' + editableAnswers + '"> Correct' +
+                            '</label>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div id="enew' + (editableAnswers + 1) + '"></div>';
+                            var divName = 'enew' + (editableAnswers)
+        document.getElementById(divName).innerHTML = data;
+        $("#" + divName).addClass("new_edit");
+        $('[type="checkbox"]').bootstrapSwitch();
+        editableAnswers++;
+    });
+    
+    
     //function used to get the paramaeter from the current page address
     var getUrlParameter = function(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -56,7 +85,7 @@ $(document).ready(function() {
         //looping through divs with answers
         $('.new').each(function(index) {
             count++;
-            console.log(count)
+            console.log(count);
             var iterate = index + 1;
             
             //creating strings which will reffer to the each answer id
@@ -86,7 +115,7 @@ $(document).ready(function() {
         $("#newQuestion").val('');
         //passing id in the object by taking it from url
         item.id = getUrlParameter("id");
-        
+    
         //checking number of correct answers
         item.answNum = count;
         if (numOfCorrect == 0) {
@@ -115,7 +144,84 @@ $(document).ready(function() {
             });
         }
     });
+    
+    /* ===================================
+    ====    Save changes from the     ====
+    ====      edit question form      ====
+    =================================== */
+    
+        $("#btnEditQuestion").click(function() {
+        //count -> number of answers
 
+        var count = 0;
+        //creating new one dimentional object
+        var item = new Object();
+        //counting correct answers for validation and setting a question type
+        var numOfCorrect = 0;
+        //looping through divs with answers
+        $('.new_edit').each(function(index) {
+            console.log(index)
+            count++;
+            var iterate = index + 1;
+            
+            //creating strings which will reffer to the each answer id
+            var sAnswer = "#eanswer" + iterate;
+            var sCorrect = "#cb_ecorrect" + iterate;
+            
+            //assigning users values to variables
+            var fcorrect;
+            var fanswer = $(sAnswer).val();
+            console.log(fanswer)
+            //reset the answer field
+            $(sAnswer).val('');
+            if ($(sCorrect).is(":checked")) {
+                fcorrect = true;
+                numOfCorrect++;
+            }
+            else {
+                fcorrect = false;
+            }
+            
+            //adding user values to object
+            item["answer" + index] = fanswer;
+            item["correct" + index] = fcorrect;
+        });
+        
+        //adding wuestion text to object
+        item.questionText = $("#editQuestion1").val();
+        $("#editQuestion1").val('');
+        //passing id in the object by taking it from url
+        item.id = getUrlParameter("id");
+        item.qid = editableQuestionId;
+        
+        //checking number of correct answers
+        item.answNum = count;
+        if (numOfCorrect == 0) {
+            alert("You must provide at least one correct answer.");
+        } else {
+            if (numOfCorrect > 1) {
+                item.type = "multi";
+            }
+            else {
+                item.type = "single";
+            }
+            
+            //posting object to router
+            $.ajax({
+                type: "POST",
+                url: "/editQuestion",
+                data: item,
+                cache: false,
+                success: function(){
+                    location.reload();
+                    $("#newQuestion").val('');
+                },
+                error: function() {
+                    alert("No data found.");
+                }
+            });
+        }
+    });
     /* ===================================
     ====     Remove the question      ====
     ====      from the database       ====
@@ -137,20 +243,65 @@ $(document).ready(function() {
         }
     });
 
+    /* ===================================
+    ====     Open question to be      ====
+    ====            edited            ====
+    =================================== */
+    
     $(".btn_edit").click(function() {
-        var main = $(this)
-            .parent()
-            .parent();
-            
-        var question = main.children("div.question").text();
-        var answers = main.children("div.answer").text();
         
-        console.log(question);
+        var id = $(this)
+                .parent()
+                .parent()
+                .attr("id");
+                
+        populateEdit(id);
+        editableQuestionId = id;
         
         
-       /* var id = "/editQest?id=" + getUrlParameter("id") + "&q=" + 
-            main.attr("id");
-        location.href = id;*/
+        
+        function populateEdit(id) {
+            var qID = getUrlParameter("id");
+            var url = '/api/quiz/' + qID;
+
+            $.getJSON(url, function(data) {
+                var html = '';
+                var $questions = data.questions;
+                for (var i=0; i<$questions.length; i++) {
+                    if(id == $questions[i]._id) {
+                        var question = $questions[i]
+                        $("#editQuestion1").val(question.questionText);
+                        editableAnswers = question.answers.length + 1;
+                        for(var x=0; x<question.answers.length;x++) {
+                            html = html + '<div id="enew' + (x+1) + '" class="new_edit">' + 
+                            '<div class="row">' +
+                            '<label htmlFor="inputName" class="col-sm-2" control-label>Answer' + (x+1) + ':</label>' + 
+                            '<div class="col-sm-10">' + 
+                            '<input type="text" id="eanswer' + (x+1) + '" class="form-control" value="' + question.answers[x].answer + '" required/>' + 
+                            '<div class="cb_correct' + (x+1) + '">' + 
+                            '<label>' + 
+                            '<input type="checkbox" id="cb_ecorrect' + (x+1) + '" name="cb_ecorrect' + (x+1)
+                            
+                            if(question.answers[x].correct == "true") {
+                                html = html + '" checked' 
+                            } else {
+                                html = html + '" ' 
+                            }
+                            
+                            html = html + '> Correct' +
+                            '</label>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        }
+                        html = html + '<div id="enew' + (editableAnswers) + '">';
+                            document.getElementById('new0').innerHTML = html;
+                            $('[type="checkbox"]').bootstrapSwitch();
+                    }
+                }
+            });
+        }
 
     });
 
