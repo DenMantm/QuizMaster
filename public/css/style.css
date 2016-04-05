@@ -2,7 +2,7 @@
 /*adding background image */
 .addBackground{
      background-image: url(../img/background-image.jpg);
-
+     background-attachment:fixed;
 }
 #how-it-works{
     background-color:white;
