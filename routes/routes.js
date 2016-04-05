@@ -156,9 +156,13 @@ var callback = function(response) {
 	});
 
 	app.post('/newquiz', isLoggedIn, function(req, res) {
-		quizCtrl.create(req); //saving object to database
-		res.redirect(301, '/showquiz'); //redirecting to homepage
+		return quizCtrl.create(req,res); //saving object to database
+		//res.redirect(301, '/showquiz'); //redirecting to homepage
 });
+
+	app.get('/testing', function(req, res){
+		return quizCtrl.findId(req, res);
+	});
 
 	app.get('/questions', function(req, res){
 		return quizCtrl.Questions(req, res);

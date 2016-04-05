@@ -2,7 +2,7 @@ var Quiz = require('../models/quiz.server.model.js');
 var mongoose = require('mongoose');
 
 //getting info from body object, which is subbmitted by POST methodfrom front end
-exports.create = function(req) {
+exports.create = function(req,res) {
     var entry = new Quiz ({
         qName: req.body.qName,
         //not sure why default values dont work, no time to investigate, insetring manually
@@ -14,13 +14,16 @@ exports.create = function(req) {
         shuffleAnswers: req.body.shuffleAnswers,
         design: req.body.design,
         viewCount: req.body.viewCount,
-        questions: req.body.questions,
         owner: req.user.local.email,
         questions : []
     });
-    entry.save();
-    //redirect to homepage
+    entry.save(function(err,quiz) {
+    var link = "questions?id=" + quiz._id;
+    res.redirect(301, link);
+    console.log("Error:" + err);
+    });
 };
+
 exports.getNode = function(req,res) {
     res.render('newquiz', {title: "Quiz - New node"});
 };
@@ -56,7 +59,7 @@ exports.myQuizList = function(req,res) {
             console.log("Error: " + err);
         }
         else{
-             res.send(result);
+            res.send(result);
         }
         
     });
@@ -64,23 +67,36 @@ exports.myQuizList = function(req,res) {
     
 };
 
-exports.saveModifiedQuiz = function(req,res){
-var condition = {_id: req.body._id};
-//var parsedBody = JSON.parse(body);
-//console.log(body.qDescription);
-var update = req.body;
-console.log( JSON.stringify(req.body));
+exports.findId = function(req,res) {
+    Quiz.find({qName:req.body.qName}, function(err,result){
+        
+        if(err){
+            console.log("Error: " + err);
+        }
+        else{
+            console.log("Looking for quiz with name : " + req.body.qName)
+             res.send(result);
+             console.log("Found: " + result);
+        }
+    });
+};
 
-Quiz.update(condition,update,
-function(err, numberAffected,rawResponse){
-    if(!err){
-    console.log("CHANGING THIS");
-    }
+exports.saveModifiedQuiz = function(req,res){
+    var condition = {_id: req.body._id};
+    //var parsedBody = JSON.parse(body);
+    //console.log(body.qDescription);
+    var update = req.body;
+    console.log( JSON.stringify(req.body));
     
-    else
-    console.log("Error: "+err);
-});
-  
+    Quiz.update(condition,update,
+    function(err, numberAffected,rawResponse){
+        if(!err){
+        console.log("CHANGING THIS");
+        }
+        
+        else
+        console.log("Error: "+err);
+    });
 };
 
 
