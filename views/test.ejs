@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
 <head>
-    <% include ./partials/head %>
+    <% include ./index_partials/head %>
         <script src="../js/test.js"></script>
         <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
         <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
         <link rel="stylesheet" href="css/quiz.css"/>
 </head>
 
-<body class="container">
+<body >
 
-
-    <header>
         <% include ./index_partials/navbar %>
-    </header>
+        
+        <div class="container">
          <% include ./form_questions %>
          <% include ./form_questions_edit %>
     <main>
@@ -29,9 +28,10 @@
             Average time spent on each question: <span id="time"></span> seconds
         </div>
     </main>
+    </div>
 
     <footer>
-        <% include ./partials/footer %>
+        <% include ./index_partials/footer %>
     </footer>
     <script>
         $(function(argument) {

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
 <head>
-    <% include ./partials/head %>
+    <% include ./index_partials/head %>
         <script src="../js/showlist.js"></script>
         <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
         <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
 </head>
 
-<body class="container">
-
-
+<body>
 
         <% include ./index_partials/navbar %>
    
-
+<div class="mainContainer container">
     <main>
+
+        
     <% if (user.local.username !== "empty") { %>
     <input type="checkbox" value="false" id="cb_displayMine" name="cb_displayMine"> Display only mine quizzes
    <% }%>
@@ -59,9 +59,9 @@
     </div>
 <% } %>
     </main>
-
+</div>
     <footer>
-        <% include ./partials/footer %>
+        <% include ./index_partials/footer %>
     </footer>
     <script>
         $(function(argument) {
