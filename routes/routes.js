@@ -31,7 +31,7 @@ module.exports = function(app, passport) {
 		
 		//calling page
 		app.get('/apiQuiz', function(req, res) {
-		res.render('apiQuiz.ejs');//displaying page where you can add existing questions
+		res.render('apiQuiz.ejs',{user: req.user});//displaying page where you can add existing questions
 		});
 		
 		//returning existing topic list from the server
@@ -464,7 +464,7 @@ UserCtrl.updateWithCheck(req,res,done);
 	});
 	app.get('/index', isLoggedIn, function(req, res) {
 		// render the page and pass in any flash data if it exists
-		res.render('index.ejs');
+		res.render('index.ejs',{user: req.user});
 	});
 
 	// process the login form
