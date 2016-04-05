@@ -101,7 +101,7 @@ var quizController = function (quiz){
                 message = {text: "OK"};
             }
             console.log(message);
-            res.render('newquiz.ejs' , {message: message, user: req.user});
+            res.render('newquiz.ejs' , {user: req.user, message: message, user: req.user});
             }
         });
         

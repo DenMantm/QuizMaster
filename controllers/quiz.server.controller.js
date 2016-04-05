@@ -22,7 +22,7 @@ exports.create = function(req) {
     //redirect to homepage
 };
 exports.getNode = function(req,res) {
-    res.render('newquiz', {title: "Quiz - New node"});
+    res.render('newquiz', {user: req.user, title: "Quiz - New node"});
 };
 
 exports.checkqName = function(req,res) {
@@ -91,9 +91,9 @@ exports.list = function(req,res) {
     .exec(function(err, results){
         if (!req.user) {
             var user = {local: {username:"empty", email:"empty"}}
-             res.render('showlist.ejs', {list:results, user:user});
+             res.render('showlist.ejs', {user: req.user, list:results, user:user});
         } else {
-            res.render('showlist.ejs', {list:results, user:req.user});
+            res.render('showlist.ejs', {user: req.user, list:results, user:req.user});
         }
         console.log("Error: " + err);
     });
@@ -112,7 +112,7 @@ exports.editqz = function(req,res) {
     var query = Quiz.findOne();
     query.sort({ owner: 'desc' }).where({_id: id})
     .exec(function(err,results){
-        res.render('edit_qz_settings.ejs', {settings: results});
+        res.render('edit_qz_settings.ejs', {user: req.user, settings: results});
         console.log("Error: " + err);
     });
 };
@@ -141,7 +141,7 @@ exports.Questions = function(req,res) {
     var query = Quiz.findOne();
     query.where({_id: id})
     .exec(function(err,results){
-        res.render('questions.ejs', {settings: results});
+        res.render('questions.ejs', {user: req.user, settings: results});
         console.log("Error: " + err);
     });
 };
@@ -250,7 +250,7 @@ exports.start = function(req,res) {
     var query = Quiz.findOne();
     query.where({_id: id})
     .exec(function(err,results){
-        res.render('test.ejs', {settings: results});
+        res.render('test.ejs', {user: req.user, settings: results});
         console.log("Error: " + err);
     });
 };
