@@ -14,7 +14,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 
 <div class="main_body_background">
 <div class="mainContainer container">
-      <div class="row">
+      <div class="topPadding row">
         <div class='col-md-2'>
             <style>
 /*      #sidebar {*/
@@ -43,6 +43,13 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 /*    </style>
 <script>
   $(document).ready(function() {
+    
+                  //setting up buttons
+             document.getElementById("profile_button").parentNode.className ="active";
+               $('#container_profile_details').show();
+           $('#container_edit_profile').hide();
+           $('#container_edit_password').hide();
+    
     //deleting user part 
            //just login button:::::
        $('#deleteUser').click(function() {
@@ -84,21 +91,59 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
        var switch_to ='';
        
        $('#profile_button').click(function() {
-        switch_to = 'container_profile_details';
-        switchMe(current,switch_to);
-        current = 'container_profile_details';
+        
+           document.getElementById("profile_button").parentNode.className ="active";
+           document.getElementById("profile_edit_button").parentNode.className ="";
+           document.getElementById("profile_edit_password").parentNode.className ="";
+          
+          // document.getElementById("api_quiz_finish_button").parentNode.className ="";
+           
+           $('#container_profile_details').show();
+           $('#container_edit_profile').hide();
+           $('#container_edit_password').hide();
+           
+          // $('#api_quiz_window_questions').hide();
+          // $('#api_quiz_window_finish').hide();
+
+         
+         
+        // switch_to = 'container_profile_details';
+        // switchMe(current,switch_to);
+        // current = 'container_profile_details';
+        
+        
+        
        });
        
         $('#profile_edit_button').click(function() {
-        switch_to = 'container_edit_profile';
-        switchMe(current,switch_to);
-        current = 'container_edit_profile';
+          
+        // switch_to = 'container_edit_profile';
+        // switchMe(current,switch_to);
+        // current = 'container_edit_profile';
+        
+                   document.getElementById("profile_button").parentNode.className ="";
+           document.getElementById("profile_edit_button").parentNode.className ="active";
+           document.getElementById("profile_edit_password").parentNode.className ="";
+          
+          // document.getElementById("api_quiz_finish_button").parentNode.className ="";
+           
+           $('#container_profile_details').hide();
+           $('#container_edit_profile').show();
+           $('#container_edit_password').hide();
+        
        });
-       
         $('#profile_edit_password').click(function() {
-        switch_to = 'container_edit_password';
-        switchMe(current,switch_to);
-        current = 'container_edit_password';
+            document.getElementById("profile_button").parentNode.className ="";
+           document.getElementById("profile_edit_button").parentNode.className ="";
+           document.getElementById("profile_edit_password").parentNode.className ="active";
+          
+          // document.getElementById("api_quiz_finish_button").parentNode.className ="";
+           
+           $('#container_profile_details').hide();
+           $('#container_edit_profile').hide();
+           $('#container_edit_password').show();
+
+        
        });
        
        
@@ -115,27 +160,27 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 
     <ul id="sidebar" class="nav nav-pills nav-stacked" >
       <li class="active">
-        <a id='profile_button' href="#">
+        <a id='profile_button' href="javascript:void(0)">
           <span class="glyphicon glyphicon-off"></span>
   Overview</a>
       </li>
       <li>
-        <a id='profile_edit_button' href="#">
+        <a id='profile_edit_button' href="javascript:void(0)">
           <span class="glyphicon glyphicon-user"></span>
   Edit Profile</a>
       </li>
       <li>
-        <a id='profile_edit_password' href="#">
+        <a id='profile_edit_password' href="javascript:void(0)">
           <span class="glyphicon glyphicon-lock"></span>
   Access / Password</a>
       </li>
       <li>
-        <a href="#">
+        <a href="javascript:void(0)">
           <span class="glyphicon glyphicon-list"></span>
   Quizes</a>
       </li>
       <li>
-        <a href="#">
+        <a href="javascript:void(0)">
           <span class="glyphicon glyphicon-signal"></span>
   Statistics</a>
       </li>
@@ -200,7 +245,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
         
         <!------------------------------------------------------STARTING EDIT DETAILS------------------------------------------------>
         
-        <div id='container_edit_profile' class='hidden_container'>
+        <div id='container_edit_profile' class='animated zoomInDown'>
           <div class="col-md-7">
             
                       <div class="panel panel-info">
@@ -308,7 +353,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
         <!----------------------------------------------------------------STARTING CHANGE PASSWORD------------------------------------------------>
         
         
-          <div id='container_edit_password' class='hidden_container'>
+          <div id='container_edit_password' class='animated zoomInDown'>
           <div class="col-md-7">
             <div class="panel panel-info">
             <div class="panel-heading">

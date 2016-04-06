@@ -49,9 +49,7 @@ exports.getVerifyKey = function(req,res){
         }
         else{
             if(doc.local.key===req.params.keys){
-                
                 res.render('./profile/newPassword',{message:'',key:req.params.keys,email:req.params.key});
-                
             }
             else{
                 res.send('invalid key');
