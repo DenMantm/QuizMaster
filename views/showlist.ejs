@@ -95,15 +95,15 @@ else{
         <p>
                 		    <% if (user.local.email === list[i].owner) { %>
     		    
-                <a class="btn icon-btn btn-primary btn_questions">
+                <a href="/questions?id=<%= list[i]._id %>" class="btn icon-btn btn-primary btn_questions">
                 <span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>
                 Edit Questions
                 </a>
-                <a class="btn icon-btn btn-info btn_edit">
+                <a href="/editqz?id=<%= list[i]._id %>" class="btn icon-btn btn-info btn_edit">
                 <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>
                 Edit Settings
                 </a>
-                <a class="btn icon-btn btn-warning btn_remove" method="post">
+                <a href="/removeqz?id=<%= list[i]._id %>" class="btn icon-btn btn-warning btn_remove" method="post">
                 <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
                 Remove Quiz
                 </a>

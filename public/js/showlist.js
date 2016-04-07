@@ -9,41 +9,4 @@ $(document).ready(function() {
             $(".notMine").show();
         }
     });
-    $(".btn_remove").click(function() {
-        if (confirm("Are you sure?"))
-{
-    var id = "/removeqz?id=" +
-            $(this)
-            .parent()
-            .parent()
-            .parent()
-            .attr("id");
-        $.post(id, function() {
-            location.href = "/showquiz";
-        });
-}
-        
-    });
-    $(".btn_questions").click(function() {
-
-    var id = "/questions?id=" +
-            $(this)
-            .parent()
-            .parent()
-            .parent()
-            .attr("id");
-            location.href = id;
-
-    });
-    
-    $(".btn_edit").click(function() {
-        var id = "/editqz?id=" +
-            $(this)
-            .parent()
-            .parent()
-            .parent()
-            .attr("id");
-            location.href = id;
-    
-    });
 });
