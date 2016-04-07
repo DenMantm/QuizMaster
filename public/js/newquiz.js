@@ -1,5 +1,14 @@
   var step = 1
-
+    function isNat(n) {                // A natural number is...
+      return n != null                 // ...a defined value,
+          && n >= 0                    // ...nonnegative,
+          && n != Infinity             // ...finite,
+          && typeof n !== 'boolean'    // ...not a boolean,
+          && n.pop == null             // ...not an array,
+          && n.getDay == null          // ...not a date,
+          && Math.floor(n) === +n      // ...and whole.
+          && n.trim() !== '';          // ...not empty
+    }
 
   $(document).ready(function() {
     //on document load hide all items except those necesary to compleet step1
@@ -51,6 +60,18 @@
         //undo all above if user change the switch state to off
         $("#qNumber_field").show();
         $("#qNumber").val('');
+      }
+    });
+    
+    $('[name="cb_timeLimit"').on('switchChange.bootstrapSwitch', function(event, state) {
+      if (state) {
+        $("#timeLimit_field").show();
+        $("#timeLimit").val('120');
+      }
+      else {
+        //undo all above if user change the switch state to off
+        $("#timeLimit_field").hide();
+        $("#timeLimit").val('');
       }
     });
 
@@ -150,6 +171,7 @@
         //checkName(test);
       case 3:
         //hide step2 and step4 (in case user is coming here bu pressing back button) items and display step3
+
         $("#step2").hide();
         $("#step3").show();
         $("#step4").hide();
@@ -158,7 +180,7 @@
         break;
       case 4:
         //check if previous step (step3) has a number of questions populated if not set thestep 3 class to error and not progress any fuerther
-        if ($("#qNumber").val() === '') {
+        if ($("#qNumber").val() !== 'all' && !(isNat($("#qNumber").val()))) {
           $("#step3").addClass("has-error bg-danger");
           step--;
           refreshBar();

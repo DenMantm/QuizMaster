@@ -12,7 +12,7 @@ $('#submit_btn').click(function(){
   var desc = $("#qDescription").val();
   var qnum = $("#qNumber").val();
   var pattern = /^(0|([1-9]\d*))$/;
-  
+
   if (name === '') {
     $("#Name").addClass("has-error bg-danger");
   } else {
@@ -26,19 +26,25 @@ $('#submit_btn').click(function(){
     $("#Description").removeClass("has-error bg-danger");
   }
   
+  if($("#timeLimitVal").val()  == '' && $("#timeLimit").val() == "true") {
+    $("#time").addClass("has-error bg-danger");
+  } else {
+    $("#time").removeClass("has-error bg-danger");
+  }
+  
   if (qnum === '' || !(pattern.test(qnum))) {
     $("#qNum").addClass("has-error bg-danger");
   } else {
     $("#qNum").removeClass("has-error bg-danger");
   }
-  var pattern = /^(0|([1-9]\d*))$/;
-  if (name !== '' && desc !== '' && (qnum === 'all' || pattern.test(qnum))) {
+  if (name !== '' 
+    && desc !== ''
+    && (qnum === 'all' || pattern.test(qnum))
+    && (!($("#timeLimitVal").val()  == '' && $("#timeLimit").val() == "true"))) {
   $("#update_form").submit();
-  } 
-
+    }
 });
-     
-     
+    
     $('[name="cb_qNumber"]').on('switchChange.bootstrapSwitch', function(event, state) {    
       if(state) {
           //if user decide to show all questions then set number of questions to 'all' and hide the field from user
@@ -54,6 +60,22 @@ $('#submit_btn').click(function(){
           $("#shuffleQuestion").val(true);
           $("#cb_shuffleQuestion").bootstrapSwitch('state',true);
           $("#cb_shuffleQuestion").bootstrapSwitch('disabled',true);
+      }
+    });
+    
+      $('[name="cb_timeLimit"]').on('switchChange.bootstrapSwitch', function(event, state) {    
+      if(state) {
+          //if user decide to show all questions then set number of questions to 'all' and hide the field from user
+          //also in this cese user will not have option to choose rether questions should or should not be shuflled in next step
+          //if the setting is set to show all questions they are automaticaly being shuffled
+          $("#time").show();
+          $("#timeLimitVal").val('');
+          $("#timeLimit").val(true);
+      } else {
+          //undo all above if user change the switch state to off
+          $("#timeLimitVal").val('');
+          $("#time").hide();
+          $("#timeLimit").val(false);
       }
     });
     
@@ -77,5 +99,5 @@ $('#submit_btn').click(function(){
           $("#shuffleQuestion").val(false);
       }
     });
-
+    
  });

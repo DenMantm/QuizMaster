@@ -102,32 +102,23 @@
                         <!-- STEP6 DESIGN -->
                         <div class="form-group" id="step6">
                             <label for="design">
-                                Step 6: Pick which design you would like to use for your quiz.
+                                Step 6: Choose if the time for answer should be limited.
                             </label>
-                            <div class="picklist">
-                                <table>
-                                    <tr>
-                                        <td class="cratio"><input id="Default" type="radio" name="design" value="default" checked></td>
-                                        <td><label for="Default">Default (placeholder for Default design picture)</label></td>
-                                    <tr>
-                                        <td class="cratio"><input id="Black" type="radio" name="design" value="Black"></td>
-                                        <td><label for="Black">Black (placeholder for Black design picture)</label></td>
-                                    </tr>
-                                     <tr>
-                                        <td class="cratio"><input id="Pink" type="radio" name="design" value="Pink"></td>
-                                        <td><label for="Pink">Pink (placeholder for Pink design picture)</label></td>
-                                    </tr>
-                                    </tr>
-                                </table>
+                            <div class="cd_timeLimit">
+                                <label>
+                                    <input type="checkbox" value="false" id="cb_timeLimit" name="cb_timeLimit"> Limit time for the answers.
+                                    <input class="form-control" id="timeLimit" name="timeLimit" type="hidden"/>
+                                </label>
                             </div>
+                            <div id="timeLimit_field" style="display: none;">
+                                <br/>
+                                Time in seconds per answer:
+                            <input class="form-control" id="timeLimitVal" name="timeLimitVal"/>
                         </div>
-
-
+                        </div>
+                        
                     <div id="alert">
                     </div>
-
-
-      
                         <button type="button" class="btn btn-danger" id="back">Back</button>
                         <button type="button" class="btn btn-success" id="next">Next</button>
                         <button type="submit" class="btn btn-default" id="submit">Submit</button>

@@ -12,10 +12,11 @@ exports.create = function(req,res) {
         qNumber: req.body.qNumber,
         shuffleQuestion: req.body.shuffleQuestion,
         shuffleAnswers: req.body.shuffleAnswers,
-        design: req.body.design,
         viewCount: req.body.viewCount,
         owner: req.user.local.email,
-        questions : []
+        questions : [],
+        timeLimit : req.body.timeLimit,
+        timeLimitVal : req.body.timeLimitVal
     });
     entry.save(function(err,quiz) {
     var link = "questions?id=" + quiz._id;
@@ -141,9 +142,11 @@ exports.updateqz = function(body) {
         qNumber: body.qNumber,
         shuffleQuestion: body.shuffleQuestion,
         shuffleAnswers: body.shuffleAnswers,
-        design: body.design
+        timeLimit: body.timeLimit,
+        timeLimitVal: body.timeLimitVal
     };
     console.log(update);
+    console.log(body);
     Quiz.update(condition, update, function(err, numberAffected, rawResponce) {
         console.log("Error: " + err);
         console.log("numberAffected: " + numberAffected);

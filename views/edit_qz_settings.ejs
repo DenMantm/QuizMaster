@@ -118,59 +118,25 @@
             
             <div class="row">
                 <div class="col-md-2">
-                    <label for="shuffleAnswers">Design:</label>
+                    <label>Time limit:</label>
                 </div>
                 <div class="col-md-8">
                     <div class="form-group">
-                        <% if (settings.design === "default") { %>
-                        <table>
-                            <tr>
-                                <td class="cratio"><input id="Default" type="radio" name="design" value="default" checked></td>
-                                <td><label for="Default">Default (placeholder for Default design picture)</label></td>
-                            <tr>
-                                <td class="cratio"><input id="Black" type="radio" name="design" value="Black"></td>
-                                <td><label for="Black">Black (placeholder for Black design picture)</label></td>
-                            </tr>
-                             <tr>
-                                <td class="cratio"><input id="Pink" type="radio" name="design" value="Pink"></td>
-                                <td><label for="Pink">Pink (placeholder for Pink design picture)</label></td>
-                            </tr>
-                            </tr>
-                        </table>
-                        <% } else if (settings.design === "Black") { %>
-                        <table>
-                            <tr>
-                                <td class="cratio"><input id="Default" type="radio" name="design" value="default"></td>
-                                <td><label for="Default">Default (placeholder for Default design picture)</label></td>
-                            <tr>
-                                <td class="cratio"><input id="Black" type="radio" name="design" value="Black" checked></td>
-                                <td><label for="Black">Black (placeholder for Black design picture)</label></td>
-                            </tr>
-                             <tr>
-                                <td class="cratio"><input id="Pink" type="radio" name="design" value="Pink"></td>
-                                <td><label for="Pink">Pink (placeholder for Pink design picture)</label></td>
-                            </tr>
-                            </tr>
-                        </table>
-                        <% } else { %>
-                        <table>
-                            <tr>
-                                <td class="cratio"><input id="Default" type="radio" name="design" value="default"></td>
-                                <td><label for="Default">Default (placeholder for Default design picture)</label></td>
-                            <tr>
-                                <td class="cratio"><input id="Black" type="radio" name="design" value="Black"></td>
-                                <td><label for="Black">Black (placeholder for Black design picture)</label></td>
-                            </tr>
-                             <tr>
-                                <td class="cratio"><input id="Pink" type="radio" name="design" value="Pink" checked></td>
-                                <td><label for="Pink">Pink (placeholder for Pink design picture)</label></td>
-                            </tr>
-                            </tr>
-                        </table>
-                        <% } %>
+                        <input type="checkbox" id="cb_timeLimit" name="cb_timeLimit" <% if (settings.timeLimit) { %> checked <% } %> >
+                        <input class="form-control" id="timeLimit" name="timeLimit" type="hidden" value="<%= settings.timeLimit %>"/>
                     </div>
                 </div>
+            </div>  
+            <div class="row" id="time" <% if (!settings.timeLimit) { %> style="display: none;" <% } %> >
                 <div class="col-md-2">
+                    <label>Limit per answer in seconds:</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="timeLimitVal" id="timeLimitVal" value="<% if (settings.timeLimit) { %><%= settings.timeLimitVal %><% } else { %><% } %>">
+                        </div>
+                    </div>
                 </div>
             </div>  
             <input class="form-control" id="_id" name="_id" type="hidden" value="<%= settings._id %>"/> 

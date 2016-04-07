@@ -25,7 +25,8 @@ var quizSchema = new Schema({
     qNumber: String,
     shuffleQuestion: Boolean,
     shuffleAnswers: Boolean,
-    design: String,
+    timeLimit: Boolean,
+    timeLimitVal: Number,
     owner: String,
     questions: [subQuestions]
 });
