@@ -12,14 +12,19 @@
         <% include ./index_partials/navbar %>
 <div class="main_body_background">   
 <div class="mainContainer container">
+   
     <main class="topPadding">
+
 
     <% if (user.local.username !== "empty") { %>
     <input type="checkbox" value="false" id="cb_displayMine" name="cb_displayMine"> Display only my quizzes
    <% }%>
-   
+
+
+
     <% for(var i=0; i<list.length; i++) {%>
     <div class="container-fluid" id="<%= list[i]._id %>">
+
             <!--STARTING ROW WITH THE QUIZES NOW -->
 <div class="row">
 <!--FIRST ENTITY    -->
@@ -61,6 +66,16 @@ else{
     %>
     </div>
         	</div>
+        	
+        	    </main>
+    
+</div>
+</div>  
+    <footer>
+        
+        <% include ./index_partials/footer %>
+        
+    </footer>
 
   <%  return;
 }
@@ -107,6 +122,17 @@ else{
     %>
     </div>
         	</div>
+        	
+        	    </main>
+    
+</div>
+</div>  
+
+    <footer>
+        
+        <% include ./index_partials/footer %>
+        
+    </footer>
 
   <%  return;
 }
@@ -151,8 +177,23 @@ else{
 }
 else{
     %>
+    
+    
     </div>
         	</div>
+        	
+        </main>
+    
+</div>
+</div>  
+
+    <footer>
+        
+        <% include ./index_partials/footer %>
+        
+    </footer>
+        	
+        	
   <%  return;
 }
 
@@ -197,13 +238,15 @@ else{
     	</div>
 <% } %>
     </main>
-</div>
-</div>
     <footer>
         
         <% include ./index_partials/footer %>
         
     </footer>
+    
+</div>
+</div>    
+    
     <script>
         $(function(argument) {
             $('[type="checkbox"]').bootstrapSwitch();
