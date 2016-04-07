@@ -15,18 +15,26 @@
     <main class="topPadding">
 
     <% if (user.local.username !== "empty") { %>
-    <input type="checkbox" value="false" id="cb_displayMine" name="cb_displayMine"> Display only mine quizzes
+    <input type="checkbox" value="false" id="cb_displayMine" name="cb_displayMine"> Display only my quizzes
    <% }%>
+   
     <% for(var i=0; i<list.length; i++) {%>
     <div class="container-fluid" id="<%= list[i]._id %>">
-        <% if (user.local.email === list[i].owner) { %>
-    	<div class="row mine">
-    	    <% } else { %>
-    	   <div class="row notMine">
-    	    <% } %>
-    		<div class="col-md-2">
-    		    <% if (user.local.email === list[i].owner) { %>
-    
+            <!--STARTING ROW WITH THE QUIZES NOW -->
+<div class="row">
+<!--FIRST ENTITY    -->
+    	        
+  <div id="<%= list[i]._id %>" class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <img height="150" width="150" src="<%= list[i].picture %>" alt="quiz_picture">
+      <div class="caption">
+        <h3><%= list[i].qName %></h3>
+        <p><%= list[i].qDescription %></p>
+        <!--<a href="#" class="btn btn-default" role="button">Button</a>-->
+        <!--BUTTONS FOR EDITING QUIZ ARE HERE-->
+        <p>
+                		    <% if (user.local.email === list[i].owner) { %>
+    		    
                 <a class="btn icon-btn btn-primary btn_questions">
                 <span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>
                 Edit Questions
@@ -40,28 +48,161 @@
                 Remove Quiz
                 </a>
     	    <% } %>
-    		</div>
-    		<div class="col-md-8">
-    			<h2>
-    				<%= list[i].qName %>
-    			</h2>
-    			<p>
-    				<%= list[i].qDescription %>
-    			</p>
-    			<p>
-    				<a class="btn" href="/quiz?id=<%= list[i]._id %>">Start »</a>
-    			</p>
-    		</div>
-    		<div class="col-md-2">
-    		</div>
-    	</div>
+        </p>
+        <p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a> </p>
+      </div>
     </div>
+  </div>
+  
+<% if( i!==list.length-1 ){
+    i++
+}
+else{
+    %>
+    </div>
+        	</div>
+
+  <%  return;
+}
+
+%>
+
+<!--SECOND ENTITY-->
+
+  <div id="<%= list[i]._id %>" class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <img height="150" width="150" src="<%= list[i].picture %>" alt="quiz_picture">
+      <div class="caption">
+        <h3><%= list[i].qName %></h3>
+        <p><%= list[i].qDescription %></p>
+        <!--<a href="#" class="btn btn-default" role="button">Button</a>-->
+        <!--BUTTONS FOR EDITING QUIZ ARE HERE-->
+        <p>
+                		    <% if (user.local.email === list[i].owner) { %>
+    		    
+                <a class="btn icon-btn btn-primary btn_questions">
+                <span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>
+                Edit Questions
+                </a>
+                <a class="btn icon-btn btn-info btn_edit">
+                <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>
+                Edit Settings
+                </a>
+                <a class="btn icon-btn btn-warning btn_remove" method="post">
+                <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
+                Remove Quiz
+                </a>
+    	    <% } %>
+        </p>
+        <p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a> </p>
+      </div>
+    </div>
+  </div>
+
+
+<% if( i!==list.length-1 ){
+    i++
+}
+else{
+    %>
+    </div>
+        	</div>
+
+  <%  return;
+}
+
+%>
+
+  <!--THIRD ENTITY-->
+  
+     <div id="<%= list[i]._id %>" class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <img height="150" width="150" src="<%= list[i].picture %>" alt="quiz_picture">
+      <div class="caption">
+        <h3><%= list[i].qName %></h3>
+        <p><%= list[i].qDescription %></p>
+        <!--<a href="#" class="btn btn-default" role="button">Button</a>-->
+        <!--BUTTONS FOR EDITING QUIZ ARE HERE-->
+        <p>
+                		    <% if (user.local.email === list[i].owner) { %>
+    		    
+                <a class="btn icon-btn btn-primary btn_questions">
+                <span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>
+                Edit Questions
+                </a>
+                <a class="btn icon-btn btn-info btn_edit">
+                <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>
+                Edit Settings
+                </a>
+                <a class="btn icon-btn btn-warning btn_remove" method="post">
+                <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
+                Remove Quiz
+                </a>
+    	    <% } %>
+        </p>
+        <p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a> </p>
+      </div>
+    </div>
+  </div>
+
+
+<% if( i!==list.length-1 ){
+    i++
+}
+else{
+    %>
+    </div>
+        	</div>
+  <%  return;
+}
+
+%>
+
+<!--FORURTH ENTITY-->
+
+    <div id="<%= list[i]._id %>" class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <img height="150" width="150" src="<%= list[i].picture %>" alt="quiz_picture">
+      <div class="caption">
+        <h3><%= list[i].qName %></h3>
+        <p><%= list[i].qDescription %></p>
+        <!--<a href="#" class="btn btn-default" role="button">Button</a>-->
+        <!--BUTTONS FOR EDITING QUIZ ARE HERE-->
+        <p>
+        <% if (user.local.email === list[i].owner) { %>
+    		    
+                <a class="btn icon-btn btn-primary btn_questions">
+                <span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>
+                Edit Questions
+                </a>
+                <a class="btn icon-btn btn-info btn_edit">
+                <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>
+                Edit Settings
+                </a>
+                <a class="btn icon-btn btn-warning btn_remove" method="post">
+                <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
+                Remove Quiz
+                </a>
+    	 <% } %>
+        </p>
+        <p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a> </p>
+      </div>
+    </div>
+  </div>
+
+
+
+</div><!--FINISHING ROW WITH QUIZES-->
+
+    	</div>
 <% } %>
     </main>
 </div>
 </div>
     <footer>
+        
         <% include ./index_partials/footer %>
+        
     </footer>
     <script>
         $(function(argument) {
