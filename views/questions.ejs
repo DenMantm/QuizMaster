@@ -5,6 +5,77 @@
         <script src="../js/questions.js"></script>
         <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
         <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+
+<script>
+//REFERENCE: http://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown
+
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+
+<style>
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+}
+
+.dropdown {
+    z-index:3000;
+    position: relative;
+    display: inline;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 390px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 5px 7px;
+    margin:10px;
+    text-decoration: none;
+    float:left;
+    /*display: block;*/
+}
+
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
+</style>
+
+
 </head>
 
 <body>
@@ -61,8 +132,108 @@
           </div>
           
           <!--SEPARATE CONTAINER FOR API QUESTIONS:::-->
-          <div class="col-md-6 question_container">
+          <div class="col-md-6 api_question_container">
+        <h3>Option to select API Questions:</h3>    
+    
+            <h2><span id=api_topic></span> </h2>
+<div class="dropdown">
+<button onclick="myFunction()" class="dropbtn">Topics</button>
+  <div id="myDropdown" class="dropdown-content">
+    
+    <% for (var i = 0;i<api_list.length;i++){ %>
+    <a href="javascript:generateList(<%= api_list[i].id %>,'<%= api_list[i].title %>')"><%= api_list[i].title %>
+    <span class="badge" style="margin-left:5px;"><%= api_list[i].clues_count %></span>
+    </a>
+    <%   }  %>
+  </div>
+</div>
+
+<div id="area_for_api_questions">
+  <h2 style="color:red">If this doesnt work, please authorize to this link: <a alt='jservice website link' href = 'https://jservice.io'>https://jservice.io</a></h2>
+</div>
+            
      </div>
+     <script>
+       $(document).ready(function(){
+  generateList(754,'anagrams');
+       })
+       //OPEN FUNCTION HERE
+       var tempArray = [];
+       function generateList(id,topic){
+         
+                                                               $.ajax({
+                              type: "GET",
+                              dataType: 'json',
+                              url: "https://jservice.io/api/category?id="+id,
+                              success: function(data) {
+                                    //change topic of the HEad
+                                    tempArray =[];
+                                        document.getElementById("api_topic").innerHTML = 'Questions for topic: <b>'+topic+"</b>";
+                                         document.getElementById("area_for_api_questions").innerHTML = "";
+                                        //add question code here
+                                 // data = JSON.parse(data);
+                                    for(var i = 0;i<data.clues_count;i++){
+
+                                        tempArray.push(data.clues[i]);
+                                        addQuestionElement(data.clues[i],i+1);
+                              }
+                              },
+                              complete:function(){
+                                        //after compreting load do something
+                                    }
+                              })//end ajax
+         
+       }
+       
+       
+       //generating Question:::
+       
+       
+                               function addQuestionElement(data,index){
+                          
+                        var tmp = $('<a/>', {
+                            class:"list-group-item animated zoomIn",
+                            id:"question_"+data.id,
+                            style:"",
+                        }).appendTo('#area_for_api_questions');
+                         
+                        
+                        //description
+                         $('<h4/>', {
+                            class:'list-group-item-heading',
+                            style:"",
+                            text: "Question_id:" + data.id + ", Dificulty: " + data.value
+                        }).appendTo(tmp);
+
+                        //Question itself
+                        $('<h4/>', {
+                            class:'list-group-item-heading',
+                            style:"",
+                            text: "Question: "+data.question
+                        }).appendTo(tmp);
+                        
+                        //answer
+                         $('<p/>', {
+                            style:"",
+                            class:'list-group-item-text',
+                            text: "Answer: "+data.answer
+                        }).appendTo(tmp);
+                        
+                            $('<a/>', {
+                            id: 'add_button_'+data.id,
+                            href: 'javascript:addQuestionToList('+data.id+')',
+                            style:"margin-left:10px;",
+                            text: 'Add'
+                        }).appendTo(tmp);
+                        
+                    }
+       
+       
+       
+       
+       
+       
+     </script>
     </main>
 </div>
     <footer>

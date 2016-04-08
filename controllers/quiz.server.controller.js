@@ -160,7 +160,7 @@ exports.Questions = function(req,res) {
     var query = Quiz.findOne();
     query.where({_id: id})
     .exec(function(err,results){
-        res.render('questions.ejs', {user: req.user, settings: results});
+        res.render('questions.ejs', {api_list: require('../from_jservice_API/best_topic_ids.json'),user: req.user, settings: results});
         console.log("Error: " + err);
     });
 };
