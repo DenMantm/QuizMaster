@@ -47,7 +47,7 @@ window.onclick = function(event) {
 }
 
 .dropdown {
-    z-index:3000;
+    z-index:2;
     position: relative;
     display: inline;
 }
@@ -154,11 +154,51 @@ window.onclick = function(event) {
             
      </div>
      <script>
+     
+     //WHEN ADDING API QUESTION TO THE LIST
+     function addQuestionToList(index){
+       //adding question to the modulus
+      // tempArray[index].answer
+       $("#newQuestion").val(tempArray[index].question);
+       $("#question_holder").val(tempArray[index].answer);
+       
+// document.getElementById("question_holder").parentNode.nextSibling.childNodes[0].className = "bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-animate";
+    
+         $('#addQuestion').modal({
+        show: 'true'
+    }); 
+     
+      
+      
+      try{
+        currentTopic = JSON.parse(localStorage.getItem("currentTopic"));
+      }
+      catch(err){
+        localStorage.setItem("currentTopic", JSON.stringify({topic:'anagrams',id:754}));
+      }
+     
+     
+     
+     
+     }
+
        $(document).ready(function(){
-  generateList(754,'anagrams');
+         
+  //generateList(754,'anagrams');
+  
+        try{
+        currentTopic = JSON.parse(localStorage.getItem("currentTopic"));
+        generateList(currentTopic.id,currentTopic.topic);
+      }
+      catch(err){
+        localStorage.setItem("currentTopic", JSON.stringify({topic:'anagrams',id:754}));
+      }
+  
+  
        })
        //OPEN FUNCTION HERE
        var tempArray = [];
+       var currentTopic;
        function generateList(id,topic){
          
                                                                $.ajax({
@@ -168,6 +208,7 @@ window.onclick = function(event) {
                               success: function(data) {
                                     //change topic of the HEad
                                     tempArray =[];
+                                    currentTopic =  localStorage.setItem("currentTopic", JSON.stringify({topic:topic,id:id}));
                                         document.getElementById("api_topic").innerHTML = 'Questions for topic: <b>'+topic+"</b>";
                                          document.getElementById("area_for_api_questions").innerHTML = "";
                                         //add question code here
@@ -202,7 +243,7 @@ window.onclick = function(event) {
                          $('<h4/>', {
                             class:'list-group-item-heading',
                             style:"",
-                            text: "Question_id:" + data.id + ", Dificulty: " + data.value
+                            text: "Question No: " + index + ", Dificulty: " + data.value
                         }).appendTo(tmp);
 
                         //Question itself
@@ -221,7 +262,7 @@ window.onclick = function(event) {
                         
                             $('<a/>', {
                             id: 'add_button_'+data.id,
-                            href: 'javascript:addQuestionToList('+data.id+')',
+                            href: 'javascript:addQuestionToList('+(index-1)+')',
                             style:"margin-left:10px;",
                             text: 'Add'
                         }).appendTo(tmp);
