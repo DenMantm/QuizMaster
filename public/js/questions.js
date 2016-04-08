@@ -113,7 +113,7 @@ $(document).ready(function() {
             var fcorrect;
             var fanswer = $(sAnswer).val();
             //reset the answer field
-            $(sAnswer).val('');
+
             if ($(sCorrect).is(":checked")) {
                 fcorrect = true;
                 numOfCorrect++;
@@ -127,9 +127,9 @@ $(document).ready(function() {
             item["correct" + index] = fcorrect;
         });
 
-        //adding wuestion text to object
+        //adding question text to object
         item.questionText = $("#newQuestion").val();
-        $("#newQuestion").val('');
+        
         //passing id in the object by taking it from url
         item.id = getUrlParameter("id");
 
@@ -155,6 +155,10 @@ $(document).ready(function() {
                 success: function() {
                     location.reload();
                     $("#newQuestion").val('');
+                    $('.new').each(function(index) {
+                        var sAnswer = $(this).find(".answer");
+                        $(sAnswer).val('');
+                    });
                 },
                 error: function() {
                     alert("No data found.");
@@ -189,8 +193,7 @@ $(document).ready(function() {
             var fcorrect;
             var fanswer = $(sAnswer).val();
             console.log(fanswer)
-                //reset the answer field
-            $(sAnswer).val('');
+
             if ($(sCorrect).is(":checked")) {
                 fcorrect = true;
                 numOfCorrect++;
@@ -206,7 +209,6 @@ $(document).ready(function() {
 
         //adding wuestion text to object
         item.questionText = $("#editQuestion1").val();
-        $("#editQuestion1").val('');
         //passing id in the object by taking it from url
         item.id = getUrlParameter("id");
         item.qid = editableQuestionId;
@@ -232,7 +234,11 @@ $(document).ready(function() {
                 cache: false,
                 success: function() {
                     location.reload();
-                    $("#newQuestion").val('');
+                    $("#newQuestion").val
+                    $('.new').each(function(index) {
+                        var sAnswer = $(this).find(".answer");
+                        $(sAnswer).val('');
+                    });
                 },
                 error: function() {
                     alert("No data found.");
