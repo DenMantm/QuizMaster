@@ -155,6 +155,29 @@ exports.updateqz = function(body) {
     //redirect to homepage
 };
 
+exports.updateqzIcon = function(id,update) {
+    var condition = { _id: id};
+    // var update = {
+    //     qName: body.qName,
+    //     qDescription: body.qDescription,
+    //     qNumber: body.qNumber,
+    //     shuffleQuestion: body.shuffleQuestion,
+    //     shuffleAnswers: body.shuffleAnswers,
+    //     timeLimit: body.timeLimit,
+    //     timeLimitVal: body.timeLimitVal
+    // };
+    Quiz.update(condition, update, function(err, numberAffected, rawResponce) {
+        console.log("Error: " + err);
+        console.log("numberAffected: " + numberAffected);
+        console.log("rawResponce: " + rawResponce);
+    });
+    //redirect to homepage
+};
+
+
+
+
+
 exports.Questions = function(req,res) {
     var id = req.query.id;
     var query = Quiz.findOne();

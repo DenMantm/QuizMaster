@@ -161,6 +161,9 @@ window.onclick = function(event) {
       // tempArray[index].answer
        $("#newQuestion").val(tempArray[index].question);
        $("#question_holder").val(tempArray[index].answer);
+        //   document.getElementById("q1_checkbox").value = true;
+        $('#q1_checkbox').bootstrapSwitch('state', true);
+        // document.getElementById("answerMarker").childNodes[1].className = "bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate"
        
 // document.getElementById("question_holder").parentNode.nextSibling.childNodes[0].className = "bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-animate";
     
@@ -211,6 +214,12 @@ window.onclick = function(event) {
                                     currentTopic =  localStorage.setItem("currentTopic", JSON.stringify({topic:topic,id:id}));
                                         document.getElementById("api_topic").innerHTML = 'Questions for topic: <b>'+topic+"</b>";
                                          document.getElementById("area_for_api_questions").innerHTML = "";
+                                    
+                                         
+                                         //ticking box
+                                   // var x =  $('[name="cb_correct1"]').val(true);
+                                   // console.log(x);
+                                         
                                         //add question code here
                                  // data = JSON.parse(data);
                                     for(var i = 0;i<data.clues_count;i++){

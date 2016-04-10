@@ -291,16 +291,20 @@ UserCtrl.updateWithCheck(req,res,done);
     fs = require('fs'),
     path = require('path');
 
-    app.post('/upload', function(req, res) {
+    app.post('/uploadQuizIcon', function(req, res) {
+    // 	console.log("something");
+    // console.log(req.body._id);
+    	console.log(req.originalUrl);
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         // `file` is the name of the <input> field of type `file`
+        
         var old_path = files.file.path,
             file_size = files.file.size,
             file_ext = files.file.name.split('.').pop(),
             index = old_path.lastIndexOf('/') + 1,
             file_name = old_path.substr(index),
-            new_path = './upload/userPics/' + req.user.local.email;
+            new_path = './public/img/quizIcons/' + fields._id;
 
         fs.readFile(old_path, function(err, data) {
             fs.writeFile(new_path, data, function(err) {
@@ -309,12 +313,17 @@ UserCtrl.updateWithCheck(req,res,done);
                         res.status(500);
                         res.json({'success': false});
                     } else {
+                    	
              var update = {
-			'local.pictureUrl': "./upload/userPics/" + req.user.local.email
+			'picture': "img/quizIcons/" + fields._id
 		};
-		UserCtrl.updateOneElement(req.user, update);
+		
+		quizCtrl.updateqzIcon(fields._id, update);
 
-		res.redirect(301, '/updateUser'); //redirecting to homepage
+			res.redirect(301, '/editqz?id='+fields._id); //redirecting to homepage
+                    
+                    	
+                    	
                     }
                 });
             });
