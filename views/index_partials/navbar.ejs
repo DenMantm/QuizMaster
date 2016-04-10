@@ -38,6 +38,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
+                    
+                    
                     <li><h3 class="logged_as_container">You are logged in as: <%= user.local.email%></h3></li>
 					<li>
 						<a href="/logout" data-toggle="modal" class="signup_ancher btn btn-primary btn-xl">Logout</a>
@@ -128,3 +130,9 @@
         </div>
 	</div>
 	</div>
+	
+	                    <% if(user.local.validEmail===false){  %>
+                    
+                    <h4 style="color:red; padding:20px;background-color:white; text-align:center" class="logged_as_container">Please note that you haven't verify your e-mail yet, if you dont do so your account will expire in 48h</h4>
+                    
+                    <%  }   %>
