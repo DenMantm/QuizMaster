@@ -321,15 +321,47 @@ UserCtrl.updateWithCheck(req,res,done);
 		quizCtrl.updateqzIcon(fields._id, update);
 
 			res.redirect(301, '/editqz?id='+fields._id); //redirecting to homepage
-                    
-                    	
-                    	
+	
                     }
                 });
             });
         });
     });
 });
+							//UPLOADING USER PICTURE
+
+ app.post('/upload', function(req, res) {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        // `file` is the name of the <input> field of type `file`
+        var old_path = files.file.path,
+            file_size = files.file.size,
+            file_ext = files.file.name.split('.').pop(),
+            index = old_path.lastIndexOf('/') + 1,
+            file_name = old_path.substr(index),
+            new_path = './upload/userPics/' + req.user.local.email;
+
+        fs.readFile(old_path, function(err, data) {
+            fs.writeFile(new_path, data, function(err) {
+                fs.unlink(old_path, function(err) {
+                    if (err) {
+                        res.status(500);
+                        res.json({'success': false});
+                    } else {
+             var update = {
+			'local.pictureUrl': "./upload/userPics/" + req.user.local.email
+		};
+		UserCtrl.updateOneElement(req.user, update);
+
+		res.redirect(301, '/updateUser'); //redirecting to homepage
+                    }
+                });
+            });
+        });
+    });
+});
+
+
 
 	//Uploading file REF:http://stackoverflow.com/questions/5149545/uploading-images-using-node-js-express-and-mongoose
 	//###############################################################################################               
