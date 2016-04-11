@@ -13,15 +13,13 @@
         <% include ./index_partials/navbar %>
         
         <div class="mainContainer container">
-         <% include ./form_questions %>
-         <% include ./form_questions_edit %>
         <main class="topPadding">
         <div id="main-mid"></div>
         <div id="clockdiv">
           <span class="minutes"></span> : <span class="seconds"></span>
         </div>
         <div id="main-bot"><button type="button" id="qbtn" class="btn btn-default btn-sm btn-block" data-toggle="modal">Next</button></div>
-        <div>
+        <div id="result" name="<%= user._id %>">
             Score so far: <span id="srate">0%</span> Correct: <span id="acorrect">0</span> Incorrect: <span id="awrong">0</span>
         </div>
         <div>
@@ -34,7 +32,7 @@
         <% include ./index_partials/footer %>
     </footer>
     <script>
-        $(function(argument) {
+        $(function() {
             $('[type="checkbox"]').bootstrapSwitch();
         })
     </script>

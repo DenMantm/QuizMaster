@@ -3,6 +3,13 @@
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
+var result = {
+    qID : String,
+    correct: Number,
+    wrong: Number,
+    timeStamp: {type: Date, default: Date.now}
+    };
+
 // define the schema for our user model
 var userSchema = mongoose.Schema({
     local            : {
@@ -16,7 +23,8 @@ var userSchema = mongoose.Schema({
         createdOn: {type: Date, default: Date.now},
         key:String,
         validEmail: {type:Boolean, default:false},
-        myQuizzes: [{quizID: String}]
+        myQuizzes: [{quizID: String}],
+        results: [result]
     }
 });
 // methods ======================
