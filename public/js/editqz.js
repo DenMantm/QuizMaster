@@ -65,9 +65,6 @@ $('#submit_btn').click(function(){
     
       $('[name="cb_timeLimit"]').on('switchChange.bootstrapSwitch', function(event, state) {    
       if(state) {
-          //if user decide to show all questions then set number of questions to 'all' and hide the field from user
-          //also in this cese user will not have option to choose rether questions should or should not be shuflled in next step
-          //if the setting is set to show all questions they are automaticaly being shuffled
           $("#time").show();
           $("#timeLimitVal").val('');
           $("#timeLimit").val(true);

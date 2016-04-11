@@ -65,14 +65,15 @@
     }
 
       var $questions = data.questions;
+      //number of questions provided in the quiz
       qNum = $questions.length;
+      //Number of questions specified by user
       var questionsNum = data.qNumber;
       var maxQuestion
-      if (questionsNum == 'all') {
-        maxQuestion = $questions.length;
-      }
-      else {
-        maxQuestion = Number(data.qNumber)
+      if (questionsNum == 'all' || questionsNum >= questionsNum) {
+        maxQuestion = qNum;
+      } else {
+        maxQuestion = questionsNum;
       }
 
       //########## create an array of random numbers for questions ###########    
@@ -93,7 +94,7 @@
         //######### if shuffleQuestion is false just create array of sorted numbers ##############
       }
       else {
-        while (arr.length < qNum) {
+        while (arr.length < maxQuestion) {
           arr[arr.length] = arr.length + 1
         }
       }
@@ -176,13 +177,37 @@
 
         if (count == maxQuestion - 1) {
           document.getElementById("main-bot").innerHTML = '<button type="button" id="fbtn" class="btn btn-default btn-sm btn-block" data-toggle="modal">Finish</button>';
-
+           $("#fbtn").click(function() {
+             clearInterval(timeinterval);
+             //getting name of div with latest question
+            var current = "#question" + count;
+            //serialize form will generate string "answer=x" where x is a number of selected answer
+            var answer = $(current).serialize();
+            //check if any answer has been selected before progressing
+            if (answer.length === 0) {
+              alert("Select your answer.");
+            }
+            else {
+              
+              //check the number of answer selected using regular expression
+              var matches = answer.match(/answer=(\d+)/);
+              //check the first found
+              var answNum = Number(matches[1]);
+              validate(answNum, question.correct);
+  
+            
+              $("html, body").animate({
+                scrollTop: $(document).height()
+              }, "slow");
+              display_ct();
+              sendResults();
+            }
+           })
         }
       }
 
       nextQuestion(count);
       ferfreshButton();
-
 
       function display_ct() {
 
@@ -211,27 +236,10 @@
         document.getElementById("srate").innerHTML = rate + "%";
       }
 
-      function ferfreshButton() {
-        $("#qbtn").click(function() {
-          //getting name of div with latest question
-          var current = "#question" + count;
-          //serialize form will generate string "answer=x" where x is a number of selected answer
-          var answer = $(current).serialize();
-          //check if any answer has been selected before progressing
-          if (answer.length === 0) {
-            alert("Select your answer.");
-          }
-          else {
-            var next = "q" + count;
-            //check the number of answer selected using regular expression
-            var matches = answer.match(/answer=(\d+)/);
-            //check the first found
-            var answNum = Number(matches[1]);
-
-            var currentAnsw = "#question" + count + " #answer" + answNum;
-
-            //check if the selected answer is the same as correct answer
-            if (answNum === question.correct) {
+      function validate(answNum, right){
+        var currentAnsw = "#question" + count + " #answer" + answNum;
+        //check if the selected answer is the same as correct answer
+            if (answNum === right) {
               //mark selected answer acordingly to the correct attribute (true or false) - true in this case, this will generate the green tick
               $(currentAnsw).addClass(question.st[answNum]);
               // update correct answers count
@@ -245,16 +253,56 @@
               var rightAnsw = "#question" + count + " #answer" + question.correct;
               //add true class to the correct answer which will generate green tick
               $(rightAnsw).addClass("true");
-
             }
             $(currentAnsw).addClass(question.st[answNum]);
+      }
+      
+      function ferfreshButton() {
+        $("#qbtn").click(function() {
+          //getting name of div with latest question
+          var current = "#question" + count;
+          //serialize form will generate string "answer=x" where x is a number of selected answer
+          var answer = $(current).serialize();
+          //check if any answer has been selected before progressing
+          if (answer.length === 0) {
+            alert("Select your answer.");
+          }
+          else {
+            
+            //check the number of answer selected using regular expression
+            var matches = answer.match(/answer=(\d+)/);
+            //check the first found
+            var answNum = Number(matches[1]);
+            validate(answNum, question.correct);
+          
             $("html, body").animate({
               scrollTop: $(document).height()
             }, "slow");
             display_ct();
             count = count + 1;
-            console.log(count)
+
             nextQuestion(count);
+          }
+        });
+      }
+      
+      function sendResults() {
+        var results = new Object();
+        results.qID = id;
+        results.correct = correct;
+        results.wrong = wrong;
+        results.user = $("#result").attr("name");
+        
+         $.ajax({
+          type: "POST",
+          url: "/sendResults",
+          data: results,
+          cache: false,
+          success: function() {
+            window.location = "/showquiz";
+          },
+          error: function() {
+            alert("No data found.");
           }
         });
       }

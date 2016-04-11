@@ -1,4 +1,5 @@
 var Quiz = require('../models/quiz.server.model.js');
+var User = require('../models/user.server.model.js')
 var mongoose = require('mongoose');
 
 //getting info from body object, which is subbmitted by POST methodfrom front end
@@ -118,7 +119,6 @@ exports.list = function(req,res) {
 
 exports.removeq  = function(req,res) {
     var condition = {_id: req.query.id};
-    console.log(req.query.id);
     Quiz.remove(condition, function(err) {
         console.log("Error: " + err);
     });
@@ -173,10 +173,6 @@ exports.updateqzIcon = function(id,update) {
     });
     //redirect to homepage
 };
-
-
-
-
 
 exports.Questions = function(req,res) {
     var id = req.query.id;
@@ -295,4 +291,28 @@ exports.start = function(req,res) {
         res.render('test.ejs', {user: req.user, settings: results});
         console.log("Error: " + err);
     });
+};
+
+exports.sendResults = function(body, res) {
+
+    var qID = body.qID;
+    var user = body.user;
+    var correct = body.correct;
+    var wrong = body.wrong;
+
+    User.findById(user, function(err, user){
+        if (err) {
+            console.log(err);
+        } else {
+            user.local.results.push({
+                qID : qID,
+                correct: correct,
+                wrong: wrong,
+                timeStamp: Date.now()
+            });
+
+            user.save();
+        }
+    } );
+    res.end();
 };

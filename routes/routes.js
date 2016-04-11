@@ -157,7 +157,6 @@ var callback = function(response) {
 
 	app.post('/newquiz', isLoggedIn, function(req, res) {
 		return quizCtrl.create(req,res); //saving object to database
-		//res.redirect(301, '/showquiz'); //redirecting to homepage
 });
 
 	app.get('/testing', function(req, res){
@@ -178,7 +177,7 @@ var callback = function(response) {
 		res.redirect(req.get('referer'));
 	});
 	
-		app.post('/editQuestion' , function(req,res){
+	app.post('/editQuestion' , function(req,res){
 		quizCtrl.editQuestion(req.body);
 		res.redirect(req.get('referer'));
 	});
@@ -202,7 +201,6 @@ var callback = function(response) {
 		res.redirect(req.get('referer'));
 	});
 	
-	
 	app.get('/editqz', function(req, res){
 		return quizCtrl.editqz(req, res);
 	});
@@ -214,6 +212,11 @@ var callback = function(response) {
 	app.get('/quiz', function(req, res){
 		return quizCtrl.start(req, res);
 	});	
+	
+	app.post('/sendResults', function(req, res){
+		return quizCtrl.sendResults(req.body, res);
+		//res.redirect(301, '/showquiz');
+	});
 
 	// ==================================
 	// ========= UPDATE USER ============
@@ -225,7 +228,6 @@ var callback = function(response) {
 	});
 	app.post('/saveModifiedQuiz', function(req, res){
 		console.log("Checking: " + req)
-		
 		quizCtrl.saveModifiedQuiz(req,res);
 		
 	});
