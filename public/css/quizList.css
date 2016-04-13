@@ -10,3 +10,17 @@
 box-shadow: 10px 10px 38px -9px rgba(0,0,0,0.75);
     
 }
+.displayQuiz{
+
+    border: 1px solid #6bb9ef ;
+    
+}
+hr{
+    
+    border: 0;
+    height: 1px;
+    background: #6bb9ef;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+
+    
+}

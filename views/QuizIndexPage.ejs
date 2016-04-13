@@ -5,21 +5,264 @@
 
 <% include ./index_partials/head %>
 
-
 </head>
+<style>
+    
+.panel-shadow {
+    box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
+}
+.panel-white {
+  border: 1px solid #dddddd;
+}
+.panel-white  .panel-heading {
+  color: #333;
+  background-color: #fff;
+  border-color: #ddd;
+}
+.panel-white  .panel-footer {
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.post .post-heading {
+  height: 95px;
+  padding: 20px 15px;
+}
+.post .post-heading .avatar {
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin-right: 15px;
+}
+.post .post-heading .meta .title {
+  margin-bottom: 0;
+}
+.post .post-heading .meta .title a {
+  color: black;
+}
+.post .post-heading .meta .title a:hover {
+  color: #aaaaaa;
+}
+.post .post-heading .meta .time {
+  margin-top: 8px;
+  color: #999;
+}
+.post .post-image .image {
+  width: 100%;
+  height: auto;
+}
+.post .post-description {
+  padding: 15px;
+}
+.post .post-description p {
+  font-size: 14px;
+}
+.post .post-description .stats {
+  margin-top: 20px;
+}
+.post .post-description .stats .stat-item {
+  display: inline-block;
+  margin-right: 15px;
+}
+.post .post-description .stats .stat-item .icon {
+  margin-right: 8px;
+}
+.post .post-footer {
+  border-top: 1px solid #ddd;
+  padding: 15px;
+}
+.post .post-footer .input-group-addon a {
+  color: #454545;
+}
+.post .post-footer .comments-list {
+  padding: 0;
+  margin-top: 20px;
+  list-style-type: none;
+}
+.post .post-footer .comments-list .comment {
+  display: block;
+  width: 100%;
+  margin: 20px 0;
+}
+.post .post-footer .comments-list .comment .avatar {
+  width: 35px;
+  height: 35px;
+}
+.post .post-footer .comments-list .comment .comment-heading {
+  display: block;
+  width: 100%;
+}
+.post .post-footer .comments-list .comment .comment-heading .user {
+  font-size: 14px;
+  font-weight: bold;
+  display: inline;
+  margin-top: 0;
+  margin-right: 10px;
+}
+.post .post-footer .comments-list .comment .comment-heading .time {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 0;
+  display: inline;
+}
+.post .post-footer .comments-list .comment .comment-body {
+  margin-left: 50px;
+}
+.post .post-footer .comments-list .comment > .comments-list {
+  margin-left: 50px;
+}
+    
+</style>
 <body>
 
 <% include ./index_partials/navbar %>
 
 <div class="mainContainer container">
 	<div class="topPadding">
-	    <h4><%= quiz.qName %></h4>
+
+        <div class= "row row-padded text-center">
+            
+            <div class = "col-sm-8 col-sm-offset-2 text-center">
+            
+	  <img height="150" width="150" src="<%= quiz.picture %>" alt="quiz_picture">
+         
+        <h2>Quiz Name: <%= quiz.qName %></h2>
+        <h4>Created On: <%= quiz.createdOn %></h4>
+        <h4>Owner of the quiz: <%= quiz.owner %></h4>
+        <h4>Questions avalable in total: <%= quiz.questions.length %></h4>
+        <h4>Questions to display in one go: <%= quiz.qNumber %></h4>   
+        
+
+            <p>Description: <%= quiz.qDescription %></p>
 	<!--<div class="jumbotron text-center">-->
 	<!--	<h1><span class="fa fa-lock"></span>Welcome!</h1>-->
 	<!--	<a href="/logout" class="btn btn-default"><span class="fa fa-user"></span>Logout</a>-->
 	<!--	<a href="/profile" class="btn btn-default"><span class="fa fa-user"></span>Profile</a>-->
 	<!--</div>-->
-	</DIV>
+	 <p><a href="/quiz?id=<%= quiz._id %>" class="btn btn-primary" role="button">Take This Quiz</a></p>
+	
+	<hr/>
+	
+	<h4>Comments area:</h4>
+    <br/>
+	</div>
+	
+	<script>
+	    $(document).ready(function(){
+	        
+	        $("#commentSubmitButton").click(function(){
+	            
+	        var comment = $("#InputMessage").val();
+	        var user = <%- JSON.stringify(user.local.email) %>;
+	        var quizId = <%- JSON.stringify(quiz._id) %>;
+	         //var values = $(this).serialize();
+	        //var tmpObject = {"comment":comment,"user":user};
+	         
+
+             $.ajax({
+                    url: "/addCommentsToQuiz",
+                    type: "post",
+                    data: {"comment":comment,"user":user,"quizId":quizId},
+                    success: function (response) {
+                       // you will get response from your php page (what you echo or print)                 
+                        location.reload();
+                        
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                       console.log(textStatus, errorThrown);
+                        }
+
+
+                    });
+	        
+	        
+	        
+	        })
+	        
+	    })
+
+	    
+	    
+	</script>
+	</div>
+	<div class="row">
+	    <div class=" col-sm-8 col-sm-offset-2">
+	      
+	    <form>    
+	  <div class="form-group">
+        <label for="InputMessage">Message</label>
+        <div class="input-group">
+          <textarea name="InputMessage" id="InputMessage" class="form-control" rows="3" required></textarea>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+          </div>
+      </div>
+       <input id="commentSubmitButton" name="submit" id="submit" value="Submit" class="btn btn-info pull-right">
+      </form>
+	        <br/>
+	        <br/>
+	        <div id= "quizCommentArea">
+	            <%if(comments.comments.length == 0){%>
+	            <!--<h4>There is no coments yet under this quiz, you have chance to make the first one!</h4>-->
+	            <% } %>
+	            
+	        <% for(var i=comments.comments.length-1; i>=0; i--) {%>
+
+	        
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="panel panel-white post panel-shadow">
+                <div class="post-heading">
+                    <div class="pull-left image">
+                        <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                    </div>
+                    <div class="pull-left meta">
+                        <div class="title h5">
+                            <a href="#"><b><%= comments.comments[i].user %></b></a>
+                            made a post.
+                        </div>
+                       
+                    </div>
+                </div> 
+                <div class="post-description"> 
+                    <p><%= comments.comments[i].comment%></p>
+                    <!--<div class="stats">-->
+                    <!--    <a href="#" class="btn btn-default stat-item">-->
+                    <!--        <i class="fa fa-thumbs-up icon"></i>2-->
+                    <!--    </a>-->
+                    <!--    <a href="#" class="btn btn-default stat-item">-->
+                    <!--        <i class="fa fa-thumbs-down icon"></i>12-->
+                    <!--    </a>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+	        
+	        	    <% } %>
+	        	   
+
+
+
+
+
+
+	            </div>
+	            
+	        </div>
+	    </div>
+	
+	</div>
+	<br/>
+</div>
+
+    <footer>
+        
+        <% include ./index_partials/footer %>
+        
+    </footer>
+
 </body>
 </html>

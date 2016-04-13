@@ -19,6 +19,7 @@ var user,
 var quizCtrl = require("../controllers/quiz.server.controller.js");
 //controler for users
 var UserCtrl = require("../controllers/user.server.controller.js");
+var CommentCtrl = require("../controllers/comment.server.controller.js");
 // load up the user model
 var User       		= require('../models/user.server.model');
 // load all the things we need
@@ -343,7 +344,16 @@ UserCtrl.updateWithCheck(req,res,done);
 							//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 							
 							app.get('/showQuizIndex', function(req,res){
+								
 								quizCtrl.showQuizIndex(req,res);
+								
+							});
+							
+							app.post('/addCommentsToQuiz', function(req,res){
+								
+								CommentCtrl.addComment(req,res);
+								//quizCtrl.showQuizIndex(req,res);
+								
 							});
 							
 							//UPLOADING USER PICTURE

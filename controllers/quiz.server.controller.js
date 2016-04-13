@@ -1,5 +1,6 @@
 var Quiz = require('../models/quiz.server.model.js');
-var User = require('../models/user.server.model.js')
+var User = require('../models/user.server.model.js');
+var CommentCtrl = require("../controllers/comment.server.controller.js");
 var mongoose = require('mongoose');
 
 //getting info from body object, which is subbmitted by POST methodfrom front end
@@ -319,7 +320,9 @@ exports.showQuizIndex = function(req,res) {
     query.where({_id: id})
     .exec(function(err,results){
         
-        res.render('QuizIndexPage.ejs', {user: req.user, quiz: results});
+        //querying further
+        CommentCtrl.getComments(req,res,results);
+
         
        if(err){ console.log("Error: " + err);}
     });
