@@ -1,0 +1,12 @@
+.quizEntity:hover{
+    ms-transform: scale(1.05,1.05); /* IE 9 */
+    -webkit-transform: scale(1.05,1.05); /* Chrome, Safari, Opera */
+    /*transform: rotate(7deg);*/
+     transform: scale(1.05,1.05);
+}
+.quizEntity{
+-webkit-box-shadow: 10px 10px 38px -9px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 38px -9px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 38px -9px rgba(0,0,0,0.75);
+    
+}

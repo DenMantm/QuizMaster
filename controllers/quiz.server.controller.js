@@ -313,6 +313,19 @@ exports.start = function(req,res) {
     });
 };
 
+exports.showQuizIndex = function(req,res) {
+    var id = req.query.id;
+    var query = Quiz.findOne();
+    query.where({_id: id})
+    .exec(function(err,results){
+        
+        res.render('QuizIndexPage.ejs', {user: req.user, quiz: results});
+        
+       if(err){ console.log("Error: " + err);}
+    });
+};
+
+
 exports.sendResults = function(body, res) {
 
     var qID = body.qID;

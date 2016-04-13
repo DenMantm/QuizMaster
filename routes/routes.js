@@ -169,7 +169,7 @@ var callback = function(response) {
 
 	app.post('/updateqz' , function(req, res) {
 		quizCtrl.updateqz(req.body);
-		res.redirect(301, '/showquiz');
+		res.redirect(301, '/showMyQuiz');
 	});
 	
 	app.post('/addQuestion' , function(req,res){
@@ -215,7 +215,9 @@ var callback = function(response) {
 	});
 	
 	app.get('/quiz', function(req, res){
+		
 		return quizCtrl.start(req, res);
+		
 	});	
 	
 	app.post('/sendResults', function(req, res){
@@ -298,7 +300,7 @@ UserCtrl.updateWithCheck(req,res,done);
     fs = require('fs'),
     path = require('path');
 
-    app.post('/uploadQuizIcon', function(req, res) {
+    app.post('/uploadQuizIcon', isLoggedIn, function(req, res) {
     // 	console.log("something");
     // console.log(req.body._id);
     	console.log(req.originalUrl);
@@ -335,9 +337,18 @@ UserCtrl.updateWithCheck(req,res,done);
         });
     });
 });
+
+
+							//~~~~~~~~~~~~~~~~~~~~~Showing Quiz Index page here::~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+							//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+							
+							app.get('/showQuizIndex', function(req,res){
+								quizCtrl.showQuizIndex(req,res);
+							});
+							
 							//UPLOADING USER PICTURE
 
- app.post('/upload', function(req, res) {
+ app.post('/upload', isLoggedIn, function(req, res) {
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         // `file` is the name of the <input> field of type `file`
