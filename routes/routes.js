@@ -188,6 +188,11 @@ var callback = function(response) {
 		return quizCtrl.list(req, res);
 	});
 	
+	
+	app.get('/showMyQuiz',isLoggedIn, function(req, res) {
+		return quizCtrl.MyList(req, res);
+	});
+
 	app.post('/removeqz', function(req, res) {
 		quizCtrl.removeq(req);
 		console.log('received removeqz') ;

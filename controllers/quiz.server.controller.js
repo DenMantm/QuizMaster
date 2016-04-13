@@ -102,8 +102,8 @@ exports.saveModifiedQuiz = function(req,res){
 };
 
 
-
 exports.list = function(req,res) {
+
     var query = Quiz.find();
     query.sort({ owner: 'desc' })
     .exec(function(err, results){
@@ -116,6 +116,26 @@ exports.list = function(req,res) {
         console.log("Error: " + err);
     });
 };
+
+
+//This one is to show only owner quizes
+
+exports.MyList = function(req,res) {
+     var user = req.user.local.email;
+    var query = Quiz.find({"owner":user});
+    query.sort({ owner: 'desc' })
+    .exec(function(err, results){
+        if (!req.user) {
+            var user = {local: {username:"empty", email:"empty"}}
+             res.render('showMyList.ejs', {user: req.user, list:results, user:user});
+        } else {
+            res.render('showMyList.ejs', {user: req.user, list:results, user:req.user});
+        }
+        console.log("Error: " + err);
+    });
+};
+
+
 
 exports.removeq  = function(req,res) {
     var condition = {_id: req.query.id};
