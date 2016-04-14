@@ -347,21 +347,34 @@ UserCtrl.updateWithCheck(req,res,done);
 							//~~~~~~~~~~~~~~~~~~~~~Showing Quiz Index page here::~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 							//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 							
-							app.get('/showQuizIndex', function(req,res){
+							app.get('/showQuizIndex',isLoggedIn, function(req,res){
 								
 								quizCtrl.showQuizIndex(req,res);
 								
 							});
 							
-							app.post('/addCommentsToQuiz', function(req,res){
+							//This is obviousley to add some comments under certain quiz
+							
+							
+							app.post('/addCommentsToQuiz',isLoggedIn, function(req,res){
 								
 								CommentCtrl.addComment(req,res);
 								//quizCtrl.showQuizIndex(req,res);
 								
 							});
 							
+							
+							//loading chat page here......
+							
+							app.get('/chat',isLoggedIn, function(req,res){
+								
+								res.render('chat',{user: req.user});
+								
+							});
+							
+							
+							
 							//UPLOADING USER PICTURE
-
  app.post('/upload', isLoggedIn, function(req, res) {
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
@@ -371,7 +384,7 @@ UserCtrl.updateWithCheck(req,res,done);
             file_ext = files.file.name.split('.').pop(),
             index = old_path.lastIndexOf('/') + 1,
             file_name = old_path.substr(index),
-            new_path = './upload/userPics/' + req.user.local.email;
+            new_path = './public/img/userPics/' + req.user.local.email;
 
         fs.readFile(old_path, function(err, data) {
             fs.writeFile(new_path, data, function(err) {
@@ -381,7 +394,7 @@ UserCtrl.updateWithCheck(req,res,done);
                         res.json({'success': false});
                     } else {
              var update = {
-			'local.pictureUrl': "./upload/userPics/" + req.user.local.email
+			'local.pictureUrl': "./public/img/userPics/" + req.user.local.email
 		};
 		UserCtrl.updateOneElement(req.user, update);
 
@@ -450,7 +463,7 @@ UserCtrl.updateWithCheck(req,res,done);
 	//###############################################################################################
 	//############################# Change password while logged in #################################
 	//###############################################################################################
-		app.post('/change_password/ajax', function(req, res) {
+		app.post('/change_password/ajax',isLoggedIn, function(req, res) {
 		
 		//putting this just for now, latter will combine in one module::
 		

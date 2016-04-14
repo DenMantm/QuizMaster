@@ -72,7 +72,108 @@ require('./routes/routes.js')(app, passport); // load our routes and pass in our
 //require('./app/addQuiz.js')('a');
 //require('./app/findQuiz.js')();
 
-// launch ======================================================================
-app.listen(port);
-console.log('The magic happens on port ' + port);
+
+
+					//########################### Creating socket chat handlers here:: ###################################
+
+
+
+
+//array for users
+var clients = {};
+function handleIO(socket){
+	
+	//adding user to list
+	socket.on('add-user', function(data){
+		//writing to the object
+    clients[data] = {
+      "socket": socket.id,
+      'name': data
+    };
+                     //if user connects, provide him with userlist and others as well
+    socket.broadcast.emit('update-list',clients);
+    socket.emit('update-list',clients);
+
+  });
+					//handling Small Chat window::
+
+
+
+					socket.on('messageToAll',function(msg){
+						    socket.broadcast.emit('chatIncomingMessage',msg);
+    						socket.emit('chatIncomingMessage',msg);
+    					
+					})
+
+				socket.on('inviteUser',function(invite){
+					
+					if(clients[invite.user]===undefined){
+						socket.emit('inviteStatus','noUser');
+						return;
+					}
+					//sending request to certain person::
+					console.log('USER TO INVITE: '+ clients[invite.user].socket);
+					console.log(invite);
+
+					//send invite to the user
+					io.to(clients[invite.user].socket).emit("invite", invite);
+
+					socket.on('inviteStatusFromUser',function(answer){
+						if(answer.type ==='accept'){
+							console.log('accepting');
+						io.to(clients[answer.user].socket).emit('inviteStatus','accept');
+						return;
+						}
+						if(answer.type === 'reject'){
+							console.log('reject');
+						io.to(clients[answer.user].socket).emit('inviteStatus','reject');
+						return;
+						}
+					});	
+					
+					
+				})       
+			
+				
+	                 //when requireing userlist presenting it
+
+	socket.on('user-list',function(){
+		                   //if new user connects, emmit userlist
+		socket.emit('update-list',clients);
+		console.log('working');
+	});
+
+					//Handling Disconnection::
+	
+	function disconnect(){
+		//finding which user disconnected
+		for (var key in clients) {
+	if(clients[key].socket === socket.id){
+		console.log(key);
+		//deleting that entry
+		delete clients[key];
+	}
+ 
+	}
+		socket.broadcast.emit('update-list',clients);
+	};
+
+	console.log("connected");
+	//whenever client disconnected
+	socket.on("disconnect",disconnect);
+}
+
+var server = app.listen(port);
+var io = require('socket.io').listen(server);
+//requireing debug messages to go away
+//io.set('log level', 1);
+//event listner on connection fires funct
+io.on("connection",handleIO);
+    
+console.log('Listening on port number: ' + port);
+
+
+// // launch ======================================================================
+// app.listen(port);
+// console.log('The magic happens on port ' + port);
 module.exports = app;

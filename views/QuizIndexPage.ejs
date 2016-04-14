@@ -119,7 +119,10 @@
 
 <div class="mainContainer container">
 	<div class="topPadding">
-
+    <h2 class="text-center">Quiz details</h2>
+    <br/>
+    <hr/>
+    <br/>
         <div class= "row row-padded text-center">
             
             <div class = "col-sm-8 col-sm-offset-2 text-center">
@@ -140,6 +143,7 @@
 	<!--	<a href="/profile" class="btn btn-default"><span class="fa fa-user"></span>Profile</a>-->
 	<!--</div>-->
 	 <p><a href="/quiz?id=<%= quiz._id %>" class="btn btn-primary" role="button">Take This Quiz</a></p>
+	 <p><a href="javascript:window.history.back()" class="btn btn-primary" role="button">Back</a></p>
 	
 	<hr/>
 	
@@ -158,7 +162,6 @@
 	         //var values = $(this).serialize();
 	        //var tmpObject = {"comment":comment,"user":user};
 	         
-
              $.ajax({
                     url: "/addCommentsToQuiz",
                     type: "post",
@@ -174,8 +177,7 @@
 
 
                     });
-	        
-	        
+ 
 	        
 	        })
 	        
@@ -206,15 +208,14 @@
 	            <% } %>
 	            
 	        <% for(var i=comments.comments.length-1; i>=0; i--) {%>
-
-	        
+ 
 <div class="container">
     <div class="row">
-        <div class="col-sm-8">
+        <div style="padding:0" class="col-sm-8">
             <div class="panel panel-white post panel-shadow">
                 <div class="post-heading">
                     <div class="pull-left image">
-                        <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                        <img src="<%= user.local.pictureUrl.slice(9) %>" class="img-circle avatar" alt="user profile image">
                     </div>
                     <div class="pull-left meta">
                         <div class="title h5">
@@ -238,6 +239,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 
 	        
