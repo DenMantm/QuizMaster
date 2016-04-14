@@ -367,7 +367,7 @@ UserCtrl.updateWithCheck(req,res,done);
             file_ext = files.file.name.split('.').pop(),
             index = old_path.lastIndexOf('/') + 1,
             file_name = old_path.substr(index),
-            new_path = './upload/userPics/' + req.user.local.email;
+            new_path = './public/img/userPics/' + req.user.local.email;
 
         fs.readFile(old_path, function(err, data) {
             fs.writeFile(new_path, data, function(err) {
@@ -377,7 +377,7 @@ UserCtrl.updateWithCheck(req,res,done);
                         res.json({'success': false});
                     } else {
              var update = {
-			'local.pictureUrl': "./upload/userPics/" + req.user.local.email
+			'local.pictureUrl': "./public/img/userPics/" + req.user.local.email
 		};
 		UserCtrl.updateOneElement(req.user, update);
 

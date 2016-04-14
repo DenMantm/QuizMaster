@@ -11,8 +11,11 @@
 }
 .choice_box{
     height:50px;
-    margin:10px;
+    
+    /*margin:10px;*/
+    
     /*margin-top:40px;*/
+    
     border: 1px solid #ccc;
     border-radius: .35em;
     background-color: #fff;
