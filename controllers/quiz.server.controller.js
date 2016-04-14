@@ -335,20 +335,41 @@ exports.sendResults = function(body, res) {
     var user = body.user;
     var correct = body.correct;
     var wrong = body.wrong;
+    var qName;
+    Quiz.findById(qID, function(err, quiz){
+        if(err) {
+            console.log(err)
+        } else {
+            qName = quiz.qName;
+            User.findById(user, function(err, user){
+                if (err) {
+                    console.log(err);
+                } else {
+                    user.local.results.push({
+                        qID : qID,
+                        correct: correct,
+                        wrong: wrong,
+                        timeStamp: Date.now(),
+                        qName: qName
+                    });
+                user.save();
+                }
+            });
+        }
+    });
 
-    User.findById(user, function(err, user){
+    res.end();
+};
+
+exports.results = function(req, res) {
+
+    var uID = req.user._id;
+    var id = mongoose.Types.ObjectId(uID);
+    User.findOne({_id: id}, function(err, user){
         if (err) {
             console.log(err);
         } else {
-            user.local.results.push({
-                qID : qID,
-                correct: correct,
-                wrong: wrong,
-                timeStamp: Date.now()
-            });
-
-            user.save();
+            res.render('results', { results: user.local.results});
         }
-    } );
-    res.end();
+    })
 };

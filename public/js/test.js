@@ -314,7 +314,6 @@
       else {
         maxQuestion = questionsNum;
       }
-      alert(maxQuestion)
       createArray();
       nextQuestion(count);
       ferfreshButton();

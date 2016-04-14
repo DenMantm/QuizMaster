@@ -1,0 +1,23 @@
+<head>
+    <% include ./index_partials/head %>
+        <script src="../js/results.js"></script>
+        <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
+        <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+
+</head>
+
+<body>
+   
+    
+   <% for (var i=0; i<results.length; i++) { %>
+    <%= results[i].qName %>
+    <%= results[i].qID %>
+    <%= results[i].wrong %>
+    <%= results[i].wrong %>
+    <% } %>    
+    
+</body>
+ 
+<footer>
+        <% include ./index_partials/footer %>
+</footer>

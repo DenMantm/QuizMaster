@@ -7,7 +7,8 @@ var result = {
     qID : String,
     correct: Number,
     wrong: Number,
-    timeStamp: {type: Date, default: Date.now}
+    timeStamp: {type: Date, default: Date.now},
+    qName: String
     };
 
 // define the schema for our user model

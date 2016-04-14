@@ -225,6 +225,10 @@ var callback = function(response) {
 		return quizCtrl.sendResults(req.body, res);
 		//res.redirect(301, '/showquiz');
 	});
+	
+	app.get('/results', function(req, res){
+		quizCtrl.results(req,res);
+	})
 
 	// ==================================
 	// ========= UPDATE USER ============
