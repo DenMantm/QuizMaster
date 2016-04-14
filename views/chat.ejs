@@ -5,7 +5,70 @@
 
 <% include ./index_partials/head %>
 
+<style>
+   
+   /*SECTION STARTS FOR THE CHAT HERE*/
+.toolTip_chat {
+    position:relative !important;
+}
+.toolTip_chat p {
+        clear: left;
+  color:black ;
+  font-size:13px;
+    padding:4px;
+    background-color:#f9f9f9;
+    border:solid 1px #a0c7ff;
+    -moz-border-radius:5px;-ie-border-radius:5px;-webkit-border-radius:5px;-o-border-radius:5px;border-radius:5px;
+}
 
+.tailShadow {
+    position:absolute;
+    bottom:-8px;
+    left:48px;
+    width:0;height:0;
+    border:solid 2px #fff;
+    box-shadow:0 0 10px 1px #555;
+}
+
+.tail1 {
+    position:absolute!important;
+    bottom:-20px!important;
+    left:40px!important;
+    width:0;height:0;
+    border-color:#a0c7ff transparent transparent transparent;
+    border-width:10px!important;
+    border-style:solid!important;
+}
+
+.tail2 {
+    position:absolute!important;
+    bottom:-18px!important;
+    left:40px!important;
+    width:0;height:0;
+    border-color:#f9f9f9 transparent transparent transparent;
+    border-width:10px;
+    border-style:solid!important;
+}
+
+.chat_name {
+  color:black;
+  font-size:11px !important;
+  float:left;
+      margin-top: -6px!important;
+    margin-left: 25px;
+    padding:2px !important;
+    background-color:#f9f9f9;
+    border:solid 1px #a0c7ff;
+    -moz-border-radius:5px;-ie-border-radius:5px;-webkit-border-radius:5px;-o-border-radius:5px;border-radius:5px;
+}
+.main_window{
+    padding-left:5px;
+     padding-right:5px;
+} 
+    
+    
+    
+</style>
 </head>
 <body>
 
@@ -18,11 +81,54 @@
     <br/>
     <hr/>
     <br/>
-	<!--<div class="jumbotron text-center">-->
-	<!--	<h1><span class="fa fa-lock"></span>Welcome!</h1>-->
-	<!--	<a href="/logout" class="btn btn-default"><span class="fa fa-user"></span>Logout</a>-->
-	<!--	<a href="/profile" class="btn btn-default"><span class="fa fa-user"></span>Profile</a>-->
-	<!--</div>-->
+    
+    
+                <!--####################################### Chat window here ########################################-->
+<div class="row">
+<div class="col-md-9 clear right bottom_marg">
+ <div class=' main_window'>
+     <h4 class='text-center'>Main Chat Area: </h4>
+     <hr/>
+     <div id="chat_small" style="height: 350px; overflow-y: scroll;"> 
+     <div class='chat_message'>
+	<div class="toolTip_chat">
+    <p>Hello! Wolcome to the Quiz chat! You are more than welcome here!</p>
+    <div class="tailShadow"></div>
+    <div class="tail1"></div>
+    <div class="tail2"></div>
+</div>
+<p class='chat_name'>ChatBot@quizportal.nn</p>
+</div>
+     </div>
+<br/>
+
+<div class='down_side_window'>
+    
+	<div class="input-group small_chat_input">
+      <input id='chatMessage' type="text" class="form-control" placeholder="Your Message Here">
+      <span class="input-group-btn">
+        <button onclick='sendMessage()' class="btn btn-default" type="button">Send</button>
+      </span>
+    </div>
+</div>
+</div>
+</div>
+                <!--############################### User list here ################################-->
+                	<div class="col-md-3 clear right bottom_marg">
+	                     <div class=' main_window'>
+                        <h4 class='text-center'>Who is in:</h4>
+                        <hr/>
+		            <div id="user_list_small" style="height: 160px; overflow-y: scroll;">
+		                </div>
+	                    </div>
+                    </div>
+                    
+                    
+                    </div><!--end of row-->
+                    
+                    <br/>
+                    <br/>
+                    
 	</div>
 </div>
 
@@ -31,7 +137,165 @@
         <% include ./index_partials/footer %>
         
     </footer>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 
+<script>
+var user = <%- JSON.stringify(user.local.email) %>;
+$(document).ready(function(){
+    checkConnections();
+})    
+    var socket = io.connect('/');
+
+//on connect informs
+socket.on("connect",function(){
+	console.log('connected');
+	socket.emit('add-user', user);
+	checkConnections();
+});
+
+//listens for disconnection
+socket.on("disconnect",function(){
+	console.log('disconnected');
+});
+
+socket.on('clientList',function(userList){
+	console.log(userList);
+var keys = Object.keys(userList);
+	console.log(keys);
+})
+
+var checkConnections = function(){
+	socket.emit('user-list');
+}
+
+socket.on('update-list',function(list){
+	//transfering object into list of users
+
+
+console.log('working');
+var keys = Object.keys(list);
+    	var div = document.createElement("div");
+    	var element = document.getElementById("user_list_small");
+    	element.innerHTML = '';
+    	for(var i = 0; i <keys.length;i++){
+    		
+var para = document.createElement("h4");
+var node = document.createTextNode(keys[i]);
+para.appendChild(node);
+div.appendChild(para);
+
+    	}
+element.appendChild(div);
+
+});
+
+socket.on("disconnect",function(){
+	console.log('disconnected');
+});
+
+
+//~~~~~~~~~~~~~~~~~~~For Chat~~~~~~~~~~~~~#
+
+var sendMessage = function(){
+//assemble JSON to send
+var chatmsg = {};
+chatmsg.user = user;
+chatmsg.message = document.getElementById('chatMessage').value;
+socket.emit('messageToAll', chatmsg);
+document.getElementById('chatMessage').value = '';
+};
+
+socket.on('chatIncomingMessage',function(msg){
+    console.log('incoming message');
+	addMessage(msg);
+});
+
+//variable for different color messages
+var state;
+				
+
+
+				//if we would get the message, fire this one
+
+				
+var addMessage = function(messageObject){
+
+	//var elementt = document.getElementById("chat_small");
+
+
+	var div = document.createElement("div");
+	div.className = 'chat_message';
+	
+	
+	var div1 = document.createElement("div");
+	div1.className = 'toolTip_chat';
+	div.appendChild(div1);
+	
+	var par1 = document.createElement("p");
+    var messageText = document.createTextNode(messageObject.message);
+    par1.appendChild(messageText);
+    div1.appendChild(par1);
+	
+	var div2 = document.createElement("div");
+	div2.className = 'tailShadow';
+	div1.appendChild(div2);
+	
+	var div3 = document.createElement("div");
+	div3.className = 'tail1';
+	div1.appendChild(div3);
+	
+	var div4 = document.createElement("div");
+	div4.className = 'tail2';
+	div1.appendChild(div4);
+
+	var userText = document.createTextNode(messageObject.user);
+	var par2 = document.createElement("p");
+	par2.className = 'chat_name';
+    par2.appendChild(userText);
+    div.appendChild(par2);
+    
+    
+    var br = document.createElement("br");
+     div.appendChild(br);
+
+		$("#chat_small").prepend(div);
+	
+// 	message.appendChild(messageText);
+
+
+
+// 	var user = document.createElement("h6");
+// 	var message = document.createElement("h6");
+
+// 	var userText = document.createTextNode(messageObject.user + ':');
+// 	var messageText = document.createTextNode(messageObject.message);
+
+
+// 	user.appendChild(userText);
+// 	message.appendChild(messageText);
+
+// 	user.className = 'userName';
+// 	message.className = 'chatMessage';
+
+// 	div.appendChild(user);
+// 	div.appendChild(message);
+
+// 	if(state){
+// 	div.className = 'chatMessage1';
+// 	state = false;
+// 	}
+// 	else{
+// 	div.className = 'chatMessage2';
+// 	state = true;
+// 	}
+
+
+	//elementt.prependChild(div);
+};
+
+
+    
+</script>
 
 </body>
 </html>
