@@ -1,14 +1,26 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html>
 <head>
-    <% include ./index_partials/head %>
-        <script src="../js/results.js"></script>
-        <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
-        <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    <script src="../js/results.js"></script>
+     <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
+    <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+<% include ./index_partials/head %>
+
 
 </head>
-
 <body>
-  <% include ./index_partials/navbar %>
-    <div class='row'>
+
+<% include ./index_partials/navbar %>
+
+<div class="mainContainer container">
+	<div class="topPadding">
+		    <h2 class="text-center">Results</h2>
+    <br/>
+    <hr/>
+    <br/>
+    
+        <div class='row'>
         <table class='table-hover col-sm-12'>
             <tr>
                 <th class='col-sm-5'>Quiz name</th>
@@ -28,8 +40,16 @@
     </div>    
    
     
-</body>
- 
-<footer>
+    
+
+	</div>
+</div>
+
+    <footer>
+        
         <% include ./index_partials/footer %>
-</footer>
+        
+    </footer>
+
+</body>
+</html>
