@@ -20,6 +20,49 @@
     <hr/>
     <br/>
     
+
+        <div class='row'>
+        <table class='table-hover col-sm-12'>
+            <tr>
+                <th class='col-sm-4'>Quiz name</th>
+                <th class='col-sm-2'>Succes rate</th>
+                <th class='col-sm-2'>Correct Answers</th>
+                <th class='col-sm-2'>Incorrect answers</th>
+                <th class='col-sm-2'>Quiz taken</th>
+            </tr>
+            <% for (var i=0; i<results.length; i++) { %>
+            <tr>
+                <td class='col-sm-4'><a href="/showQuizIndex?id=<%= results[i].qID %>"><%= results[i].qName %></a></th>
+                <th class='col-sm-2'><%= (results[i].correct / (results[i].correct + results[i].wrong))*100 %>%</th>
+                <td class='col-sm-2'><%= results[i].correct %></th>
+                <td class='col-sm-2'><%= results[i].wrong %></th>
+                <td class='col-sm-4'><%
+                    var elapsed = new Date().getTime() - results[i].timeStamp 
+                    var result;
+                    var elapDays = Math.round(elapsed / (1000*60*60*24),1);
+                    if (elapDays > 1) {
+                        result = elapDays + " days ago"
+                    } else if (elapDays == 1) {
+                        result = elapDays + " day ago"
+                    } else {
+                        var elapHrs = Math.round(elapsed / (1000*60*60),1);
+                        if(elapHrs > 2) {
+                            result = elapHrs + " hours ago"
+                        } else if (elapHrs == 1) {
+                            result = elapHrs + " hour ago"
+                        } else {
+                            var elapMin = Math.round(elapsed / (1000*60),1);
+                            result = elapMin + " minutes ago"
+                        }
+                    }
+                    %>
+                    <%= result %></th>
+            </tr>
+            <% } %>    
+        </table>
+    </div>    
+   
+
     
     
 
