@@ -369,7 +369,7 @@ exports.results = function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.render('results', { results: user.local.results});
+            res.render('results', { results: user.local.results, user: req.user});
         }
     })
 };

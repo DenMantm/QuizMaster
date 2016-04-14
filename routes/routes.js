@@ -216,9 +216,7 @@ var callback = function(response) {
 	});
 	
 	app.get('/quiz', function(req, res){
-		
 		return quizCtrl.start(req, res);
-		
 	});	
 	
 	app.post('/sendResults', function(req, res){
@@ -241,10 +239,7 @@ var callback = function(response) {
 	app.post('/saveModifiedQuiz', function(req, res){
 		console.log("Checking: " + req)
 		quizCtrl.saveModifiedQuiz(req,res);
-		
 	});
-
-
 
 	//POST method for user update limited method which first checks if user nam can be updated and is not taken :-)
 	app.post('/updateUser', isLoggedIn, function(req, res) {

@@ -7,14 +7,26 @@
 </head>
 
 <body>
+  <% include ./index_partials/navbar %>
+    <div class='row'>
+        <table class='table-hover col-sm-12'>
+            <tr>
+                <th class='col-sm-5'>Quiz name</th>
+                <th class='col-sm-2'>Correct Answers</th>
+                <th class='col-sm-2'>Incorrect answers</th>
+                <th class='col-sm-3'>Date / time</th>
+            </tr>
+            <% for (var i=0; i<results.length; i++) { %>
+            <tr>
+                <td class='col-sm-5'><%= results[i].qName %></th>
+                <td class='col-sm-2'><%= results[i].correct %></th>
+                <td class='col-sm-2'><%= results[i].wrong %></th>
+                <td class='col-sm-3'><%= results[i].timeStamp %></th>
+            </tr>
+            <% } %>    
+        </table>
+    </div>    
    
-    
-   <% for (var i=0; i<results.length; i++) { %>
-    <%= results[i].qName %>
-    <%= results[i].qID %>
-    <%= results[i].wrong %>
-    <%= results[i].wrong %>
-    <% } %>    
     
 </body>
  
