@@ -15,6 +15,10 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
 <div class="main_body_background">
 <div class="mainContainer container">
       <div class="topPadding row">
+              <h2 class="text-center">My Settings</h2>
+    <br/>
+    <hr/>
+    <br/>
         <div class='col-md-2'>
             <style>
 /*      #sidebar {*/
@@ -188,7 +192,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
           </div>
                                     <!--VIEW PROFILE DETAILS STARTING HERE-->
         <div id='container_profile_details' class='animated zoomInDown'>
-        <div class="col-md-7">
+        <div class="col-md-10">
           <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title"><%= user.local.email %></h3>
@@ -246,7 +250,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
         <!------------------------------------------------------STARTING EDIT DETAILS------------------------------------------------>
         
         <div id='container_edit_profile' class='animated zoomInDown'>
-          <div class="col-md-7">
+          <div class="col-md-10">
             
                       <div class="panel panel-info">
             <div class="panel-heading">
@@ -260,7 +264,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
                            <div class="form-group">
             <label class="col-lg-3 control-label">Avatar:</label>
             <div class="col-lg-8">
-          <div class="col-md-3 col-lg-3 " align="center"> <img  alt="User Pic" src= '/getProgilePic'class="img-circle img-responsive" style="max-height:30%; max-width:30%">  
+          <div class="col-md-3 col-lg-3 " align="center"> <img  alt="User Pic" src= '/getProgilePic'class="img-circle img-responsive" style="max-height:80%; max-width:80%">  
                 </div>
                <input id='enableSavePicture' value='Change' data-original-title="Change Picture" data-toggle="tooltip" class="btn btn-sm btn-warning"></input>
             </div>
@@ -354,7 +358,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
         
         
           <div id='container_edit_password' class='animated zoomInDown'>
-          <div class="col-md-7">
+          <div class="col-md-10">
             <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title"><%= user.local.email %></h3>
@@ -400,7 +404,7 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
           </div>
                                         <div class="form-group">
             <label class="col-md-3 control-label"></label>
-            <div class="col-md-7">
+            <div class="col-md-10">
               <div id='message_change_password' style='display:none;' class="alert alert-danger"></div>
               <!--<input type="button" class="btn btn-primary" value="Save Changes">-->
               <button id='profile_change_password' type="button" class="btn btn-success">Change Password</button>
@@ -468,9 +472,10 @@ REFERENCE: http://bootsnipp.com/snippets/featured/simple-user-profile
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-         <div class='col-md-3'>
-           <img alt="User Pic" src= '/img/profile_fun_face.jpg'class="img-responsive">
-            </div>
+
+         <!--<div class='col-md-3'>-->
+         <!--  <img alt="User Pic" src= '/img/profile_fun_face.jpg'class="img-responsive">-->
+         <!--   </div>-->
       </div>
     </div>
     </div>
