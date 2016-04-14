@@ -24,199 +24,24 @@
     <div class="container-fluid" id="<%= list[i]._id %>">
 
             <!--STARTING ROW WITH THE QUIZES NOW -->
-<div class="row">
-<!--FIRST ENTITY    -->
-    	        
-  <div class="col-sm-6 col-md-3">
-      <a href="/showQuizIndex?id=<%= list[i]._id%>">
-          
-    <div id="<%= list[i]._id %>" class="thumbnail quizEntity">
-      <img height="150" width="150" src="<%= list[i].picture %>" alt="quiz_picture">
-      <div class="caption">
-        <h3><%= list[i].qName %></h3>
-        <p><%= list[i].qDescription %></p>
-        <!--<a href="#" class="btn btn-default" role="button">Button</a>-->
-        <!--BUTTONS FOR EDITING QUIZ ARE HERE-->
-        <p>
-                		    <% if (user.local.email === list[i].owner) { %>
-    		    
-                <!--<a href="/questions?id=<%= list[i]._id %>" class="btn icon-btn btn-primary btn_questions">-->
-                <!--<span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>-->
-                <!--Edit Questions-->
-                <!--</a>-->
-                <!--<a href="/editqz?id=<%= list[i]._id %>" class="btn icon-btn btn-info btn_edit">-->
-                <!--<span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>-->
-                <!--Edit Settings-->
-                <!--</a>-->
-                <!--<a href="/removeqz?id=<%= list[i]._id %>" class="btn icon-btn btn-warning btn_remove" method="post">-->
-                <!--<span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>-->
-                <!--Remove Quiz-->
-                <!--</a>-->
-                <h5 style="color:blue">(You are the owner of this quiz)</h5>
-    	    <% } %>
-        </p>
-        <!--<p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a> </p>-->
-      </div>
-    </div>
-    </a>
-  </div>
-  
-<% if( i!==list.length-1 ){
-    i++
-}
-else{
-    %>
-    </div>
-        	</div>
-        	
-        	    </main>
-    
-</div>
-</div>  
-    <footer>
-        
-        <% include ./index_partials/footer %>
-        
-    </footer>
-
-  <%  return;
-}
-
-%>
-
-<!--SECOND ENTITY-->
-
-  <div class="col-sm-6 col-md-3">
-      <a class='quizEntity' href="/showQuizIndex?id=<%= list[i]._id%>">
-    <div id="<%= list[i]._id %>" class="thumbnail quizEntity">
-      <img height="150" width="150" src="<%= list[i].picture %>" alt="quiz_picture">
-      <div class="caption">
-        <h3><%= list[i].qName %></h3>
-        <p><%= list[i].qDescription %></p>
-        <!--<a href="#" class="btn btn-default" role="button">Button</a>-->
-        <!--BUTTONS FOR EDITING QUIZ ARE HERE-->
-        <p>
-            <% if (user.local.email === list[i].owner) { %>
-            
-    		    
-                <!--<a href="/questions?id=<%= list[i]._id %>" class="btn icon-btn btn-primary btn_questions">-->
-                <!--<span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>-->
-                <!--Edit Questions-->
-                <!--</a>-->
-                <!--<a href="/editqz?id=<%= list[i]._id %>" class="btn icon-btn btn-info btn_edit">-->
-                <!--<span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>-->
-                <!--Edit Settings-->
-                <!--</a>-->
-                <!--<a href="/removeqz?id=<%= list[i]._id %>" class="btn icon-btn btn-warning btn_remove" method="post">-->
-                <!--<span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>-->
-                <!--Remove Quiz-->
-                <!--</a>-->
-                
-                <h5 style="color:blue">(You are the owner of this quiz)</h5>
-    	    <% } %>
-        </p>
-        <!--<p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a> </p>-->
-      </div>
-    </div>
-    </a>
-  </div>
-
-
-<% if( i!==list.length-1 ){
-    i++
-}
-else{
-    %>
-    </div>
-        	</div>
-        	
-        	    </main>
-    
-</div>
-</div>  
-
-    <footer>
-        
-        <% include ./index_partials/footer %>
-        
-    </footer>
-
-  <%  return;
-}
-
-%>
-
-  <!--THIRD ENTITY-->
-  
-  <div class="col-sm-6 col-md-3">
-      <a class='quizEntity' href="/showQuizIndex?id=<%= list[i]._id%>">
-    <div id="<%= list[i]._id %>" class="thumbnail quizEntity">
-      <img height="150" width="150" src="<%= list[i].picture %>" alt="quiz_picture">
-      <div class="caption">
-        <h3><%= list[i].qName %></h3>
-        <p><%= list[i].qDescription %></p>
-        <!--<a href="#" class="btn btn-default" role="button">Button</a>-->
-        <!--BUTTONS FOR EDITING QUIZ ARE HERE-->
-        <p>
-                		    <% if (user.local.email === list[i].owner) { %>
-    		    
-                <!--<a href="/questions?id=<%= list[i]._id %>" class="btn icon-btn btn-primary btn_questions">-->
-                <!--<span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>-->
-                <!--Edit Questions-->
-                <!--</a>-->
-                <!--<a href="/editqz?id=<%= list[i]._id %>" class="btn icon-btn btn-info btn_edit">-->
-                <!--<span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>-->
-                <!--Edit Settings-->
-                <!--</a>-->
-                <!--<a href="/removeqz?id=<%= list[i]._id %>" class="btn icon-btn btn-warning btn_remove" method="post">-->
-                <!--<span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>-->
-                <!--Remove Quiz-->
-                <!--</a>-->
-                
-                <h5 style="color:blue">(You are the owner of this quiz)</h5>
-    	    <% } %>
-        </p>
-        <!--<p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a> </p>-->
-      </div>
-    </div>
-    </a>
-  </div>
-
-
-<% if( i!==list.length-1 ){
-    i++
-}
-else{
-    %>
-    </div>
-        	</div>
-        	
-        </main>
-    
-</div>
-</div>  
-
-    <footer>
-        
-        <% include ./index_partials/footer %>
-        
-    </footer>
-        	
-        	
-  <%  return;
-}
-
-%>
 
 
 <!--FORURTH ENTITY-->
-  <div class="col-sm-6 col-md-3">
+
       <a class='quizEntity' href="/showQuizIndex?id=<%= list[i]._id%>">
     <div id="<%= list[i]._id %>" class="thumbnail quizEntity">
-      <img height="150" width="150" src="<%= list[i].picture %>" alt="quiz_picture">
       <div class="caption">
-        <h3><%= list[i].qName %></h3>
-        <p><%= list[i].qDescription %></p>
+          <div class="row">
+              <div class="col-md-1">
+                  <img height="70" width="70" src="<%= list[i].picture %>" alt="quiz_picture">
+              </div>
+              <div class="col-md-11">
+                  <h3><%= list[i].qName %></h3>
+                  <h5><%= list[i].qDescription %></h5>
+              </div>
+         
+        
+        
         <!--<a href="#" class="btn btn-default" role="button">Button</a>-->
         <!--BUTTONS FOR EDITING QUIZ ARE HERE-->
         <p>
@@ -239,14 +64,14 @@ else{
     	 <% } %>
         </p>
         <!--<p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a> </p>-->
+        </div>
       </div>
     </div>
     </a>
-  </div>
 
 
 
-</div><!--FINISHING ROW WITH QUIZES-->
+
 
     	</div>
 <% } %>
