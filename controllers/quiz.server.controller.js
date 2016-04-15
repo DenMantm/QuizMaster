@@ -59,17 +59,13 @@ exports.checkqName = function(req,res) {
 //ADDING EXTRA METHOD TO RETURN ONLY OWNED QUIZES::
 exports.myQuizList = function(req,res) {
     Quiz.find({owner:req.user.local.email}, function(err,result){
-        
         if(err){
             console.log("Error: " + err);
         }
         else{
             res.send(result);
         }
-        
     });
-
-    
 };
 
 exports.findId = function(req,res) {
@@ -108,10 +104,10 @@ exports.list = function(req,res) {
     query.sort({ owner: 'desc' })
     .exec(function(err, results){
         if (!req.user) {
-            var user = {local: {username:"empty", email:"empty"}}
-             res.render('showlist.ejs', {user: req.user, list:results, user:user});
+            var userBlank = {local: {username:"empty", email:"empty"}};
+             res.render('showlist.ejs', {user: userBlank, list:results});
         } else {
-            res.render('showlist.ejs', {user: req.user, list:results, user:req.user});
+            res.render('showlist.ejs', {user: req.user, list:results});
         }
         console.log("Error: " + err);
     });
@@ -121,21 +117,21 @@ exports.list = function(req,res) {
 //This one is to show only owner quizes
 
 exports.MyList = function(req,res) {
-     var user = req.user.local.email;
-    var query = Quiz.find({"owner":user});
+    var userDetails = req.user.local.email;
+    var query = Quiz.find({"owner":userDetails});
     query.sort({ owner: 'desc' })
     .exec(function(err, results){
         if (!req.user) {
-            var user = {local: {username:"empty", email:"empty"}}
-             res.render('showMyList.ejs', {user: req.user, list:results, user:user});
+            var userBlank = {local: {username:"empty", email:"empty"}};
+            res.render('showMyList.ejs', {user: userBlank, list:results});
         } else {
-            res.render('showMyList.ejs', {user: req.user, list:results, user:req.user});
+            res.render('showMyList.ejs', {user: req.user, list:results});
         }
         console.log("Error: " + err);
     });
 };
 
-exports.removeq  = function(req,res) {
+exports.removeq  = function(req) {
     var condition = {_id: req.query.id};
     Quiz.remove(condition, function(err) {
         if (err) {
@@ -158,7 +154,7 @@ exports.updateqz = function(body) {
     var condition = { _id: body._id };
     var update = {
         qName: body.qName,
-        category: body.category,
+        category: body.drop_category,
         qDescription: body.qDescription,
         qNumber: body.qNumber,
         shuffleQuestion: body.shuffleQuestion,
@@ -245,10 +241,10 @@ exports.editQuestion = function(body) {
 
             for (var i=0 ; i< quiz.questions.length ; i++){
                 if (quiz.questions[i]._id == body.qid) {
-                    quiz.questions[i].questionText = body.questionText
-                    quiz.questions[i].answers = []
-                    quiz.questions[i].qType = body.type
-                    quiz.questions[i].anwsNum = answNum
+                    quiz.questions[i].questionText = body.questionText;
+                    quiz.questions[i].answers = [];
+                    quiz.questions[i].qType = body.type;
+                    quiz.questions[i].anwsNum = answNum;
                     for (var x=0; x < answNum;x++){
                         quiz.questions[i].answers.push({answer: body["answer" + x],correct: body["correct" + x]});
                     }
@@ -319,7 +315,7 @@ exports.sendResults = function(body, res) {
     var id = mongoose.Types.ObjectId(qID);
     Quiz.findOne({_id: id}, function(err, quiz){
         if(err) {
-            console.log(err)
+            console.log(err);
         } else {
             qName = quiz.qName;
             User.findById(user, function(err, user){
@@ -334,7 +330,6 @@ exports.sendResults = function(body, res) {
                         qName: qName
                     });
                 user.save();
-                
                 }
             });
         }
@@ -351,5 +346,5 @@ exports.results = function(req, res) {
         } else {
             res.render('results', { results: user.local.results, user: req.user});
         }
-    })
+    });
 };

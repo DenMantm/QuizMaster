@@ -52,8 +52,8 @@
                     <select id="drop_category" name="drop_category" class="selectpicker">
                         <% include ./index_partials/categories_list %>
                     </select>
+                    <input class="form-control" id="curr_category" type="hidden" value="<%= settings.category %>"/>
                 </div>
-            
                 <div class="col-md-2">
                 </div>
             </div>
@@ -186,6 +186,9 @@
         $(function(argument) {
             $('[type="checkbox"]').bootstrapSwitch();
         })
+        
+        $('.selectpicker').val($("#curr_category").val());
+        $('.selectpicker').selectpicker('render');
     </script>
     
     
