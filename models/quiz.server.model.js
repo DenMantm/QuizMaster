@@ -20,6 +20,7 @@ var subAnswers = {
 var quizSchema = new Schema({
     picture: {type:String, default:'img/quizIcons/default.png'},
     createdOn: {type: Date, default: Date.now},
+    category: String,
     qName: String,   
     qDescription: String,
     qNumber: String,

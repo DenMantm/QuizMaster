@@ -194,11 +194,9 @@ var callback = function(response) {
 		return quizCtrl.MyList(req, res);
 	});
 
-	app.post('/removeqz', function(req, res) {
+	app.get('/removeqz', function(req, res) {
 		quizCtrl.removeq(req);
-		console.log('received removeqz') ;
 		res.redirect(301, '../index'); //redirecting to homepage
-		console.log('redirected') ;
 	});
 	
 	app.post('/removeQuest', function(req, res) {

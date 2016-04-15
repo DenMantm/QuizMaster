@@ -5,8 +5,10 @@ var mongoose = require('mongoose');
 
 //getting info from body object, which is subbmitted by POST methodfrom front end
 exports.create = function(req,res) {
+    console.log(req.body)
     var entry = new Quiz ({
         qName: req.body.qName,
+        category: req.body.drop_category,
         //not sure why default values dont work, no time to investigate, insetring manually
         topic:"Non specific",
         picture: "img/quizIcons/default.png",

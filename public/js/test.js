@@ -1,3 +1,4 @@
+jQuery(function($) {  
   $(document).ready(function() {
     var question = new Object();
     var count = 0;
@@ -205,7 +206,7 @@
         data: results,
         cache: false,
         success: function() {
-          window.location = "/showquiz";
+          window.location = "/results";
         },
         error: function() {
           alert("No data found.");
@@ -235,7 +236,6 @@
       $.each($answers, function(index, item) {
 
         question.answer[x] = item.answer;
-        console.log("found question" + item.answer)
         question.st[x] = item.correct;
         if (question.st[x] === "true") {
           question.correct = x;
@@ -255,6 +255,7 @@
           '"><input type="radio" class="canswer" name="answer" value="' + w + '" id="radio' + i +
           w + '"></td><td class="col-sm-11"><label   for="radio' + i + w + '">' + question.answer[w] + '</label></td>';
       }
+      arrA = [];
       list = list + '</form></div>';
       newElement.innerHTML = list;
 
@@ -287,7 +288,7 @@
             display_ct();
             sendResults();
           }
-        })
+        });
       }
     }
 
@@ -299,7 +300,7 @@
     $.getJSON(url, function(data) {
       timeLimit = data.timeLimit;
       timeLimitVal = data.timeLimitVal;
-      shuffleQuestion = data.shuffleQuestion
+      shuffleQuestion = data.shuffleQuestion;
       shuffleAnswer = data.shuffleAnswers;
 
       $questions = data.questions;
@@ -317,7 +318,6 @@
       createArray();
       nextQuestion(count);
       ferfreshButton();
-
-
-    })
+    });
   });
+});

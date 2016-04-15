@@ -17,6 +17,7 @@
     $("#step4").hide();
     $("#step5").hide();
     $("#step6").hide();
+    $("#step7").hide();
     $("#submit").hide();
     $("#back").hide();
 
@@ -97,6 +98,13 @@
         $("#shuffleQuestion").val(false);
       }
     });
+    
+    
+     $('.selectpicker').selectpicker({
+      style: 'btn',
+      size: 4
+    });
+    
   });
 
   //next button function
@@ -119,6 +127,8 @@
       refresh();
     }
   }
+  
+ 
 
   //refresh function is run after every back or nex button click and it show() or hide() all necesary items acording to the Step counter
   function refresh() {
@@ -168,51 +178,60 @@
           });
         }
         break;
-        //checkName(test);
       case 3:
+       
+                $("#step2").hide();
+                $("#step3").show();
+                $("#step4").hide();
+                $("#back").show();
+                refreshBar();
+
+        break;
+        //checkName(test);
+      case 4:
         //hide step2 and step4 (in case user is coming here bu pressing back button) items and display step3
 
-        $("#step2").hide();
-        $("#step3").show();
-        $("#step4").hide();
+        $("#step3").hide();
+        $("#step4").show();
         $("#step5").hide();
+        $("#step6").hide();
         refreshBar();
         break;
-      case 4:
+      case 5:
         //check if previous step (step3) has a number of questions populated if not set thestep 3 class to error and not progress any fuerther
         if ($("#qNumber").val() !== 'all' && !(isNat($("#qNumber").val()))) {
-          $("#step3").addClass("has-error bg-danger");
+          $("#step4").addClass("has-error bg-danger");
           step--;
           refreshBar();
           break;
           //if user decided to display all questions then skip the step 4 where the decision rather questions should or should not be shuffled 
         }
         else if ($("#qNumber").val() === 'all') {
-          $("#step3").removeClass("has-error bg-danger");
+          $("#step4").removeClass("has-error bg-danger");
           next();
           break;
           //if none of the above show step 2 and hide step 3 and 5
         }
         else {
-          $("#step3").hide();
-          $("#step4").show();
-          $("#step5").hide();
+          $("#step4").hide();
+          $("#step5").show();
+          $("#step6").hide();
           refreshBar();
           break;
         }
-      case 5:
+      case 6:
         //display step 5 and hide all other items that may be shown
-        $("#step3").hide();
         $("#step4").hide();
-        $("#step5").show();
-        $("#step6").hide();
+        $("#step5").hide();
+        $("#step6").show();
+        $("#step7").hide();
         $("#next").show();
         $("#submit").hide();
         refreshBar();
         break;
-      case 6:
-        $("#step5").hide();
-        $("#step6").show();
+      case 7:
+        $("#step6").hide();
+        $("#step7").show();
         $("#next").hide();
         $("#submit").show();
         refreshBar();
