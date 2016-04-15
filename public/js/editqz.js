@@ -48,11 +48,6 @@ $('#submit_btn').click(function(){
     }
 });
     
-    
-    $('.selectpicker').selectpicker({
-      style: 'btn'
-    });
-    
     $('[name="cb_qNumber"]').on('switchChange.bootstrapSwitch', function(event, state) {    
       if(state) {
           //if user decide to show all questions then set number of questions to 'all' and hide the field from user

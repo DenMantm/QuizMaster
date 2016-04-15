@@ -58,10 +58,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 }
 .plavce_for_banner > h1{
-    text-shadow: 2px 2px #000000;
+    text-shadow: 2px 2px #ffffff;
     font-weight: 700;
-    color:white;
+    color:black;
     font-size:4.5em;
 text-align: center;
     margin-top: 54px
+}
+
+h5.logged_as_container {
+    color:black;
 }

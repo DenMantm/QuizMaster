@@ -244,7 +244,7 @@ jQuery(function($) {
       });
 
 
-      list = '<div class="row" id="qBox"><p class="col-sm-12">Question ' + (i + 1) + ': ' + question.text +
+      list = '<div class="row" id="qBox"><p class="col-sm-12">Question ' + (i + 1) + ': ' + question.text.replace(/\n/g, "<br />") +
         '</p><form class="form" id="question' + i + '" action=""><table>';
       aNum = question.answer.length;
       createArrayA();

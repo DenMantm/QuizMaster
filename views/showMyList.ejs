@@ -45,17 +45,19 @@
         <p>
                 		    <% if (user.local.email === list[i].owner) { %>
     		    
-                <a href="/questions?id=<%= list[i]._id %>" class="btn icon-btn btn-primary btn_questions">
+                <a href="/questions?id=<%= list[i]._id %>" class="btn-group-vertical btn_questions" role="group">
                 <span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>
                 Edit Questions
                 </a>
-                <a href="/editqz?id=<%= list[i]._id %>" class="btn icon-btn btn-info btn_edit">
+                <br />
+                <a href="/editqz?id=<%= list[i]._id %>" class="btn-group-vertical btn_edit" role="group">
                 <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>
                 Edit Settings
                 </a>
-                <a href="/removeqz?id=<%= list[i]._id %>" class="btn icon-btn btn-warning btn_remove" method="post">
+                <br /><br />
+                <a href="/removeqz?id=<%= list[i]._id %>" class="btn-group-vertical btn_remove" method="post" role="group">
                 <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
-                Remove Quiz
+                Delete Quiz
                 </a>
     	    <% } %>
         </p>

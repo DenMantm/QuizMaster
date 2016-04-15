@@ -98,7 +98,7 @@ window.onclick = function(event) {
           <% for(var i=settings.questions.length-1; i>=0; i--) {%>
             <div id="<%= settings.questions[i]._id %>">
               <div class="question">
-                Question: <span class="question-text"> <%= settings.questions[i].questionText %></span>
+                Question: <span class="question-text"> <%- settings.questions[i].questionText.replace(/\n/g, "<br />") %></span>
               </div>
               <div class="answers">
                 <% for(var y=0; y<settings.questions[i].answers.length; y++) {%>
