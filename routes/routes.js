@@ -196,7 +196,7 @@ var callback = function(response) {
 
 	app.get('/removeqz', function(req, res) {
 		quizCtrl.removeq(req);
-		res.redirect(301, '../index'); //redirecting to homepage
+		res.redirect(301, '../showMyQuiz'); //redirecting to homepage
 	});
 	
 	app.post('/removeQuest', function(req, res) {

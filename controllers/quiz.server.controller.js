@@ -79,9 +79,7 @@ exports.findId = function(req,res) {
             console.log("Error: " + err);
         }
         else{
-            console.log("Looking for quiz with name : " + req.body.qName)
-             res.send(result);
-             console.log("Found: " + result);
+            res.send(result);
         }
     });
 };
@@ -106,7 +104,6 @@ exports.saveModifiedQuiz = function(req,res){
 
 
 exports.list = function(req,res) {
-
     var query = Quiz.find();
     query.sort({ owner: 'desc' })
     .exec(function(err, results){
@@ -138,12 +135,12 @@ exports.MyList = function(req,res) {
     });
 };
 
-
-
 exports.removeq  = function(req,res) {
     var condition = {_id: req.query.id};
     Quiz.remove(condition, function(err) {
-        console.log("Error: " + err);
+        if (err) {
+            console.log("Error: " + err);
+        }
     });
 };
 
@@ -176,26 +173,15 @@ exports.updateqz = function(body) {
         console.log("numberAffected: " + numberAffected);
         console.log("rawResponce: " + rawResponce);
     });
-    //redirect to homepage
 };
 
 exports.updateqzIcon = function(id,update) {
     var condition = { _id: id};
-    // var update = {
-    //     qName: body.qName,
-    //     qDescription: body.qDescription,
-    //     qNumber: body.qNumber,
-    //     shuffleQuestion: body.shuffleQuestion,
-    //     shuffleAnswers: body.shuffleAnswers,
-    //     timeLimit: body.timeLimit,
-    //     timeLimitVal: body.timeLimitVal
-    // };
     Quiz.update(condition, update, function(err, numberAffected, rawResponce) {
         console.log("Error: " + err);
         console.log("numberAffected: " + numberAffected);
         console.log("rawResponce: " + rawResponce);
     });
-    //redirect to homepage
 };
 
 exports.Questions = function(req,res) {
@@ -241,7 +227,6 @@ exports.addQuestion = function(body) {
             quiz.save();
         }
     } );
-
 };
 
 exports.editQuestion = function(body) {
@@ -257,8 +242,7 @@ exports.editQuestion = function(body) {
             //delete id value from body as we wont want to pass those to the DB
             delete body.id;
             //push the guestion with initial settings and empty array of answers which we will populate below
-            console.log("found " + quiz.questions.length + "number of questions, and searching for question ID " + body.qid)
-            
+
             for (var i=0 ; i< quiz.questions.length ; i++){
                 if (quiz.questions[i]._id == body.qid) {
                     quiz.questions[i].questionText = body.questionText
@@ -270,11 +254,9 @@ exports.editQuestion = function(body) {
                     }
                 }
             }
-      
             quiz.save();
         }
     } );
-
 };
 
 
@@ -297,7 +279,6 @@ exports.removeQest = function(req) {
 
 exports.editQest = function(req) {
     var qid = req.query.id;
-    console.log("Searching for id: : " + qid);
     var id = mongoose.Types.ObjectId(qid);
     var conditions = { };
     var update = { $pull: { questions: { _id: id } } };
@@ -322,24 +303,21 @@ exports.showQuizIndex = function(req,res) {
     var query = Quiz.findOne();
     query.where({_id: id})
     .exec(function(err,results){
-        
-        //querying further
-        CommentCtrl.getComments(req,res,results);
-
-        
-       if(err){ console.log("Error: " + err);}
+    //querying further
+    CommentCtrl.getComments(req,res,results);
+    if(err){ console.log("Error: " + err);}
     });
 };
 
 
 exports.sendResults = function(body, res) {
-
     var qID = body.qID;
     var user = body.user;
     var correct = body.correct;
     var wrong = body.wrong;
     var qName;
-    Quiz.findById(qID, function(err, quiz){
+    var id = mongoose.Types.ObjectId(qID);
+    Quiz.findOne({_id: id}, function(err, quiz){
         if(err) {
             console.log(err)
         } else {
@@ -356,16 +334,15 @@ exports.sendResults = function(body, res) {
                         qName: qName
                     });
                 user.save();
+                
                 }
             });
         }
+        res.end();
     });
-
-    res.end();
 };
 
 exports.results = function(req, res) {
-
     var uID = req.user._id;
     var id = mongoose.Types.ObjectId(uID);
     User.findOne({_id: id}, function(err, user){

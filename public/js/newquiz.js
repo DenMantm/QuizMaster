@@ -247,7 +247,7 @@ jQuery(function($) {
 
   //maintain the barr progress base on step counter
   function refreshBar() {
-    var value = (100 / 5) * (step - 1) + "%";
+    var value = (100 / 7) * (step - 1) + "%";
     $(".progress-bar").css('width', value).attr('aria-valuenow', value);
   }
 });
