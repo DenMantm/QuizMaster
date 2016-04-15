@@ -1,14 +1,17 @@
+jQuery(function($) {
+
   var step = 1
-    function isNat(n) {                // A natural number is...
-      return n != null                 // ...a defined value,
-          && n >= 0                    // ...nonnegative,
-          && n != Infinity             // ...finite,
-          && typeof n !== 'boolean'    // ...not a boolean,
-          && n.pop == null             // ...not an array,
-          && n.getDay == null          // ...not a date,
-          && Math.floor(n) === +n      // ...and whole.
-          && n.trim() !== '';          // ...not empty
-    }
+
+  function isNat(n) { // A natural number is...
+    return n != null // ...a defined value,
+      && n >= 0 // ...nonnegative,
+      && n != Infinity // ...finite,
+      && typeof n !== 'boolean' // ...not a boolean,
+      && n.pop == null // ...not an array,
+      && n.getDay == null // ...not a date,
+      && Math.floor(n) === +n // ...and whole.
+      && n.trim() !== ''; // ...not empty
+  }
 
   $(document).ready(function() {
     //on document load hide all items except those necesary to compleet step1
@@ -30,9 +33,6 @@
         return false;
       }
     });
-
-
-
 
     //activate action listeners for buttons
     //next button
@@ -63,7 +63,7 @@
         $("#qNumber").val('');
       }
     });
-    
+
     $('[name="cb_timeLimit"').on('switchChange.bootstrapSwitch', function(event, state) {
       if (state) {
         $("#timeLimit_field").show();
@@ -98,13 +98,11 @@
         $("#shuffleQuestion").val(false);
       }
     });
-    
-    
-     $('.selectpicker').selectpicker({
-      style: 'btn',
-      size: 4
+
+
+    $('.selectpicker').selectpicker({
+      style: 'btn'
     });
-    
   });
 
   //next button function
@@ -127,8 +125,6 @@
       refresh();
     }
   }
-  
- 
 
   //refresh function is run after every back or nex button click and it show() or hide() all necesary items acording to the Step counter
   function refresh() {
@@ -179,18 +175,15 @@
         }
         break;
       case 3:
-       
-                $("#step2").hide();
-                $("#step3").show();
-                $("#step4").hide();
-                $("#back").show();
-                refreshBar();
-
+        $("#step2").hide();
+        $("#step3").show();
+        $("#step4").hide();
+        $("#back").show();
+        refreshBar();
         break;
         //checkName(test);
       case 4:
-        //hide step2 and step4 (in case user is coming here bu pressing back button) items and display step3
-
+        //hide step3 and step5 (in case user is coming here bu pressing back button) items and display step3
         $("#step3").hide();
         $("#step4").show();
         $("#step5").hide();
@@ -198,19 +191,19 @@
         refreshBar();
         break;
       case 5:
-        //check if previous step (step3) has a number of questions populated if not set thestep 3 class to error and not progress any fuerther
+        //check if previous step (step4) has a number of questions populated if not set thestep 3 class to error and not progress any fuerther
         if ($("#qNumber").val() !== 'all' && !(isNat($("#qNumber").val()))) {
           $("#step4").addClass("has-error bg-danger");
           step--;
           refreshBar();
           break;
-          //if user decided to display all questions then skip the step 4 where the decision rather questions should or should not be shuffled 
+          //if user decided to display all questions then skip the step 5 where the decision rather questions should or should not be shuffled 
         }
         else if ($("#qNumber").val() === 'all') {
           $("#step4").removeClass("has-error bg-danger");
           next();
           break;
-          //if none of the above show step 2 and hide step 3 and 5
+          //if none of the above show step 3 and hide step 4 and 6
         }
         else {
           $("#step4").hide();
@@ -220,7 +213,7 @@
           break;
         }
       case 6:
-        //display step 5 and hide all other items that may be shown
+        //display step 6 and hide all other items that may be shown
         $("#step4").hide();
         $("#step5").hide();
         $("#step6").show();
@@ -257,4 +250,4 @@
     var value = (100 / 5) * (step - 1) + "%";
     $(".progress-bar").css('width', value).attr('aria-valuenow', value);
   }
-  
+});

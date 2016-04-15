@@ -6,6 +6,9 @@
          $("#qNum").show();
      }
      
+$('#cancel').click(function(){
+  window.location.href = "/showMyQuiz";
+})
          
 $('#submit_btn').click(function(){
   var name = $("#qName").val();
@@ -44,6 +47,11 @@ $('#submit_btn').click(function(){
   $("#update_form").submit();
     }
 });
+    
+    
+    $('.selectpicker').selectpicker({
+      style: 'btn'
+    });
     
     $('[name="cb_qNumber"]').on('switchChange.bootstrapSwitch', function(event, state) {    
       if(state) {

@@ -161,6 +161,7 @@ exports.updateqz = function(body) {
     var condition = { _id: body._id };
     var update = {
         qName: body.qName,
+        category: body.category,
         qDescription: body.qDescription,
         qNumber: body.qNumber,
         shuffleQuestion: body.shuffleQuestion,
