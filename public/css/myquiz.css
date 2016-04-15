@@ -1,0 +1,49 @@
+.title_container {
+    height: 70px;
+    font-size:large;
+    padding:10px;
+}
+
+.picture_container{
+    text-align: center;
+    height: 152px;
+    
+}
+
+.picture_container img{
+    max-width: 100%; width: auto
+}
+
+.module {
+  padding:10px;
+  
+  
+}
+
+.module p {
+    font: 1.2em/1.2em 'Open Sans', sans-serif;
+  font-size:small;
+}
+
+
+.fade {
+    overflow: hidden !important;
+    opacity: 1;
+  position: relative;
+  height: 6.4em; /* exactly three lines */
+}
+.fade:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 70%;
+  height: 1.4em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), white 100%);
+  pointer-events: none;
+}
+
+.buttons_container{
+    padding:10px;
+}

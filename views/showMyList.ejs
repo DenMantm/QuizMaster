@@ -3,11 +3,19 @@
 <head>
     <% include ./index_partials/head %>
         <script src="../js/showlist.js"></script>
+        <link href="../css/myquiz.css" rel="stylesheet">
         <link href="/scripts/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
         <script src="/scripts/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
 </head>
 
 <body>
+    <% function shorten(text, maxLength) {
+    var ret = text;
+    if (ret.length > maxLength) {
+        ret = ret.substr(0,maxLength-3) + "...";
+    }
+    return ret;
+}%>
 
         <% include ./index_partials/navbar %>
 <div class="main_body_background">   
@@ -36,33 +44,38 @@
     	        
   <div id="<%= list[i]._id %>" class="col-sm-6 col-md-3">
     <div class="thumbnail ">
-      <img height="150" width="150" src="<%= list[i].picture %>" alt="quiz_picture">
-      <div class="caption">
-        <h3><%= list[i].qName %></h3>
-        <p><%= list[i].qDescription %></p>
+        <div class="picture_container">
+            <img height="150" width="400" src="<%= list[i].picture %>" alt="quiz_picture">
+        </div>
+        <p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a></p>
+        <div class="title_container">
+            <%= list[i].qName %>
+        </div>
+        <div class="module fade">
+            <p><%= list[i].qDescription %></p>
+        </div>
         <!--<a href="#" class="btn btn-default" role="button">Button</a>-->
         <!--BUTTONS FOR EDITING QUIZ ARE HERE-->
-        <p>
-                <% if (user.local.email === list[i].owner) { %>
-    		    
-                <a href="/questions?id=<%= list[i]._id %>" class="btn-group-vertical btn_questions" role="group">
-                <span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>
-                Edit Questions
-                </a>
-                <br />
-                <a href="/editqz?id=<%= list[i]._id %>" class="btn-group-vertical btn_edit" role="group">
-                <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>
-                Edit Settings
-                </a>
-                <br /><br />
-                <a href="/removeqz?id=<%= list[i]._id %>" class="btn-group-vertical btn_remove" method="post" role="group">
-                <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
-                Delete Quiz
-                </a>
-    	    <% } %>
-        </p>
-        <p><a href="/quiz?id=<%= list[i]._id %>" class="btn btn-primary" role="button">Take Quiz</a> </p>
-      </div>
+        <div class="buttons_container">
+            <a href="/questions?id=<%= list[i]._id %>" class="btn-group-vertical btn_questions" role="group">
+            <span class="glyphicon btn-glyphicon glyphicon-question-sign img-circle text-normal"></span>
+            Edit Questions
+            </a>
+            <br />
+            <a href="/editqz?id=<%= list[i]._id %>" class="btn-group-vertical btn_edit" role="group">
+            <span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-info"></span>
+            Edit Settings
+            </a>
+            <br /><br />
+            <a href="/removeqz?id=<%= list[i]._id %>" class="btn-group-vertical btn_remove" method="post" role="group">
+            <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-normal"></span>
+            Delete Quiz
+            </a>
+            <br />
+            
+        </div>
+
+
     </div>
 
 

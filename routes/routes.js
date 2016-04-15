@@ -120,22 +120,15 @@ var callback = function(response) {
 									      console.log(err);
 									    } else {
 									      console.log("JSON saved to " + outputFilename);
-									    }
-									}); 
-                        console.log("::::Its time to stop;:::::" + topics.length);
-                        //for (var i =0; i<topics.length;i++){
-                           //console.log('topic: '+topics[i].title);
-                           //console.log('clues: '+topics[i].clues_count);
-                       // }
-                       return;
+				}
+			}); 
+        console.log("::::Its time to stop;:::::" + topics.length);
+
+    return;
   }
 }
-	
 	http.request(options, callback).end();
-	
 	});
-	
-	
 		
 	// ==================================
 	// == ROUTES FOR QUIZ GET, POST =====
@@ -145,8 +138,6 @@ var callback = function(response) {
 	// ========== NEW QUIZ ==============
 	// ==================================		
 
-
-	
 	app.get('/newquiz', isLoggedIn, function(req, res) {
 		res.render('newquiz.ejs', {
 			user: req.user,
@@ -183,12 +174,10 @@ var callback = function(response) {
 		res.redirect(req.get('referer'));
 	});
 
-	
 	app.get('/showquiz', function(req, res) {
 		console.log('getting showquiz');
 		return quizCtrl.list(req, res);
 	});
-	
 	
 	app.get('/showMyQuiz',isLoggedIn, function(req, res) {
 		return quizCtrl.MyList(req, res);
@@ -201,7 +190,6 @@ var callback = function(response) {
 	
 	app.post('/removeQuest', function(req, res) {
 		quizCtrl.removeQest(req);
-		console.log("Redirecting to the: " + req.get('referer'))
 		res.redirect(req.get('referer'));
 	});
 	
@@ -219,7 +207,6 @@ var callback = function(response) {
 	
 	app.post('/sendResults', function(req, res){
 		return quizCtrl.sendResults(req.body, res);
-		//res.redirect(301, '/showquiz');
 	});
 	
 	app.get('/results', function(req, res){
@@ -234,6 +221,7 @@ var callback = function(response) {
 	app.get('/myQuizList', function(req, res) {
 		quizCtrl.myQuizList(req,res);
 	});
+	
 	app.post('/saveModifiedQuiz', function(req, res){
 		console.log("Checking: " + req)
 		quizCtrl.saveModifiedQuiz(req,res);
