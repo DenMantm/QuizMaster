@@ -23,7 +23,10 @@
       <!--    </div><!--/.nav-collapse -->
       <!--  </div><!--/.container-fluid -->
       <!--</nav>-->
-          <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+      <!--navbar navbar-inverse navbar-static-top primaryNav-->
+      <!--navbar-fixed-top-->
+          <nav id="mainNav" class="navbar-inverse navbar-default navbar-fixed-top">
+    
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -33,12 +36,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-				<img class = "logo-header" src = "img/logo.png" alt = "header-logo">
-				
 			</div>
-			<a  style="float:left; margin-left:15px" href="/index"><h3>Quiz News</h3></a>
-			
             <!-- Collect the nav links, forms, and other content for toggling -->
+                                  <img style="float:left; height:40px;width:80px" class = "logo-header" src = "img/logo.png" alt = "header-logo">
+                                
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     
@@ -47,6 +48,17 @@
 					<li>
 						<a href="/logout" data-toggle="modal" class="signup_ancher btn btn-primary btn-xl">Logout</a>
 					</li>
+                  	
+                  	<li><a style='color:black'href='/index'>Quzi News</a></li>
+					<li><a style='color:black'href='/newquiz'>New Quiz</a></li>
+					<li><a style='color:black'href='/showMyQuiz'>My Quizes</a></li>
+					<li><a style='color:black'href='/showquiz'>Take Quiz</a></li>
+					<li><a style='color:black'href='/results'>Monitor</a></li>
+					<li><a style='color:black'href='/chat'>Chat</a></li>
+					<li><a style='color:black'href='/profile'>Profile</a></li>
+					<li><a style='color:black'href='/logout'>Logout</a></li>
+					
+			
                  </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -59,29 +71,22 @@
       <div style="width:100%;padding:0px" class="nav_main container">
       	<div id="main_choice_area">
     <div class="row">
-    <div class="plavce_for_banner">
-
-                <h1>QuizMaster - Build, Take Monitor</h1>
-     
-
-          </div>
     </div>
- 
 	        <div style="width:70%" class="container">
 	          
-            <div class="row">
+     <!--       <div class="row">-->
               
-              <a href="/newquiz">
-                <div class="col-lg-2 col-md-6 text-center">
-                    <div class="choice_box">
-                    <div class="service-box">
-                        <i class="fa fa-5x fa-download text-primary"></i>
-                        <span class="menu_icon glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        <h3 class="title_p">New Quiz</h3>
-                        </div>
-                    </div>
-                </div>
-                </a>
+     <!--         <a href="/newquiz">-->
+     <!--           <div class="col-lg-2 col-md-6 text-center">-->
+     <!--               <div class="choice_box">-->
+     <!--               <div class="service-box">-->
+     <!--                   <i class="fa fa-5x fa-download text-primary"></i>-->
+     <!--                   <span class="menu_icon glyphicon glyphicon-plus" aria-hidden="true"></span>-->
+     <!--                   <h3 class="title_p">New Quiz</h3>-->
+     <!--                   </div>-->
+     <!--               </div>-->
+     <!--           </div>-->
+     <!--           </a>-->
                 
                 <!--OLD VERSION OF THE PAGE-->
                 <!--<a href="/apiQuiz">-->
@@ -95,74 +100,74 @@
                 <!--</div>-->
                 <!--</a>-->
                 
-                                <a href="/showMyQuiz">
-                <div class="col-lg-2 col-md-6 text-center">
-                    <div class="choice_box">
-                    <div class="service-box">
-                        <i class="fa fa-5x fa-question text-primary"></i>
-                    <span class="menu_icon glyphicon glyphicon-wrench" aria-hidden="true"></span>
-                        <h3 class="title_p">My Quizes</h3>
-                        </div>
+     <!--                           <a href="/showMyQuiz">-->
+     <!--           <div class="col-lg-2 col-md-6 text-center">-->
+     <!--               <div class="choice_box">-->
+     <!--               <div class="service-box">-->
+     <!--                   <i class="fa fa-5x fa-question text-primary"></i>-->
+     <!--               <span class="menu_icon glyphicon glyphicon-wrench" aria-hidden="true"></span>-->
+     <!--                   <h3 class="title_p">My Quizes</h3>-->
+     <!--                   </div>-->
 					
-                    </div>
-                </div>
-                </a>
+     <!--               </div>-->
+     <!--           </div>-->
+     <!--           </a>-->
                 
                 
                 
-                <a href="/showquiz">
-                <div class="col-lg-2 col-md-6 text-center">
-                    <div class="choice_box">
-                    <div class="service-box">
-	                <span class="menu_icon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                    <h3 class="title_p">Take Quiz</h3>
-                    </div>
-                    </div>
-                </div>
-                </a>
+     <!--           <a href="/showquiz">-->
+     <!--           <div class="col-lg-2 col-md-6 text-center">-->
+     <!--               <div class="choice_box">-->
+     <!--               <div class="service-box">-->
+	    <!--            <span class="menu_icon glyphicon glyphicon-eye-open" aria-hidden="true"></span>-->
+     <!--               <h3 class="title_p">Take Quiz</h3>-->
+     <!--               </div>-->
+     <!--               </div>-->
+     <!--           </div>-->
+     <!--           </a>-->
                 
                 
-                <a href="/results">
-                <div class="col-lg-2 col-md-6 text-center">
-                    <div class="choice_box">
-                    <div class="service-box">
-                    <i class="fa fa-5x fa-pencil-square-o text-primary"></i>
-                    <span class="menu_icon glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                    <h3 class="title_p">Monitor</h3>
-                   </div>
-                    </div>
-                </div>
-                </a>
+     <!--           <a href="/results">-->
+     <!--           <div class="col-lg-2 col-md-6 text-center">-->
+     <!--               <div class="choice_box">-->
+     <!--               <div class="service-box">-->
+     <!--               <i class="fa fa-5x fa-pencil-square-o text-primary"></i>-->
+     <!--               <span class="menu_icon glyphicon glyphicon-info-sign" aria-hidden="true"></span>-->
+     <!--               <h3 class="title_p">Monitor</h3>-->
+     <!--              </div>-->
+     <!--               </div>-->
+     <!--           </div>-->
+     <!--           </a>-->
                 
-                 <a href="/chat">
-                <div class="col-lg-2 col-md-6 text-center">
-                    <div class="choice_box">
-                    <div class="service-box">
-                        <i class="fa fa-5x fa-question text-primary"></i>
-                    <span class="menu_icon glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <h3 class="title_p">Chat</h3>
-					</div>
-                    </div>
-                </div>
-                </a>
-                
-                
-                
-                <a href="/profile">
-                <div class="col-lg-2 col-md-6 text-center">
-                    <div class="choice_box">
-                    <div class="service-box">
-                        <i class="fa fa-5x fa-pencil-square-o text-primary"></i>
-                 <span  class="menu_icon glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        <h3 class="title_p">My Settings</h3>
-                   </div>
-                    </div>
-                </div>
-                </a>
+     <!--            <a href="/chat">-->
+     <!--           <div class="col-lg-2 col-md-6 text-center">-->
+     <!--               <div class="choice_box">-->
+     <!--               <div class="service-box">-->
+     <!--                   <i class="fa fa-5x fa-question text-primary"></i>-->
+     <!--               <span class="menu_icon glyphicon glyphicon-user" aria-hidden="true"></span>-->
+     <!--                   <h3 class="title_p">Chat</h3>-->
+					<!--</div>-->
+     <!--               </div>-->
+     <!--           </div>-->
+     <!--           </a>-->
                 
                 
                 
-            </div>
+     <!--           <a href="/profile">-->
+     <!--           <div class="col-lg-2 col-md-6 text-center">-->
+     <!--               <div class="choice_box">-->
+     <!--               <div class="service-box">-->
+     <!--                   <i class="fa fa-5x fa-pencil-square-o text-primary"></i>-->
+     <!--            <span  class="menu_icon glyphicon glyphicon-cog" aria-hidden="true"></span>-->
+     <!--                   <h3 class="title_p">My Settings</h3>-->
+     <!--              </div>-->
+     <!--               </div>-->
+     <!--           </div>-->
+     <!--           </a>-->
+                
+                
+                
+     <!--       </div>-->
         </div>
 	</div>
 	</div>
@@ -172,3 +177,4 @@
                     <h4 style="color:red; padding:20px;background-color:white; text-align:center" class="logged_as_container">Please note that you haven't verify your e-mail yet, if you dont do so your account will expire in 48h</h4>
                     
                     <%  }   %>
+                     <h5 style="float:right" class="logged_as_container">You are logged in as: <%= user.local.email%></h5>

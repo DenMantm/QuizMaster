@@ -1,5 +1,15 @@
 /*ADDING SOME CSSS*/
 /*adding background image */
+
+
+
+
+/*fixing login for firefox*/
+.input-lg{
+    clear:left;
+}
+
+
 .addBackground{
      background-image: url(../img/background-image.jpg);
      background-attachment:fixed;
